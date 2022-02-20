@@ -21,7 +21,7 @@ export default function TransactionLatest() {
   }, [])
 
   return (
-    <TableContainer sx={{ minHeight: 330 }}>
+    <TableContainer >
       <Table size="small" aria-label="sticky table" stickyHeader>
         <TableHead>
           <TableRow>
@@ -69,10 +69,12 @@ export default function TransactionLatest() {
                       background: item.side === "buy" ? "#007944" : "#D32626",
                     }}
                   >
-                    {item.side}
+                    {item.side.charAt(0).toUpperCase() + item.side.slice(1)}
                   </Bade>
                 </TableCell>
-                <TableCell align="center">{item.type}</TableCell>
+                <TableCell align="center">
+                  {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                </TableCell>
                 <TableCell align="right">
                   {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </TableCell>

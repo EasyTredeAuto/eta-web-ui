@@ -1,17 +1,17 @@
 import React from "react"
-import Select from "react-select"
+// import Select from "react-select"
 import { useRecoilState } from "recoil"
 import { getTransaction } from "../../../Recoil/actions/transaction"
 import { transactionState } from "../../../Recoil/atoms"
-import { TextFieldSearch } from "../../Element/CustomMaterial.element"
+// import { TextFieldSearch } from "../../Element/CustomMaterial.element"
 import { Component } from "../../Element/History.Element"
 import HistoryTable from "./HistoryTable"
 
 export default function History() {
-  const options = [
-    { value: "spot", label: "Spot" },
-    { value: "futures", label: "Futures" },
-  ]
+  // const options = [
+  //   { value: "spot", label: "Spot" },
+  //   { value: "futures", label: "Futures" },
+  // ]
 
   const [transaction, setTransaction] = useRecoilState(transactionState)
 
@@ -23,7 +23,7 @@ export default function History() {
 
   return (
     <Component col={"100%"}>
-      <Component col={"20% 20% 20%"}>
+      {/* <Component col={"20% 20% 20%"}>
         <Select options={options} placeholder="Select Trade" />
         <TextFieldSearch
           fullWidth
@@ -37,7 +37,7 @@ export default function History() {
           label="Time Frame"
           name="timeFrame"
         />
-      </Component>
+      </Component> */}
       <HistoryTable />
     </Component>
   )

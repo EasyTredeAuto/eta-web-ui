@@ -11,6 +11,7 @@ import { useRecoilState } from "recoil"
 import { transactionState } from "../../../Recoil/atoms"
 import moment from "moment"
 import { getTransaction } from "../../../Recoil/actions/transaction"
+import { Bade } from "../../Element/Dashboard.Element"
 
 export default function HistoryTable() {
   const [transaction, setTransaction] = useRecoilState(transactionState)
@@ -62,8 +63,18 @@ export default function HistoryTable() {
               <TableRow key={index}>
                 <TableCell align="center">{index + 1}</TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
-                <TableCell align="center">{row.side}</TableCell>
-                <TableCell align="center">{row.type}</TableCell>
+                <TableCell align="center" sx={{ width: 50 }}>
+                  <Bade
+                    style={{
+                      background: row.side === "buy" ? "#007944" : "#D32626",
+                    }}
+                  >
+                    {row.side.charAt(0).toUpperCase() + row.side.slice(1)}
+                  </Bade>
+                </TableCell>
+                <TableCell align="center">
+                  {row.type.charAt(0).toUpperCase() + row.type.slice(1)}
+                </TableCell>
                 <TableCell align="right">
                   {row.quantity
                     .toString()
