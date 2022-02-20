@@ -52,12 +52,12 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <DrawerHeader />
             <Routes>
-              <Route path="/" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} /> }/>
-              <Route path="/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={ManageBot} /> }/>
-              <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={History} /> }/>
-              <Route path="/login" element={<PublicRoute component={Login} />} />
-              <Route path="/register" element={<PublicRoute component={Login} />} />
-              <Route path="*" element={<AccessDenied />} />
+              <Route path="/" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
+              <Route path="/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={ManageBot} />}/>
+              <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={History} />}/>
+              <Route path="/login" element={<PublicRoute component={Login} />}/>
+              <Route path="/register" element={<PublicRoute component={Login} />}/>
+              <Route path="*" element={<AccessDenied />}/>
             </Routes>
           </Box>
         </Box>
