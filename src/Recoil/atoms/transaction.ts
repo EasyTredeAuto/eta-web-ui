@@ -2,22 +2,22 @@ import { atom } from "recoil"
 
 export interface transactionDto {
   id: number
-  botId: number
-  botName: string
-  symbol: string
-  side: string
-  type: string
   amount: number
-  quantity: number
   price: number
+  quantity: number
+  side: string
+  symbol: string
+  type: string
   createdAt: Date
+  updatedAt: Date
 }
 
 export const transactionState = atom({
   key: "transaction",
   default: {
-    page: 1,
+    page: 0,
     size: 10,
-    data: [] as transactionDto[]
+    count: 0,
+    data: [] as transactionDto[],
   },
 })
