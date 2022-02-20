@@ -6,10 +6,22 @@ export const Component = styled.div`
     grid-template-columns: ${({ col }: { col?: string }) => col ? col : "repeat(3,1fr)"};
     grid-gap: 1rem;
 `
+export const BoxHeader = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+`
 export const BoxContent = styled.div`
     /* background: #212121; */
-    width: 100%;
-    border: 1px solid red;
+    width: 90%;
     display: flex;
+    align-items: center;
+`
+export const BoxFooter = styled.div`
+    /* background: #212121; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 `

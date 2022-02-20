@@ -8,7 +8,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import {BoxContent, Component} from '../Element/CreateBot.Dialog.Element';
+import {BoxContent, BoxHeader, Component,BoxFooter} from '../Element/CreateBot.Dialog.Element';
+import { SelectBase } from '../Element/CustomReact.element';
+import { TextFieldName} from '../Element/CustomMaterial.element';
+import { Checkbox, FormControlLabel} from '@mui/material';
 
 const BootstrapDialog:any = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -42,7 +45,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <CloseIcon />
+          {/* <CloseIcon /> */}
         </IconButton>
       ) : null}
     </DialogTitle>
@@ -60,12 +63,26 @@ export default function CreateBot({ open, setOpen}: Props) {
     setOpen(false);
   };
 
+    const options = [
+    { value: "bnb", label: "BNB" },
+    { value: "usdt", label: "USDT" },
+  ]
+    const optionSide = [
+    { value: "buy", label: "BUY" },
+    { value: "sell", label: "Sell" },
+  ]
+
+    const optionType = [
+    { value: "limit", label: "Limit" },
+    { value: "market", label: "Market" },
+  ]
+
   return (
-    <div>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        fullWidth
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           Create Bot
@@ -73,17 +90,62 @@ export default function CreateBot({ open, setOpen}: Props) {
         <DialogContent  dividers>
           <Component col={"100%"}>
             <Component col={"20% 80%"}>
-              <BoxContent>Name:</BoxContent>
-              <BoxContent>123</BoxContent>
+              <BoxHeader>Bot Name:</BoxHeader>
+              <BoxContent>
+                <TextFieldName
+                    fullWidth
+                    type="text"
+                    placeholder="Bot Name"
+                    name="botName"
+                  />
+              </BoxContent>
+              
+              <BoxHeader>Side:</BoxHeader>
+              <Component col={"40% 7% 40%"}>
+                <BoxContent>
+                  <SelectBase  options={optionSide} placeholder="Buy/Sell" />
+                </BoxContent>
+                <BoxHeader>Type:</BoxHeader>
+                <BoxContent>
+                  <SelectBase  options={optionType} placeholder="Limit/Market" />
+                </BoxContent>
+              </Component>
+              
+              <BoxHeader>Asset:</BoxHeader>
+              <BoxContent>
+                <SelectBase  options={options} placeholder="Select Asset" />
+              </BoxContent>
+              <BoxHeader>Currency:</BoxHeader>
+              <BoxContent>
+                <SelectBase  options={options} placeholder="Select Currency" />
+              </BoxContent>
+              <BoxHeader>Amount:</BoxHeader>
+              <Component col={"50% 50%"}>
+                <BoxContent>
+                  <TextFieldName
+                    fullWidth
+                    type="text"
+                    placeholder="Amount Currency"
+                    name="amount"
+                  />
+                </BoxContent>
+                <FormControlLabel control={<Checkbox />} label="%" />
+              </Component>
             </Component>
           </Component>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
+          <BoxFooter>
+            <Button variant="contained" color="primary" sx={{ width:"100%"}} autoFocus onClick={handleClose}>
+              Create
+            </Button>
+            <Button variant="contained" color="error" sx={{background:"#aaa" , width:"100%",marginLeft:"0.5rem"}} autoFocus onClick={handleClose}>
+              Cancel
+             </Button>
+          </BoxFooter>
+          
+          
         </DialogActions>
       </BootstrapDialog>
-    </div>
   );
 }
