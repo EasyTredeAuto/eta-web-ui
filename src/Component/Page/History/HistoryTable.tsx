@@ -155,11 +155,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  const {
-    order,
-    orderBy,
-    onRequestSort,
-  } = props
+  const { order, orderBy, onRequestSort } = props
   const createSortHandler =
     (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property)
@@ -193,7 +189,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     </TableHead>
   )
 }
-
 
 export default function HistoryTable() {
   const [order, setOrder] = React.useState<Order>("asc")
@@ -260,11 +255,7 @@ export default function HistoryTable() {
   return (
     <BoxContent>
       <TableContainer>
-        <Table
-          sx={{ minHeight: 450 }}
-          aria-label="sticky table"
-          stickyHeader
-        >
+        <Table size="small" sx={{ minHeight: 450 }} aria-label="sticky table" stickyHeader>
           <EnhancedTableHead
             numSelected={selected.length}
             order={order}
