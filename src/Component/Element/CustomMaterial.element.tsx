@@ -1,29 +1,28 @@
 import styled from "styled-components"
-import TextField from '@mui/material/TextField'
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-
+import TextField from "@mui/material/TextField"
+import Checkbox from "@mui/material/Checkbox"
+import FormControlLabel from "@mui/material/FormControlLabel"
 
 export const TextFieldBase = styled(TextField)`
-    & label{
-      color: #14FFEC;
+  & label {
+    color: #14ffec;
+  }
+  &:hover label,
+  & label.Mui-focused {
+    color: #c2ffd9;
+  }
+  & .MuiOutlinedInput-root {
+    color: #c2ffd9;
+    & fieldset {
+      border-color: #14ffec;
     }
-    &:hover label,& label.Mui-focused{
-      color: #C2FFD9;
+    &:hover fieldset {
+      border-color: #c2ffd9;
     }
-    & .MuiOutlinedInput-root{
-        color: #C2FFD9;
-        & fieldset{
-          border-color: #14FFEC;
-        }
-        &:hover fieldset{
-          border-color: #C2FFD9;
-        }
-        &.Mui-focused fieldset{
-          border-color: #C2FFD9;
-        }
+    &.Mui-focused fieldset {
+      border-color: #c2ffd9;
     }
+  }
 `
 export const TextFieldSearch = styled(TextField)`
   & label {
@@ -42,7 +41,6 @@ export const TextFieldSearch = styled(TextField)`
     }
     & fieldset {
       border-color: #ccc;
-      height: 36 !important;
     }
     &:hover fieldset {
       border-color: #055cfd;
@@ -72,12 +70,13 @@ export const TextFieldName = styled(TextField)`
 `
 
 export const FormLabel = styled(FormControlLabel)`
-    &.MuiFormControlLabel-root{
-      color: #14FFEC;
-    }
+  &.MuiFormControlLabel-root {
+    color: #14ffec;
+  }
 `
 export const CheckboxRemember = styled(Checkbox)`
-    &.MuiCheckbox-root, &.Mui-checked{
-      color: #14FFEC  !important;
-    }
+  &.MuiCheckbox-root,
+  &.Mui-checked {
+    color: #14ffec !important;
+  }
 `

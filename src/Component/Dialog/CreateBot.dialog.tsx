@@ -17,6 +17,10 @@ import {
 import { SelectBase } from "../Element/CustomReact.element"
 import { TextFieldName } from "../Element/CustomMaterial.element"
 import { Checkbox, FormControlLabel } from "@mui/material"
+import { coinsState } from "../../Recoil/atoms"
+import { useRecoilValue } from "recoil"
+import { Coins } from "../../Recoil/atoms/coins"
+import { useEffect, useState } from "react"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -67,10 +71,13 @@ export default function CreateBot({ open, setOpen }: Props) {
     setOpen(false)
   }
 
-  const options = [
-    { value: "bnb", label: "BNB" },
-    { value: "usdt", label: "USDT" },
-  ]
+  const [options, setOptions] = useState([] as any)
+  const coins = useRecoilValue(coinsState)
+
+  useEffect(() => {
+    return setOptions(coins.data)
+  }, [coins.data])
+  
   const optionSide = [
     { value: "buy", label: "Buy" },
     { value: "sell", label: "Sell" },
@@ -94,22 +101,38 @@ export default function CreateBot({ open, setOpen }: Props) {
       <DialogContent dividers>
         <Component col={"100%"}>
           <Component col={"20% 80%"}>
-            <BoxHeader>Asset:</BoxHeader>
+            <BoxHeader>Symbol:</BoxHeader>
             <BoxContent>
-              <SelectBase options={options} placeholder="Select Asset" />
+              <SelectBase
+                options={options}
+                menuPosition={"fixed"}
+                placeholder="Select Symbol"
+              />
             </BoxContent>
-            <BoxHeader>Currency:</BoxHeader>
+            {/* <BoxHeader>Currency:</BoxHeader>
             <BoxContent>
-              <SelectBase options={options} placeholder="Select Currency" />
-            </BoxContent>
+              <SelectBase
+                options={options}
+                menuPosition={"fixed"}
+                placeholder="Select Currency"
+              />
+            </BoxContent> */}
             <BoxHeader>Side:</BoxHeader>
             <Component col={"40% 7% 40%"}>
               <BoxContent>
-                <SelectBase options={optionSide} placeholder="Buy/Sell" />
+                <SelectBase
+                  options={optionSide}
+                  menuPosition={"fixed"}
+                  placeholder="Buy/Sell"
+                />
               </BoxContent>
               <BoxHeader>Type:</BoxHeader>
               <BoxContent>
-                <SelectBase options={optionType} placeholder="Limit/Market" />
+                <SelectBase
+                  options={optionType}
+                  menuPosition={"fixed"}
+                  placeholder="Limit/Market"
+                />
               </BoxContent>
             </Component>
 
