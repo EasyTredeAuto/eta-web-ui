@@ -101,7 +101,7 @@ export default function CreateBot({ open, setOpen }: Props) {
       <DialogContent dividers>
         <Component col={"100%"}>
           <Component col={"20% 80%"}>
-            <BoxHeader>Symbol:</BoxHeader>
+            <BoxHeader>Asset:</BoxHeader>
             <BoxContent>
               <SelectBase
                 options={options}
@@ -109,14 +109,14 @@ export default function CreateBot({ open, setOpen }: Props) {
                 placeholder="Select Symbol"
               />
             </BoxContent>
-            {/* <BoxHeader>Currency:</BoxHeader>
+            <BoxHeader>Currency:</BoxHeader>
             <BoxContent>
               <SelectBase
                 options={options}
                 menuPosition={"fixed"}
                 placeholder="Select Currency"
               />
-            </BoxContent> */}
+            </BoxContent>
             <BoxHeader>Side:</BoxHeader>
             <Component col={"40% 7% 40%"}>
               <BoxContent>
