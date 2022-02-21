@@ -12,8 +12,10 @@ import AccountCircle from "@mui/icons-material/AccountCircle"
 import { Menu, MenuItem } from "@mui/material"
 import { logout } from "../../Recoil/actions/auth"
 import { useNavigate } from "react-router-dom"
-import { useRecoilState } from "recoil"
-import { openSidebar } from "../../Recoil/atoms"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { coinsState, openSidebar } from "../../Recoil/atoms"
+import { getAsset, getSymbol } from "../../Recoil/actions/coin"
+import { assetState } from "../../Recoil/atoms/coins"
 
 const drawerWidth = 240
 
@@ -46,6 +48,8 @@ export default function Navbar() {
   const navigate = useNavigate()
 
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
+  const setAsset = useSetRecoilState(assetState)
+  const setCoins = useSetRecoilState(coinsState)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -54,10 +58,10 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-  
+
   const handleLogout = async () => {
     await logout()
-    navigate('/login')
+    navigate("/login")
     window.location.reload()
   }
 
@@ -67,6 +71,11 @@ export default function Navbar() {
 
   const menuId = "primary-search-account-menu"
 
+  React.useEffect(() => {
+    getAsset(setAsset)
+    getSymbol(setCoins)
+  }, [])
+  
   return (
     <AppBar position="fixed" open={sidebar.open}>
       <Toolbar

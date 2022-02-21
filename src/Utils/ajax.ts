@@ -2,6 +2,7 @@ import axios from "axios"
 import { LoginDto } from "../Recoil/atoms/auth"
 
 const baseUrl = process.env.REACT_APP_BASE_URL
+const accessToken = sessionStorage.getItem("accessToken")
 
 export const login = async (user: LoginDto) => {
   const url = `${baseUrl}/auth/login`
@@ -42,7 +43,10 @@ export const register = async (user: LoginDto) => {
 
 export const get = async (path: string) => {
   const url = `${baseUrl}${path}`
-  const headers = { "Content-Type": "application/json" }
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + accessToken,
+  }
   return await axios
     .get(url, { headers })
     .then((result) => result.data)
@@ -51,7 +55,10 @@ export const get = async (path: string) => {
 
 export const post = async (path: string, body: any) => {
   const url = `${baseUrl}${path}`
-  const headers = { "Content-Type": "application/json" }
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + accessToken,
+  }
   return await axios
     .post(url, body, { headers })
     .then((result) => result.data)
@@ -60,7 +67,10 @@ export const post = async (path: string, body: any) => {
 
 export const put = async (path: string, body: any) => {
   const url = `${baseUrl}${path}`
-  const headers = { "Content-Type": "application/json" }
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + accessToken,
+  }
   return await axios
     .put(url, body, { headers })
     .then((result) => result.data)
@@ -69,7 +79,10 @@ export const put = async (path: string, body: any) => {
 
 export const remove = async (path: string) => {
   const url = `${baseUrl}${path}`
-  const headers = { "Content-Type": "application/json" }
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + accessToken,
+  }
   return await axios
     .delete(url, { headers })
     .then((result) => result.data)

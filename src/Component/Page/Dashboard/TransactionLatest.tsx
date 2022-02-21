@@ -1,118 +1,98 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { Bade } from '../../Element/Dashboard.Element'
-
-const data = [
-    {
-        no: 1,
-        name: "Bot1",
-        symbol: "bnb",
-        status: "Buy",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    },
-    {
-        no: 2,
-        name: "Bot2",
-        symbol: "bnb",
-        status: "Buy",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    },
-    {
-        no: 3,
-        name: "Bot3",
-        symbol: "bnb",
-        status: "Buy",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    },
-    {
-        no: 4,
-        name: "Bot4",
-        symbol: "bnb",
-        status: "Sell",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    },
-    {
-        no: 5,
-        name: "Bot5",
-        symbol: "bnb",
-        status: "Sell",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    },
-    {
-        no: 6,
-        name: "Bot2",
-        symbol: "bnb",
-        status: "Buy",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    },
-    {
-        no: 7,
-        name: "Bot3",
-        symbol: "bnb",
-        status: "Buy",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    },
-    {
-        no: 8,
-        name: "Bot4",
-        symbol: "bnb",
-        status: "Sell",
-        amount: "16.3500",
-        daytime: "11-11-2021 10:00",
-    }
-
-]
-
-
+import * as React from "react"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableContainer from "@mui/material/TableContainer"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import { Bade } from "../../Element/Dashboard.Element"
+import { getTransaction } from "../../../Recoil/actions/transaction"
+import { useRecoilState } from "recoil"
+import { transactionState } from "../../../Recoil/atoms"
+import moment from "moment"
 
 export default function TransactionLatest() {
-    return (
-        <TableContainer sx={{ minHeight: 330 }}>
-            <Table size="small" aria-label="sticky table" stickyHeader>
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="center" sx={{ fontWeight: "bolder" }}>No.</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: "bolder" }}>Name</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: "bolder" }}>Symbol</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: "bolder" }}>Status</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: "bolder" }}>Amount</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: "bolder" }}>Day/Time</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.map((item, i) => (
-                        <TableRow
-                            key={i}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell align="center" component="th" scope="row">{item.no}</TableCell>
-                            <TableCell align="center">{item.name}</TableCell>
-                            <TableCell align="center">{item.symbol.toUpperCase()}</TableCell>
-                            <TableCell align="center" sx={{width:50}}>
-                                <Bade style={{ background: item.status === "Buy" ? "#007944" : "#D32626" }} >
-                                    {item.status}
-                                </Bade>
-                            </TableCell>
-                            <TableCell align="right">{item.amount}</TableCell>
-                            <TableCell align="center">{item.daytime}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+  const [transaction, setTransaction] = useRecoilState(transactionState)
+
+  React.useEffect(() => {
+    getTransaction(transaction, setTransaction)
+      .then((result) => result)
+      .catch((err) => err)
+  }, [])
+
+  return (
+    <TableContainer >
+      <Table size="small" aria-label="sticky table" stickyHeader>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              No.
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              Symbol
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              Side
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              Type
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              Price
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              Amount
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              Quantity
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: "bolder" }}>
+              Date
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {transaction.data
+            .filter((_, i) => i < 10)
+            .map((item, i) => (
+              <TableRow
+                key={i}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell align="center">{i + 1}</TableCell>
+                <TableCell align="center">
+                  {item.symbol.toUpperCase()}
+                </TableCell>
+                <TableCell align="center" sx={{ width: 50 }}>
+                  <Bade
+                    style={{
+                      background: item.side === "buy" ? "#007944" : "#D32626",
+                    }}
+                  >
+                    {item.side.charAt(0).toUpperCase() + item.side.slice(1)}
+                  </Bade>
+                </TableCell>
+                <TableCell align="center">
+                  {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                </TableCell>
+                <TableCell align="right">
+                  {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </TableCell>
+                <TableCell align="right">
+                  {item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </TableCell>
+                <TableCell align="right">
+                  {item.quantity
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </TableCell>
+                <TableCell align="center">
+                  {moment(item.createdAt).format("DD-MMM-YYYY HH:mm:ss")}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
 }
-
-
