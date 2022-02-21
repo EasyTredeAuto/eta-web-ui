@@ -2,6 +2,7 @@ import styled from "styled-components"
 import TextField from "@mui/material/TextField"
 import Checkbox from "@mui/material/Checkbox"
 import FormControlLabel from "@mui/material/FormControlLabel"
+import NumberFormat from "react-number-format"
 
 export const TextFieldBase = styled(TextField)`
   & label {
@@ -67,6 +68,14 @@ export const TextFieldName = styled(TextField)`
       border-color: #055cfd;
     }
   }
+`
+
+export const NumberFormatCustom = styled(NumberFormat)`
+  height: 35px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding-left: 10px;
 `
 
 export const FormLabel = styled(FormControlLabel)`

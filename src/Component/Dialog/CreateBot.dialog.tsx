@@ -6,7 +6,6 @@ import DialogTitle from "@mui/material/DialogTitle"
 import DialogContent from "@mui/material/DialogContent"
 import DialogActions from "@mui/material/DialogActions"
 import IconButton from "@mui/material/IconButton"
-import CloseIcon from "@mui/icons-material/Close"
 
 import {
   BoxContent,
@@ -15,12 +14,18 @@ import {
   BoxFooter,
 } from "../Element/CreateBot.Dialog.Element"
 import { SelectBase } from "../Element/CustomReact.element"
-import { TextFieldName } from "../Element/CustomMaterial.element"
+import {
+  NumberFormatCustom,
+  TextFieldName,
+} from "../Element/CustomMaterial.element"
 import { Checkbox, FormControlLabel } from "@mui/material"
 import { coinsState } from "../../Recoil/atoms"
-import { useRecoilValue } from "recoil"
-import { Coins } from "../../Recoil/atoms/coins"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { assetState, botValueState } from "../../Recoil/atoms/coins"
 import { useEffect, useState } from "react"
+import { createToken } from "../../Recoil/actions/createSpotBotToken"
+import Swal from "sweetalert2"
+import useCopyToClipboard from "../../Middleware/copyToClipboard"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -72,12 +77,89 @@ export default function CreateBot({ open, setOpen }: Props) {
   }
 
   const [options, setOptions] = useState([] as any)
+  const [valueUrl, copy] = useCopyToClipboard()
+
   const coins = useRecoilValue(coinsState)
+  const assets = useRecoilValue(assetState)
+  const [value, setValue] = useRecoilState(botValueState)
+
+  const handleSelectSymbol = (_e: any) => {
+    const asset = assets.data.find((asset: string) =>
+      _e.value.startsWith(asset)
+    )
+    const currency = _e.value.split(asset)[1]
+    setValue({ ...value, asset, currency, symbol: _e.value })
+  }
+
+  const handleChangeSide = (_e: any) => {
+    setValue({ ...value, side: _e.value })
+  }
+
+  const handleChangeType = (_e: any) => {
+    setValue({ ...value, type: _e.value })
+  }
+
+  const handleChangeAmountType = (_e: any) => {
+    if (_e.target.checked) {
+      const amount = value.amount && value.amount > 100 ? 100 : value.amount
+      setValue({ ...value, amountType: "percent", amount })
+    } else {
+      setValue({ ...value, amountType: "amount" })
+    }
+  }
+
+  const handleChangeAmount = (e: any) => {
+    const elementValue = parseFloat(e.target.value.split(",").join(""))
+    const elementName = e.target.name
+    if (value.amountType === "percent") {
+      const amount = elementValue > 100 ? 100 : elementValue
+      setValue({
+        ...value,
+        [elementName]: amount,
+      })
+    } else setValue({ ...value, [elementName]: elementValue })
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const elementValue = e.target.value
+    const elementName = e.target.name
+    setValue({ ...value, [elementName]: elementValue })
+  }
+
+  const handleCreateBot = async () => {
+    const result = await createToken(value)
+    if (result.url) {
+      setOpen(false)
+      Swal.fire({
+        icon: "success",
+        title: result.message,
+        html: `<div>
+        <label>Url</label>
+        <input  type="text" disabled value="${result.url}" />
+        </div>`,
+        confirmButtonText: "Copy",
+      }).then(() => {
+        Swal.fire({
+          showConfirmButton: false,
+          timer: 1500,
+          title: "Copied!",
+          icon: "success",
+        })
+        copy(result.url)
+      })
+    } else {
+      setOpen(false)
+      Swal.fire({
+        icon: "error",
+        title: result.message,
+      })
+    }
+  }
 
   useEffect(() => {
     return setOptions(coins.data)
   }, [coins.data])
-  
+
   const optionSide = [
     { value: "buy", label: "Buy" },
     { value: "sell", label: "Sell" },
@@ -101,20 +183,17 @@ export default function CreateBot({ open, setOpen }: Props) {
       <DialogContent dividers>
         <Component col={"100%"}>
           <Component col={"20% 80%"}>
-            <BoxHeader>Asset:</BoxHeader>
+            <BoxHeader>Symbol:</BoxHeader>
             <BoxContent>
               <SelectBase
                 options={options}
+                isSearchable
+                value={options.find(
+                  (v: { value: string | undefined }) => v.value === value.symbol
+                )}
                 menuPosition={"fixed"}
                 placeholder="Select Symbol"
-              />
-            </BoxContent>
-            <BoxHeader>Currency:</BoxHeader>
-            <BoxContent>
-              <SelectBase
-                options={options}
-                menuPosition={"fixed"}
-                placeholder="Select Currency"
+                onChange={handleSelectSymbol}
               />
             </BoxContent>
             <BoxHeader>Side:</BoxHeader>
@@ -122,6 +201,8 @@ export default function CreateBot({ open, setOpen }: Props) {
               <BoxContent>
                 <SelectBase
                   options={optionSide}
+                  value={optionSide.find((v) => v.value === value.side)}
+                  onChange={handleChangeSide}
                   menuPosition={"fixed"}
                   placeholder="Buy/Sell"
                 />
@@ -130,6 +211,8 @@ export default function CreateBot({ open, setOpen }: Props) {
               <BoxContent>
                 <SelectBase
                   options={optionType}
+                  value={optionType.find((v) => v.value === value.type)}
+                  onChange={handleChangeType}
                   menuPosition={"fixed"}
                   placeholder="Limit/Market"
                 />
@@ -139,14 +222,24 @@ export default function CreateBot({ open, setOpen }: Props) {
             <BoxHeader>Amount:</BoxHeader>
             <Component col={"50% 50%"}>
               <BoxContent>
-                <TextFieldName
-                  fullWidth
-                  type="text"
-                  placeholder="Amount Currency"
+                <NumberFormatCustom
+                  placeholder="Amount per currency"
                   name="amount"
+                  value={value.amount}
+                  thousandSeparator
+                  isNumericString
+                  onChange={handleChangeAmount}
                 />
               </BoxContent>
-              <FormControlLabel control={<Checkbox />} label="%" />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    defaultChecked={value.amountType === "percent"}
+                    onChange={handleChangeAmountType}
+                  />
+                }
+                label="%"
+              />
             </Component>
             <BoxHeader>Bot Name:</BoxHeader>
             <BoxContent>
@@ -154,7 +247,9 @@ export default function CreateBot({ open, setOpen }: Props) {
                 fullWidth
                 type="text"
                 placeholder="Bot Name"
-                name="botName"
+                name="name"
+                value={value.name}
+                onChange={handleChange}
               />
             </BoxContent>
           </Component>
@@ -167,7 +262,8 @@ export default function CreateBot({ open, setOpen }: Props) {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            onClick={handleClose}
+            disabled={!value.name || !value.symbol || !value.amount}
+            onClick={handleCreateBot}
           >
             Create
           </Button>
