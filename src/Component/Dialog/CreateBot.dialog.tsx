@@ -223,7 +223,7 @@ export default function CreateBot({ open, setOpen }: Props) {
             <Component col={"50% 50%"}>
               <BoxContent>
                 <NumberFormatCustom
-                  placeholder="Amount per currency"
+                  placeholder={value.amountType !== "percent" ? "Minimum 15 token" : ''}
                   name="amount"
                   value={value.amount}
                   thousandSeparator
@@ -262,7 +262,12 @@ export default function CreateBot({ open, setOpen }: Props) {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={!value.name || !value.symbol || !value.amount}
+            disabled={
+              !value.name ||
+              !value.symbol ||
+              !value.amount ||
+              (value.amountType === "amount" && value.amount < 15)
+            }
             onClick={handleCreateBot}
           >
             Create
