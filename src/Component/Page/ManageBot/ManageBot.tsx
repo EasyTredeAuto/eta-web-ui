@@ -66,33 +66,38 @@ export default function ManageBot() {
   return (
     <Component col={"100%"}>
       <Component col={"15% 85%"}>
-        <Button 
-          variant="contained" 
-          endIcon={<BsPlusCircleFill />} 
+        <Button
+          variant="contained"
+          endIcon={<BsPlusCircleFill />}
           onClick={handleClickOpen}
         >
           Create Bot
         </Button>
         <BoxSearch>
-          <Search >
-            <SearchIconWrapper >
+          <Search>
+            <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <div style={{ border: "1px solid #4444", borderRadius: "5px", marginRight: "1rem" }}>
+            <div
+              style={{
+                border: "1px solid #4444",
+                borderRadius: "5px",
+                marginRight: "1rem",
+              }}
+            >
               <StyledInputBase
                 id="search"
                 placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
+                inputProps={{ "aria-label": "search" }}
               />
             </div>
-
           </Search>
         </BoxSearch>
       </Component>
       <BoxContent>
         <Overview />
       </BoxContent>
-      <CreateBot open={open} setOpen={setOpen}/>
-    </Component >
+      <CreateBot open={open} setOpen={setOpen} />
+    </Component>
   )
 }

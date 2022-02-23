@@ -1,4 +1,5 @@
 import * as React from "react"
+import Swal from "sweetalert2"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -7,17 +8,36 @@ import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import { deleteMyBot, getAllMyBots } from "../../../Recoil/actions/myBot"
-import { useRecoilState } from "recoil"
-import { myBotsState } from "../../../Recoil/atoms"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { botValueUpdateState, myBotsState } from "../../../Recoil/atoms"
+import useCopyToClipboard from "../../../Middleware/copyToClipboard"
+import { botUpdateValueReq } from "../../../Recoil/atoms/coins"
+import { MdContentCopy, MdDelete } from "react-icons/md"
+import UpdateBot from "../../Dialog/UpdateBot.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
-import { MdContentCopy, MdDelete } from "react-icons/md"
-import useCopyToClipboard from "../../../Middleware/copyToClipboard"
-import Swal from "sweetalert2"
 
 export default function Overview() {
-  const [myBots, setMyBots] = useRecoilState(myBotsState)
+  const [open, setOpen] = React.useState(false)
   const [valueUrl, copy] = useCopyToClipboard()
+  const [myBots, setMyBots] = useRecoilState(myBotsState)
+  const setValue = useSetRecoilState(botValueUpdateState)
+
+  const handleUpdate = (bot: any) => {
+    const data = {
+      id: bot.id,
+      name: bot.name,
+      symbol: bot.symbol,
+      asset: bot.asset,
+      currency: bot.currency,
+      side: bot.side,
+      type: bot.type,
+      amount: bot.amount,
+      amountType: bot.amountType,
+    } as botUpdateValueReq
+    setValue(data)
+    setOpen(true)
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setMyBots({ ...myBots, page: newPage })
@@ -90,7 +110,7 @@ export default function Overview() {
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="Edit" placement="top">
-                    <IconButton>
+                    <IconButton onClick={() => handleUpdate(row)}>
                       <FaEdit />
                     </IconButton>
                   </Tooltip>
@@ -116,6 +136,7 @@ export default function Overview() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <UpdateBot open={open} setOpen={setOpen} />
     </>
   )
 }

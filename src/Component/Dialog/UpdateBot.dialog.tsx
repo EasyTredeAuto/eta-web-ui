@@ -6,26 +6,25 @@ import DialogTitle from "@mui/material/DialogTitle"
 import DialogContent from "@mui/material/DialogContent"
 import DialogActions from "@mui/material/DialogActions"
 import IconButton from "@mui/material/IconButton"
-
 import {
   BoxContent,
   BoxHeader,
   Component,
   BoxFooter,
 } from "../Element/CreateBot.Dialog.Element"
-import { SelectBase } from "../Element/CustomReact.element"
 import {
   NumberFormatCustom,
   TextFieldName,
 } from "../Element/CustomMaterial.element"
-import { Checkbox, FormControlLabel } from "@mui/material"
-import { coinsState, myBotsState } from "../../Recoil/atoms"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { assetState, botValueState } from "../../Recoil/atoms/coins"
-import { useEffect, useState } from "react"
-import { createToken } from "../../Recoil/actions/createSpotBotToken"
-import Swal from "sweetalert2"
+import { assetState, botValueUpdateState } from "../../Recoil/atoms/coins"
+import { updateToken } from "../../Recoil/actions/createSpotBotToken"
 import useCopyToClipboard from "../../Middleware/copyToClipboard"
+import { SelectBase } from "../Element/CustomReact.element"
+import { Checkbox, FormControlLabel } from "@mui/material"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { coinsState, myBotsState } from "../../Recoil/atoms"
+import { useEffect, useState } from "react"
+import Swal from "sweetalert2"
 import { getAllMyBots } from "../../Recoil/actions/myBot"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
@@ -82,7 +81,7 @@ export default function CreateBot({ open, setOpen }: Props) {
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
-  const [value, setValue] = useRecoilState(botValueState)
+  const [value, setValue] = useRecoilState(botValueUpdateState)
 
   const [myBots, setMyBots] = useRecoilState(myBotsState)
 
@@ -129,8 +128,8 @@ export default function CreateBot({ open, setOpen }: Props) {
     setValue({ ...value, [elementName]: elementValue })
   }
 
-  const handleCreateBot = async () => {
-    const result = await createToken(value)
+  const handleUpdateBot = async () => {
+    const result = await updateToken(value)
     if (result.url) {
       await handleChangeFetchingMyBots()
       setOpen(false)
@@ -160,6 +159,10 @@ export default function CreateBot({ open, setOpen }: Props) {
     }
   }
 
+  const handleChangeFetchingMyBots = async () => {
+    getAllMyBots(myBots, setMyBots)
+  }
+
   useEffect(() => {
     return setOptions(coins.data)
   }, [coins.data])
@@ -173,10 +176,6 @@ export default function CreateBot({ open, setOpen }: Props) {
     { value: "limit", label: "Limit" },
     { value: "market", label: "Market" },
   ]
-
-  const handleChangeFetchingMyBots = async () => {
-    getAllMyBots(myBots, setMyBots)
-  }
 
   return (
     <BootstrapDialog
@@ -226,12 +225,13 @@ export default function CreateBot({ open, setOpen }: Props) {
                 />
               </BoxContent>
             </Component>
-
             <BoxHeader>Amount:</BoxHeader>
             <Component col={"50% 50%"}>
               <BoxContent>
                 <NumberFormatCustom
-                  placeholder={value.amountType !== "percent" ? "Minimum 15 token" : ''}
+                  placeholder={
+                    value.amountType !== "percent" ? "Minimum 15 token" : ""
+                  }
                   name="amount"
                   value={value.amount}
                   thousandSeparator
@@ -267,22 +267,23 @@ export default function CreateBot({ open, setOpen }: Props) {
         <BoxFooter>
           <Button
             variant="contained"
-            color="primary"
+            color="success"
             sx={{ width: "100%" }}
             autoFocus
             disabled={
+              !value.id ||
               !value.name ||
               !value.symbol ||
               !value.amount ||
               (value.amountType === "amount" && value.amount < 15)
             }
-            onClick={handleCreateBot}
+            onClick={handleUpdateBot}
           >
-            Create
+            Save
           </Button>
           <Button
             variant="contained"
-            color="error"
+            color="secondary"
             sx={{ background: "#aaa", width: "100%", marginLeft: "0.5rem" }}
             autoFocus
             onClick={handleClose}

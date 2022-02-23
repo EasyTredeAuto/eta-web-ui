@@ -21,7 +21,6 @@ export const getAllMyBots = async (
     .then((result) => result)
     .catch((err) => console.log(err))
 
-  console.log(result.data)
   if (result.data) {
     let data = []
     for (const row of result.data) {
