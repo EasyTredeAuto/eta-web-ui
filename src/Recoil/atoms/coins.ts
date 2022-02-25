@@ -51,3 +51,30 @@ export const botValueState = atom({
     amountType: "amount",
   } as botValueReq,
 })
+
+export interface botUpdateValueReq {
+  id: number | undefined
+  name: string
+  symbol: string | undefined
+  asset: string | undefined
+  currency: string | undefined
+  side: string
+  type: string
+  amount: number | undefined
+  amountType: string
+}
+
+export const botValueUpdateState = atom({
+  key: "botUpdateValue",
+  default: {
+    id: undefined,
+    name: "",
+    symbol: undefined,
+    asset: undefined,
+    currency: undefined,
+    side: "buy",
+    type: "limit",
+    amount: undefined,
+    amountType: "amount",
+  } as botUpdateValueReq,
+})
