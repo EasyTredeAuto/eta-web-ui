@@ -55,7 +55,7 @@ export default function Overview() {
   const handleChangeDelete = async (id: number, name: string) => {
     Swal.fire({
       icon: "info",
-      title: `Are you sure to delete a bot ${name}?`,
+      title: `Are you sure to delete this ${name}?`,
       confirmButtonText: "Delete",
       confirmButtonColor: "red",
       preConfirm: () => deleteMyBot(id, handleChangeFetchingMyBots),
