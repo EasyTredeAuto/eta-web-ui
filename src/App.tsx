@@ -37,7 +37,7 @@ function App() {
   const accessToken: string | null = sessionStorage.getItem("accessToken")
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/eta" >
       {!accessToken ? (
         <Routes>
           <Route path="/login" element={<PublicRoute component={Login} />} />
