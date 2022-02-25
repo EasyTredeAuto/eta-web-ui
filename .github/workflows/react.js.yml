@@ -2,9 +2,9 @@ name: react.js CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ main ]
+  pull_requests:
+    branches: [ main ]
     
 jobs:
   build:
