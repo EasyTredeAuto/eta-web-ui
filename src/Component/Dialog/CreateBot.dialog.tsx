@@ -78,7 +78,7 @@ export default function CreateBot({ open, setOpen }: Props) {
   }
 
   const [options, setOptions] = useState([] as any)
-  const [valueUrl, copy] = useCopyToClipboard()
+  const copy = useCopyToClipboard()[1]
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)

@@ -19,7 +19,7 @@ import { FaEdit } from "react-icons/fa"
 
 export default function Overview() {
   const [open, setOpen] = React.useState(false)
-  const [valueUrl, copy] = useCopyToClipboard()
+  const copy = useCopyToClipboard()[1]
   const [myBots, setMyBots] = useRecoilState(myBotsState)
   const setValue = useSetRecoilState(botValueUpdateState)
 
