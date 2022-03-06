@@ -9,11 +9,14 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import { FaFirstOrder } from "react-icons/fa"
-import { RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
+import { FaFirstOrder, FaRobot } from "react-icons/fa"
+import { RiAdminFill, RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
 import { openSidebar } from "../../Recoil/atoms"
 import { useRecoilState } from "recoil"
+import { AppRoles } from "../../Utils/roles"
+
+const role = sessionStorage.getItem("roles") as AppRoles | null
 
 const drawerWidth = 240
 
@@ -64,12 +67,23 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 const iconDashboard = <RiDashboardFill />
-const iconRobot = <FaFirstOrder />
+const iconRobot = <FaRobot />
+const iconOrders = <FaFirstOrder />
 const iconHistory = <RiFileHistoryLine />
+const iconAdmin = <RiAdminFill />
+
+const menuAdminList = [
+  { path: "/dashboard/admin", name: "Dashboard", icon: iconDashboard },
+  { path: "/manage/user/admin", name: "Users", icon: iconAdmin },
+  { path: "/manage/orders/admin", name: "Orders", icon: iconOrders },
+  { path: "/manage/bot/admin", name: "System Bot", icon: iconRobot },
+  { path: "/history/admin", name: "History", icon: iconHistory },
+]
 
 const menuList = [
   { path: "/", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/orders", name: "Manage orders", icon: iconRobot },
+  { path: "/manage/orders", name: "Manage orders", icon: iconOrders },
+  { path: "/manage/bot", name: "System Bot", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },
 ]
 
@@ -100,12 +114,19 @@ export default function Sidebar() {
       </DrawerHeader>
       <Divider />
       <List>
-        {menuList.map((text, i) => (
-          <ListItem button key={i} onClick={() => navigate(text.path)}>
-            <ListItemIcon sx={{ fontSize: 26 }}>{text.icon}</ListItemIcon>
-            <ListItemText primary={text.name} />
-          </ListItem>
-        ))}
+        {role === "ADMIN"
+          ? menuAdminList.map((text, i) => (
+              <ListItem button key={i} onClick={() => navigate(text.path)}>
+                <ListItemIcon sx={{ fontSize: 26 }}>{text.icon}</ListItemIcon>
+                <ListItemText primary={text.name} />
+              </ListItem>
+            ))
+          : menuList.map((text, i) => (
+              <ListItem button key={i} onClick={() => navigate(text.path)}>
+                <ListItemIcon sx={{ fontSize: 26 }}>{text.icon}</ListItemIcon>
+                <ListItemText primary={text.name} />
+              </ListItem>
+            ))}
       </List>
     </Drawer>
   )
