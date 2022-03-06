@@ -13,7 +13,7 @@ import { botValueUpdateState, myBotsState } from "../../../Recoil/atoms"
 import useCopyToClipboard from "../../../Middleware/copyToClipboard"
 import { botUpdateValueReq } from "../../../Recoil/atoms/coins"
 import { MdContentCopy, MdDelete } from "react-icons/md"
-import UpdateBot from "../../Dialog/UpdateBot.dialog"
+import UpdateBot from "../../Dialog/UpdateOrder.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
 

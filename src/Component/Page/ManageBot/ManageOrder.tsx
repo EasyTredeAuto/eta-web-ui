@@ -7,7 +7,7 @@ import { BoxContent, BoxSearch, Component } from '../../Element/ManageBot.Elemen
 import Overview from './Overview';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import CreateBot from '../../Dialog/CreateBot.dialog';
+import CreateBot from '../../Dialog/CreateOrder.dialog';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -54,8 +54,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
-
 export default function ManageBot() {
   const [open, setOpen] = useState(false)
 
@@ -71,7 +69,7 @@ export default function ManageBot() {
           endIcon={<BsPlusCircleFill />}
           onClick={handleClickOpen}
         >
-          Create Bot
+          Create Order
         </Button>
         <BoxSearch>
           <Search>

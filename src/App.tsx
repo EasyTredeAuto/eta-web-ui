@@ -13,7 +13,7 @@ import Sidebar from "./Component/Layout/Sidebar"
 // main page
 import Dashboard from "./Component/Page/Dashboard/Dashboard"
 import History from "./Component/Page/History/History"
-import ManageBot from "./Component/Page/ManageBot/ManageBot"
+import ManageBot from "./Component/Page/ManageBot/ManageOrder"
 import AccessDenied from "./Component/Page/AccessDenied"
 
 // recoil

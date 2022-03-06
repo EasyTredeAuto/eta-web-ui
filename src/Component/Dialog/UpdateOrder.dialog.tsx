@@ -11,7 +11,7 @@ import {
   BoxHeader,
   Component,
   BoxFooter,
-} from "../Element/CreateBot.Dialog.Element"
+} from "../Element/CreateOrder.Dialog.Element"
 import {
   NumberFormatCustom,
   TextFieldName,
@@ -127,7 +127,7 @@ export default function CreateBot({ open, setOpen }: Props) {
     setValue({ ...value, [elementName]: elementValue })
   }
 
-  const handleUpdateBot = async () => {
+  const handleUpdateOrder = async () => {
     const result = await updateToken(value)
     if (result.url) {
       await handleChangeFetchingMyBots()
@@ -276,7 +276,7 @@ export default function CreateBot({ open, setOpen }: Props) {
               !value.amount ||
               (value.amountType === "amount" && value.amount < 15)
             }
-            onClick={handleUpdateBot}
+            onClick={handleUpdateOrder}
           >
             Save
           </Button>

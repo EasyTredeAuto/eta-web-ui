@@ -12,7 +12,7 @@ import {
   BoxHeader,
   Component,
   BoxFooter,
-} from "../Element/CreateBot.Dialog.Element"
+} from "../Element/CreateOrder.Dialog.Element"
 import { SelectBase } from "../Element/CustomReact.element"
 import {
   NumberFormatCustom,
@@ -128,7 +128,7 @@ export default function CreateBot({ open, setOpen }: Props) {
     setValue({ ...value, [elementName]: elementValue })
   }
 
-  const handleCreateBot = async () => {
+  const handleCreateOrder = async () => {
     const result = await createToken(value)
     if (result.url) {
       await handleChangeFetchingMyBots()
@@ -275,7 +275,7 @@ export default function CreateBot({ open, setOpen }: Props) {
               !value.amount ||
               (value.amountType === "amount" && value.amount < 15)
             }
-            onClick={handleCreateBot}
+            onClick={handleCreateOrder}
           >
             Create
           </Button>
