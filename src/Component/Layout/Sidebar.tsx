@@ -9,7 +9,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import { FaRobot } from "react-icons/fa"
+import { FaFirstOrder } from "react-icons/fa"
 import { RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
 import { openSidebar } from "../../Recoil/atoms"
@@ -64,12 +64,12 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 const iconDashboard = <RiDashboardFill />
-const iconRobot = <FaRobot />
+const iconRobot = <FaFirstOrder />
 const iconHistory = <RiFileHistoryLine />
 
 const menuList = [
   { path: "/", name: "Dashboard", icon: iconDashboard },
-  { path: "/bot", name: "Manage Bot", icon: iconRobot },
+  { path: "/manage/orders", name: "Manage orders", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },
 ]
 

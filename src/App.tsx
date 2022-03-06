@@ -13,7 +13,7 @@ import Sidebar from "./Component/Layout/Sidebar"
 // main page
 import Dashboard from "./Component/Page/Dashboard/Dashboard"
 import History from "./Component/Page/History/History"
-import ManageBot from "./Component/Page/ManageBot/ManageOrder"
+import ManageBot from "./Component/Page/ManageOrder/ManageOrder"
 import AccessDenied from "./Component/Page/AccessDenied"
 
 // recoil
@@ -53,7 +53,7 @@ function App() {
             <DrawerHeader />
             <Routes>
               <Route path="/" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
-              <Route path="/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={ManageBot} />}/>
+              <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={ManageBot} />}/>
               <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={History} />}/>
               <Route path="/login" element={<PublicRoute component={Login} />}/>
               <Route path="/register" element={<PublicRoute component={Login} />}/>
