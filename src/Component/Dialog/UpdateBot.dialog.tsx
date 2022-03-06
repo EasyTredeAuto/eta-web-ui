@@ -17,7 +17,6 @@ import {
   TextFieldName,
 } from "../Element/CustomMaterial.element"
 import { assetState, botValueUpdateState } from "../../Recoil/atoms/coins"
-import { updateToken } from "../../Recoil/actions/createSpotBotToken"
 import useCopyToClipboard from "../../Middleware/copyToClipboard"
 import { SelectBase } from "../Element/CustomReact.element"
 import { Checkbox, FormControlLabel } from "@mui/material"
@@ -25,7 +24,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import { coinsState, myBotsState } from "../../Recoil/atoms"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getAllMyBots } from "../../Recoil/actions/myBot"
+import { getAllMyBots, updateToken } from "../../Recoil/actions/manageOrders"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

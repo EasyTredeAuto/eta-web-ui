@@ -23,10 +23,9 @@ import { coinsState, myBotsState } from "../../Recoil/atoms"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { assetState, botValueState } from "../../Recoil/atoms/coins"
 import { useEffect, useState } from "react"
-import { createToken } from "../../Recoil/actions/createSpotBotToken"
 import Swal from "sweetalert2"
 import useCopyToClipboard from "../../Middleware/copyToClipboard"
-import { getAllMyBots } from "../../Recoil/actions/myBot"
+import { getAllMyBots, createToken } from "../../Recoil/actions/manageOrders"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

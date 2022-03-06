@@ -1,6 +1,7 @@
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
 import { myBotsDto } from "../atoms/mybot"
+import { botUpdateValueReq, botValueReq } from "../atoms/coins"
 
 export const getAllMyBots = async (
   myBots: {
@@ -17,7 +18,7 @@ export const getAllMyBots = async (
   }>
 ) => {
   const result = await ajax
-    .get(`/bot-user/${myBots.page}/${myBots.size}`)
+    .get(`/manage-orders/${myBots.page}/${myBots.size}`)
     .then((result) => result)
     .catch((err) => console.log(err))
 
@@ -33,9 +34,23 @@ export const getAllMyBots = async (
   }
 }
 
+export const createToken = async (value: botValueReq) => {
+  return await ajax
+    .post(`/manage-orders`, value)
+    .then((result) => result)
+    .catch((err) => err)
+}
+
+export const updateToken = async (value: botUpdateValueReq) => {
+  return await ajax
+    .put(`/manage-orders`, value)
+    .then((result) => result)
+    .catch((err) => err)
+}
+
 export const deleteMyBot = async (id: number, callBack: { (): Promise<void>; (): void }) => {
   const result = await ajax
-    .remove(`/bot-user/${id}`)
+    .remove(`/manage-orders/${id}`)
     .then((result) => result)
     .catch((err) => console.log(err))
 
