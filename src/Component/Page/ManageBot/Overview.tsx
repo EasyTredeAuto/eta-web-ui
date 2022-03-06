@@ -7,19 +7,19 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
-import { deleteMyBot, getAllMyBots } from "../../../Recoil/actions/myBot"
+import { deleteMyBot, getAllMyBots } from "../../../Recoil/actions/manageOrders"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import { botValueUpdateState, myBotsState } from "../../../Recoil/atoms"
 import useCopyToClipboard from "../../../Middleware/copyToClipboard"
 import { botUpdateValueReq } from "../../../Recoil/atoms/coins"
 import { MdContentCopy, MdDelete } from "react-icons/md"
-import UpdateBot from "../../Dialog/UpdateBot.dialog"
+import UpdateBot from "../../Dialog/UpdateOrder.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
 
 export default function Overview() {
   const [open, setOpen] = React.useState(false)
-  const [valueUrl, copy] = useCopyToClipboard()
+  const copy = useCopyToClipboard()[1]
   const [myBots, setMyBots] = useRecoilState(myBotsState)
   const setValue = useSetRecoilState(botValueUpdateState)
 

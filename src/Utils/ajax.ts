@@ -1,11 +1,11 @@
 import axios from "axios"
 import { LoginDto } from "../Recoil/atoms/auth"
 
-const baseUrl = process.env.REACT_APP_BASE_URL
+const baseUrl = "http://159.223.65.62:8000"
 const accessToken = sessionStorage.getItem("accessToken")
 
 export const login = async (user: LoginDto) => {
-  const url = `${baseUrl}/auth/login`
+  const url = `http://159.223.65.62:8000/auth/login`
   const headers = { "Content-Type": "application/json" }
   const result = await axios
     .post(url, user, { headers })
