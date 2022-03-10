@@ -24,7 +24,7 @@ import { PrivateRoute } from "./Middleware/privateRoute"
 import { AppRoles } from "./Utils/roles"
 import { PublicRoute } from "./Middleware/publicRoute"
 
-const DrawerHeader = styled("div")(({ theme }) => ({
+const DrawerHeader = styled("div")(({ theme }:any) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",

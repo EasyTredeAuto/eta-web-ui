@@ -14,14 +14,14 @@ import {
   LinkSignUp,
 } from "../Element/Login.element"
 import { BiLogInCircle } from "react-icons/bi"
-import { useRef } from "react"
+import { memo, useRef } from "react"
 import { useRecoilState } from "recoil"
 import { LoginDto, loginState } from "../../Recoil/atoms/auth"
 import { useNavigate } from "react-router-dom"
 import * as ajax from "../../Utils/ajax"
 import Swal from "sweetalert2"
 
-const Login: React.FunctionComponent = () => {
+const Login: React.FunctionComponent = memo(() => {
   const homeRef = useRef<HTMLAnchorElement>(null)
   const btnSubmit = useRef<HTMLButtonElement>(null)
   const [user, setUser] = useRecoilState(loginState)
@@ -124,6 +124,6 @@ const Login: React.FunctionComponent = () => {
       </BoxLogin>
     </Container>
   )
-}
+})
 
 export default Login

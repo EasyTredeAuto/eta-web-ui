@@ -76,7 +76,7 @@ const menuAdminList = [
   { path: "/dashboard/admin", name: "Dashboard", icon: iconDashboard },
   { path: "/manage/user/admin", name: "Users", icon: iconAdmin },
   { path: "/manage/orders/admin", name: "Orders", icon: iconOrders },
-  { path: "/manage/bot/admin", name: "System bot", icon: iconRobot },
+  { path: "/manage/orders", name: "System bot", icon: iconRobot },
   { path: "/history/admin", name: "History", icon: iconHistory },
 ]
 
@@ -87,7 +87,7 @@ const menuList = [
   { path: "/history", name: "History", icon: iconHistory },
 ]
 
-export default function Sidebar() {
+const Sidebar = React.memo(() => {
   const theme = useTheme()
 
   const navigate = useNavigate()
@@ -130,4 +130,6 @@ export default function Sidebar() {
       </List>
     </Drawer>
   )
-}
+})
+
+export default Sidebar

@@ -17,8 +17,7 @@ import UpdateBot from "../../Dialog/UpdateOrder.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
 
-
-export default function Overview() {
+const Overview = React.memo(() => {
   const copy = useCopyToClipboard()[1]
   const [open, setOpen] = React.useState(false)
   const [myBots, setMyBots] = useRecoilState(myBotsState)
@@ -65,12 +64,11 @@ export default function Overview() {
   }
 
   React.useEffect(() => {
-    handleChangeFetchingMyBots()
-  }, [myBots.size])
-
-  React.useEffect(() => {
-    handleChangeFetchingMyBots()
-  }, [myBots.page])
+    function fetchData() {
+      getAllMyBots(myBots, setMyBots)
+    }
+    fetchData()
+  }, [setMyBots])
 
   return (
     <>
@@ -140,4 +138,6 @@ export default function Overview() {
       <UpdateBot open={open} setOpen={setOpen} />
     </>
   )
-}
+})
+
+export default Overview

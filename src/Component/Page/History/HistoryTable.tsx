@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, memo } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -13,15 +13,11 @@ import moment from "moment"
 import { getTransaction } from "../../../Recoil/actions/transaction"
 import { Bade } from "../../Element/Dashboard.Element"
 
-export default function HistoryTable() {
+const HistoryTable = memo(() => {
   const [transaction, setTransaction] = useRecoilState(transactionState)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setTransaction({ ...transaction, page: newPage })
-  }
-
-  const handleFetchData = async () => {
-    await getTransaction(transaction, setTransaction)
   }
 
   const handleChangeRowsPerPage = (
@@ -35,12 +31,11 @@ export default function HistoryTable() {
   }
 
   useEffect(() => {
+    async function handleFetchData() {
+      await getTransaction(transaction, setTransaction)
+    }
     handleFetchData()
-  }, [transaction.size])
-
-  useEffect(() => {
-    handleFetchData()
-  }, [transaction.page])
+  }, [transaction, setTransaction])
 
   return (
     <BoxContent>
@@ -105,4 +100,6 @@ export default function HistoryTable() {
       />
     </BoxContent>
   )
-}
+})
+
+export default HistoryTable

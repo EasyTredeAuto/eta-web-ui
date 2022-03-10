@@ -26,7 +26,7 @@ import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 import { getAllMyBots, updateToken } from "../../Recoil/actions/manageOrders"
 
-const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
+const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
@@ -70,7 +70,7 @@ interface Props {
   setOpen: any
 }
 
-export default function CreateBot({ open, setOpen }: Props) {
+const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleClose = () => {
     setOpen(false)
   }
@@ -163,7 +163,7 @@ export default function CreateBot({ open, setOpen }: Props) {
   }
 
   useEffect(() => {
-    return setOptions(coins.data)
+    setOptions(coins.data)
   }, [coins.data])
 
   const optionSide = [
@@ -184,7 +184,7 @@ export default function CreateBot({ open, setOpen }: Props) {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Create Bot
+        Create Api Order
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -248,7 +248,7 @@ export default function CreateBot({ open, setOpen }: Props) {
                 label="%"
               />
             </Component>
-            <BoxHeader>Bot Name:</BoxHeader>
+            <BoxHeader>Api Name:</BoxHeader>
             <BoxContent>
               <TextFieldName
                 fullWidth
@@ -293,4 +293,6 @@ export default function CreateBot({ open, setOpen }: Props) {
       </DialogActions>
     </BootstrapDialog>
   )
-}
+})
+
+export default UpdateOrder

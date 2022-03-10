@@ -26,8 +26,9 @@ import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 import useCopyToClipboard from "../../Middleware/copyToClipboard"
 import { getAllMyBots, createToken } from "../../Recoil/actions/manageOrders"
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
-const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
+const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
@@ -71,7 +72,7 @@ interface Props {
   setOpen: any
 }
 
-export default function CreateBot({ open, setOpen }: Props) {
+const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleClose = () => {
     setOpen(false)
   }
@@ -82,10 +83,10 @@ export default function CreateBot({ open, setOpen }: Props) {
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
   const [value, setValue] = useRecoilState(botValueState)
-
   const [myBots, setMyBots] = useRecoilState(myBotsState)
 
   const handleSelectSymbol = (_e: any) => {
+    console.log(assets)
     const asset = assets.data.find((asset: string) =>
       _e.value.startsWith(asset)
     )
@@ -148,7 +149,8 @@ export default function CreateBot({ open, setOpen }: Props) {
           title: "Copied!",
           icon: "success",
         })
-        copy(result.url)
+        // copy(result.url)
+        return <CopyToClipboard text={result.url} />
       })
     } else {
       setOpen(false)
@@ -160,7 +162,7 @@ export default function CreateBot({ open, setOpen }: Props) {
   }
 
   useEffect(() => {
-    return setOptions(coins.data)
+    setOptions(coins.data)
   }, [coins.data])
 
   const optionSide = [
@@ -185,7 +187,7 @@ export default function CreateBot({ open, setOpen }: Props) {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Create Bot
+        Create Api Order
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -292,4 +294,6 @@ export default function CreateBot({ open, setOpen }: Props) {
       </DialogActions>
     </BootstrapDialog>
   )
-}
+})
+
+export default CreateOrder

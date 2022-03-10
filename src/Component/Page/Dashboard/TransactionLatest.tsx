@@ -11,17 +11,20 @@ import { useRecoilState } from "recoil"
 import { transactionState } from "../../../Recoil/atoms"
 import moment from "moment"
 
-export default function TransactionLatest() {
+const TransactionLatest = React.memo(() => {
   const [transaction, setTransaction] = useRecoilState(transactionState)
 
   React.useEffect(() => {
-    getTransaction(transaction, setTransaction)
-      .then((result) => result)
-      .catch((err) => err)
-  }, [])
+    function fetchData() {
+      getTransaction(transaction, setTransaction)
+        .then((result) => result)
+        .catch((err) => err)
+    }
+    fetchData()
+  }, [transaction, setTransaction])
 
   return (
-    <TableContainer >
+    <TableContainer>
       <Table size="small" aria-label="sticky table" stickyHeader>
         <TableHead>
           <TableRow>
@@ -95,4 +98,6 @@ export default function TransactionLatest() {
       </Table>
     </TableContainer>
   )
-}
+})
+
+export default TransactionLatest
