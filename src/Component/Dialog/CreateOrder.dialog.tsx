@@ -86,7 +86,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const [myBots, setMyBots] = useRecoilState(myBotsState)
 
   const handleSelectSymbol = (_e: any) => {
-    console.log(assets)
     const asset = assets.data.find((asset: string) =>
       _e.value.startsWith(asset)
     )
