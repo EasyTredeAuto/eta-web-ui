@@ -35,11 +35,11 @@ export const TextFieldSearch = styled(TextField)`
   & label.Mui-focused {
     color: #055cfd;
   }
+  & > div > input {
+    padding: 7.5px 16px;
+  }
   & .MuiOutlinedInput-root {
     color: #cccc;
-    & .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-      padding: 7.5px 16px;
-    }
     & fieldset {
       border-color: #ccc;
     }
@@ -52,11 +52,11 @@ export const TextFieldSearch = styled(TextField)`
   }
 `
 export const TextFieldName = styled(TextField)`
+  & > div > input {
+    padding: 7.5px 16px;
+  }
   & .MuiOutlinedInput-root {
     color: #333;
-    & .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-      padding: 7.5px 16px;
-    }
     & fieldset {
       border-color: #ccc;
       height: 36 !important;
