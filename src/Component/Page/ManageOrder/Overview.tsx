@@ -17,7 +17,6 @@ import {
   orderPagingState,
   orderDataState,
 } from "../../../Recoil/atoms"
-import useCopyToClipboard from "../../../Middleware/copyToClipboard"
 import { orderUpdateValueReq } from "../../../Recoil/atoms/coins"
 import { MdContentCopy, MdDelete } from "react-icons/md"
 import UpdateBot from "../../Dialog/UpdateOrder.dialog"
