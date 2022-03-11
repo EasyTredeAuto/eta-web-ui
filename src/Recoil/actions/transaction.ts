@@ -6,12 +6,8 @@ export const getTransaction = async (
   transaction: {
     page: number
     size: number
-    count: number
-    data: transactionDto[]
   },
   setTransaction: SetterOrUpdater<{
-    page: number
-    size: number
     count: number
     data: transactionDto[]
   }>
@@ -31,6 +27,31 @@ export const getTransaction = async (
         amount: parseFloat(row.amount),
       })
     }
-    setTransaction({ ...transaction, count: result.count, data })
+    setTransaction({ count: result.count, data })
+  }
+}
+
+export const getTransactionDashboard = async (
+  setTransaction: SetterOrUpdater<{
+    count: number
+    data: transactionDto[]
+  }>
+) => {
+  const result = await ajax
+    .get(`/transaction/0/10`)
+    .then((result) => result)
+    .catch((err) => console.log(err))
+
+  if (result.data) {
+    let data = []
+    for (const row of result.data) {
+      data.push({
+        ...row,
+        quantity: parseFloat(row.quantity),
+        price: parseFloat(row.price),
+        amount: parseFloat(row.amount),
+      })
+    }
+    setTransaction({ count: result.count, data })
   }
 }

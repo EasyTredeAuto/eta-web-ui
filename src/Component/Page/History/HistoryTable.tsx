@@ -8,23 +8,27 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import { BoxContent } from "../../Element/History.Element"
 import { useRecoilState } from "recoil"
-import { transactionState } from "../../../Recoil/atoms"
+import {
+  transactionsState,
+  transactionPagingState,
+} from "../../../Recoil/atoms"
 import moment from "moment"
 import { getTransaction } from "../../../Recoil/actions/transaction"
 import { Bade } from "../../Element/Dashboard.Element"
 
 const HistoryTable = memo(() => {
-  const [transaction, setTransaction] = useRecoilState(transactionState)
+  const [paging, setPaging] = useRecoilState(transactionPagingState)
+  const [transactions, setTransactions] = useRecoilState(transactionsState)
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setTransaction({ ...transaction, page: newPage })
+    setPaging({ ...paging, page: newPage })
   }
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setTransaction({
-      ...transaction,
+    setPaging({
+      ...paging,
       page: 0,
       size: parseInt(event.target.value),
     })
@@ -32,10 +36,10 @@ const HistoryTable = memo(() => {
 
   useEffect(() => {
     async function handleFetchData() {
-      await getTransaction(transaction, setTransaction)
+      await getTransaction(paging, setTransactions)
     }
     handleFetchData()
-  }, [setTransaction])
+  }, [paging, setTransactions])
 
   return (
     <BoxContent>
@@ -54,7 +58,7 @@ const HistoryTable = memo(() => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transaction.data.map((row, index) => (
+            {transactions.data.map((row, index) => (
               <TableRow key={index}>
                 <TableCell align="center">{index + 1}</TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
@@ -92,9 +96,9 @@ const HistoryTable = memo(() => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={transaction.count}
-        rowsPerPage={transaction.size}
-        page={transaction.page}
+        count={transactions.count}
+        rowsPerPage={paging.size}
+        page={paging.page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

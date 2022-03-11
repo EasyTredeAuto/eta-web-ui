@@ -6,17 +6,17 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import { Bade } from "../../Element/Dashboard.Element"
-import { getTransaction } from "../../../Recoil/actions/transaction"
+import { getTransactionDashboard } from "../../../Recoil/actions/transaction"
 import { useRecoilState } from "recoil"
-import { transactionState } from "../../../Recoil/atoms"
+import { transactionsState } from "../../../Recoil/atoms"
 import moment from "moment"
 
 const TransactionLatest = React.memo(() => {
-  const [transaction, setTransaction] = useRecoilState(transactionState)
+  const [transaction, setTransaction] = useRecoilState(transactionsState)
 
   React.useEffect(() => {
     function fetchData() {
-      getTransaction(transaction, setTransaction)
+      getTransactionDashboard(setTransaction)
         .then((result) => result)
         .catch((err) => err)
     }
