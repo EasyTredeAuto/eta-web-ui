@@ -3,7 +3,7 @@ import * as ajax from "../../Utils/ajax"
 import { ordersDto } from "../atoms/orders"
 import { orderUpdateValueReq, orderValueReq } from "../atoms/coins"
 
-export const getAllMyBots = async (
+export const getListOrders = async (
   paging: {
     page: number
     size: number

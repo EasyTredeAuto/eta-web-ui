@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
-import { deleteOrder, getAllMyBots } from "../../../Recoil/actions/manageOrders"
+import { deleteOrder, getListOrders } from "../../../Recoil/actions/manageOrders"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
   orderValueUpdateState,
@@ -55,7 +55,7 @@ const Overview = React.memo(() => {
   }
 
   const handleChangeFetchingOrders = async () => {
-    getAllMyBots(paging, setOrderList)
+    getListOrders(paging, setOrderList)
   }
   const handleChangeDelete = async (id: number, name: string) => {
     Swal.fire({
@@ -70,7 +70,7 @@ const Overview = React.memo(() => {
 
   React.useEffect(() => {
     function fetchData() {
-      getAllMyBots(paging, setOrderList)
+      getListOrders(paging, setOrderList)
     }
     fetchData()
   }, [paging, setOrderList])
