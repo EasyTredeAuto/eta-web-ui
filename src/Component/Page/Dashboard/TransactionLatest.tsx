@@ -6,22 +6,27 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import { Bade } from "../../Element/Dashboard.Element"
-import { getTransaction } from "../../../Recoil/actions/transaction"
+import { getTransactionDashboard } from "../../../Recoil/actions/transaction"
 import { useRecoilState } from "recoil"
-import { transactionState } from "../../../Recoil/atoms"
+import { transactionsState } from "../../../Recoil/atoms"
 import moment from "moment"
 
-export default function TransactionLatest() {
-  const [transaction, setTransaction] = useRecoilState(transactionState)
+const TransactionLatest = React.memo(() => {
+  console.log(6)
+
+  const [transaction, setTransaction] = useRecoilState(transactionsState)
 
   React.useEffect(() => {
-    getTransaction(transaction, setTransaction)
-      .then((result) => result)
-      .catch((err) => err)
-  }, [])
+    function fetchData() {
+      getTransactionDashboard(setTransaction)
+        .then((result) => result)
+        .catch((err) => err)
+    }
+    fetchData()
+  }, [setTransaction])
 
   return (
-    <TableContainer >
+    <TableContainer>
       <Table size="small" aria-label="sticky table" stickyHeader>
         <TableHead>
           <TableRow>
@@ -95,4 +100,6 @@ export default function TransactionLatest() {
       </Table>
     </TableContainer>
   )
-}
+})
+
+export default TransactionLatest

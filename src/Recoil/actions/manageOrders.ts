@@ -1,28 +1,21 @@
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
-import { myBotsDto } from "../atoms/mybot"
-import { botUpdateValueReq, botValueReq } from "../atoms/coins"
+import { ordersDto } from "../atoms/orders"
+import { orderUpdateValueReq, orderValueReq } from "../atoms/coins"
 
-export const getAllMyBots = async (
-  myBots: {
+export const getListOrders = async (
+  paging: {
     page: number
     size: number
-    count: number
-    data: myBotsDto[]
   },
-  setMyBots: SetterOrUpdater<{
-    page: number
-    size: number
-    count: number
-    data: myBotsDto[]
-  }>
+  setOrderList: SetterOrUpdater<{ count: number; data: ordersDto[] }>
 ) => {
   const result = await ajax
-    .get(`/manage-orders/${myBots.page}/${myBots.size}`)
+    .get(`/manage-orders/${paging.page}/${paging.size}`)
     .then((result) => result)
     .catch((err) => console.log(err))
 
-  if (result.data) {
+  if (result?.data) {
     let data = []
     for (const row of result.data) {
       data.push({
@@ -30,25 +23,28 @@ export const getAllMyBots = async (
         amount: parseFloat(row.amount),
       })
     }
-    setMyBots({ ...myBots, count: result.count, data })
+    setOrderList({ count: result.count, data })
   }
 }
 
-export const createToken = async (value: botValueReq) => {
+export const createToken = async (value: orderValueReq) => {
   return await ajax
     .post(`/manage-orders`, value)
     .then((result) => result)
     .catch((err) => err)
 }
 
-export const updateToken = async (value: botUpdateValueReq) => {
+export const updateToken = async (value: orderUpdateValueReq) => {
   return await ajax
     .put(`/manage-orders`, value)
     .then((result) => result)
     .catch((err) => err)
 }
 
-export const deleteMyBot = async (id: number, callBack: { (): Promise<void>; (): void }) => {
+export const deleteOrder = async (
+  id: number,
+  callBack: { (): Promise<void>; (): void }
+) => {
   const result = await ajax
     .remove(`/manage-orders/${id}`)
     .then((result) => result)

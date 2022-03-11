@@ -27,7 +27,7 @@ export const assetState = atom({
   },
 })
 
-export interface botValueReq {
+export interface orderValueReq {
   name: string
   symbol: string | undefined
   asset: string | undefined
@@ -38,10 +38,10 @@ export interface botValueReq {
   amountType: string
 }
 
-export const botValueState = atom({
+export const orderValueState = atom({
   key: "botValue",
   default: {
-    name: '',
+    name: "",
     symbol: undefined,
     asset: undefined,
     currency: undefined,
@@ -49,10 +49,10 @@ export const botValueState = atom({
     type: "limit",
     amount: undefined,
     amountType: "amount",
-  } as botValueReq,
+  } as orderValueReq,
 })
 
-export interface botUpdateValueReq {
+export interface orderUpdateValueReq {
   id: number | undefined
   name: string
   symbol: string | undefined
@@ -64,8 +64,8 @@ export interface botUpdateValueReq {
   amountType: string
 }
 
-export const botValueUpdateState = atom({
-  key: "botUpdateValue",
+export const orderValueUpdateState = atom({
+  key: "orderUpdateValue",
   default: {
     id: undefined,
     name: "",
@@ -76,5 +76,5 @@ export const botValueUpdateState = atom({
     type: "limit",
     amount: undefined,
     amountType: "amount",
-  } as botUpdateValueReq,
+  } as orderUpdateValueReq,
 })

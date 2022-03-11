@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { memo, useRef } from "react"
 import { BiLogInCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
@@ -16,7 +16,7 @@ import {
 import { LoginDto } from "../../Recoil/atoms/auth"
 import Swal from "sweetalert2"
 
-export default function Register() {
+const Register = memo(() => {
   const btnSubmit = useRef<HTMLButtonElement>(null)
   const [user, setUser] = useRecoilState(registerState)
   const navigate = useNavigate()
@@ -119,4 +119,6 @@ export default function Register() {
       </BoxRegister>
     </Container>
   )
-}
+})
+
+export default Register

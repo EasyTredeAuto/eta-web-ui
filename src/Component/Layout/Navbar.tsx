@@ -24,8 +24,8 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
+  shouldForwardProp: (prop: string) => prop !== "open",
+})<AppBarProps>(({ theme, open }: any) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -41,7 +41,9 @@ const AppBar = styled(MuiAppBar, {
   }),
 }))
 
-export default function Navbar() {
+const Navbar = React.memo(() => {
+  console.log(3)
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
@@ -72,9 +74,12 @@ export default function Navbar() {
   const menuId = "primary-search-account-menu"
 
   React.useEffect(() => {
-    getAsset(setAsset)
-    getSymbol(setCoins)
-  }, [])
+    function fetchData() {
+      getAsset(setAsset)
+      getSymbol(setCoins)
+    }
+    fetchData()
+  }, [setAsset, setCoins])
   
   return (
     <AppBar position="fixed" open={sidebar.open}>
@@ -148,4 +153,6 @@ export default function Navbar() {
       </Toolbar>
     </AppBar>
   )
-}
+})
+
+export default Navbar 

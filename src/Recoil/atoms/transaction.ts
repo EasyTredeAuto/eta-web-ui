@@ -12,11 +12,17 @@ export interface transactionDto {
   updatedAt: Date
 }
 
-export const transactionState = atom({
-  key: "transaction",
+export const transactionPagingState = atom({
+  key: "transactionPagingState",
   default: {
     page: 0,
     size: 10,
+  },
+})
+
+export const transactionsState = atom({
+  key: "transactionsState",
+  default: {
     count: 0,
     data: [] as transactionDto[],
   },

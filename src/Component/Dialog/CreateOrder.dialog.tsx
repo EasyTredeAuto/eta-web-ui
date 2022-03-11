@@ -19,15 +19,19 @@ import {
   TextFieldName,
 } from "../Element/CustomMaterial.element"
 import { Checkbox, FormControlLabel } from "@mui/material"
-import { coinsState, myBotsState } from "../../Recoil/atoms"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { assetState, botValueState } from "../../Recoil/atoms/coins"
+import {
+  assetState,
+  orderValueState,
+  coinsState,
+  orderDataState,
+  orderPagingState,
+} from "../../Recoil/atoms"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import useCopyToClipboard from "../../Middleware/copyToClipboard"
-import { getAllMyBots, createToken } from "../../Recoil/actions/manageOrders"
+import { getListOrders, createToken } from "../../Recoil/actions/manageOrders"
 
-const BootstrapDialog: any = styled(Dialog)(({ theme }) => ({
+const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
@@ -71,19 +75,19 @@ interface Props {
   setOpen: any
 }
 
-export default function CreateBot({ open, setOpen }: Props) {
+const CreateOrder = React.memo(({ open, setOpen }: Props) => {
+  console.log(1)
   const handleClose = () => {
     setOpen(false)
   }
 
   const [options, setOptions] = useState([] as any)
-  const copy = useCopyToClipboard()[1]
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
-  const [value, setValue] = useRecoilState(botValueState)
-
-  const [myBots, setMyBots] = useRecoilState(myBotsState)
+  const [value, setValue] = useRecoilState(orderValueState)
+  const paging = useRecoilValue(orderPagingState)
+  const setOrderList = useSetRecoilState(orderDataState)
 
   const handleSelectSymbol = (_e: any) => {
     const asset = assets.data.find((asset: string) =>
@@ -148,7 +152,7 @@ export default function CreateBot({ open, setOpen }: Props) {
           title: "Copied!",
           icon: "success",
         })
-        copy(result.url)
+        navigator.clipboard.writeText(result.url)
       })
     } else {
       setOpen(false)
@@ -160,7 +164,7 @@ export default function CreateBot({ open, setOpen }: Props) {
   }
 
   useEffect(() => {
-    return setOptions(coins.data)
+    setOptions(coins.data)
   }, [coins.data])
 
   const optionSide = [
@@ -174,7 +178,7 @@ export default function CreateBot({ open, setOpen }: Props) {
   ]
 
   const handleChangeFetchingMyBots = async () => {
-    getAllMyBots(myBots, setMyBots)
+    getListOrders(paging, setOrderList)
   }
 
   return (
@@ -185,7 +189,7 @@ export default function CreateBot({ open, setOpen }: Props) {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Create Bot
+        Create Api Order
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -230,7 +234,9 @@ export default function CreateBot({ open, setOpen }: Props) {
             <Component col={"50% 50%"}>
               <BoxContent>
                 <NumberFormatCustom
-                  placeholder={value.amountType !== "percent" ? "Minimum 15 token" : ''}
+                  placeholder={
+                    value.amountType !== "percent" ? "Minimum 15 token" : ""
+                  }
                   name="amount"
                   value={value.amount}
                   thousandSeparator
@@ -248,12 +254,12 @@ export default function CreateBot({ open, setOpen }: Props) {
                 label="%"
               />
             </Component>
-            <BoxHeader>Bot Name:</BoxHeader>
+            <BoxHeader>Order Name:</BoxHeader>
             <BoxContent>
               <TextFieldName
                 fullWidth
                 type="text"
-                placeholder="Bot Name"
+                placeholder="Order Name"
                 name="name"
                 value={value.name}
                 onChange={handleChange}
@@ -292,4 +298,6 @@ export default function CreateBot({ open, setOpen }: Props) {
       </DialogActions>
     </BootstrapDialog>
   )
-}
+})
+
+export default CreateOrder

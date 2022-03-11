@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, memo } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -8,39 +8,40 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import { BoxContent } from "../../Element/History.Element"
 import { useRecoilState } from "recoil"
-import { transactionState } from "../../../Recoil/atoms"
+import {
+  transactionsState,
+  transactionPagingState,
+} from "../../../Recoil/atoms"
 import moment from "moment"
 import { getTransaction } from "../../../Recoil/actions/transaction"
 import { Bade } from "../../Element/Dashboard.Element"
 
-export default function HistoryTable() {
-  const [transaction, setTransaction] = useRecoilState(transactionState)
+const HistoryTable = memo(() => {
+  console.log(7)
+
+  const [paging, setPaging] = useRecoilState(transactionPagingState)
+  const [transactions, setTransactions] = useRecoilState(transactionsState)
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setTransaction({ ...transaction, page: newPage })
-  }
-
-  const handleFetchData = async () => {
-    await getTransaction(transaction, setTransaction)
+    setPaging({ ...paging, page: newPage })
   }
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setTransaction({
-      ...transaction,
+    setPaging({
+      ...paging,
       page: 0,
       size: parseInt(event.target.value),
     })
   }
 
   useEffect(() => {
+    async function handleFetchData() {
+      await getTransaction(paging, setTransactions)
+    }
     handleFetchData()
-  }, [transaction.size])
-
-  useEffect(() => {
-    handleFetchData()
-  }, [transaction.page])
+  }, [paging, setTransactions])
 
   return (
     <BoxContent>
@@ -59,7 +60,7 @@ export default function HistoryTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transaction.data.map((row, index) => (
+            {transactions.data.map((row, index) => (
               <TableRow key={index}>
                 <TableCell align="center">{index + 1}</TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
@@ -97,12 +98,14 @@ export default function HistoryTable() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={transaction.count}
-        rowsPerPage={transaction.size}
-        page={transaction.page}
+        count={transactions.count}
+        rowsPerPage={paging.size}
+        page={paging.page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </BoxContent>
   )
-}
+})
+
+export default HistoryTable
