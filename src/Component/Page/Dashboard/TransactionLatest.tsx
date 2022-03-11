@@ -21,7 +21,7 @@ const TransactionLatest = React.memo(() => {
         .catch((err) => err)
     }
     fetchData()
-  }, [transaction, setTransaction])
+  }, [setTransaction])
 
   return (
     <TableContainer>

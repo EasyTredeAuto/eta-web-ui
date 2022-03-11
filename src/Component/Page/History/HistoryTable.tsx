@@ -35,7 +35,7 @@ const HistoryTable = memo(() => {
       await getTransaction(transaction, setTransaction)
     }
     handleFetchData()
-  }, [transaction, setTransaction])
+  }, [setTransaction])
 
   return (
     <BoxContent>

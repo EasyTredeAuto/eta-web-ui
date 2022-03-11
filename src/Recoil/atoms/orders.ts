@@ -1,6 +1,6 @@
 import { atom } from "recoil"
 
-export interface myBotsDto {
+export interface ordersDto {
   id: number
   name: string
   symbol: string
@@ -15,12 +15,18 @@ export interface myBotsDto {
   updatedAt: Date
 }
 
-export const myBotsState = atom({
-  key: "myBots",
+export const orderPagingState = atom({
+  key: "orderPagingState",
   default: {
     page: 0,
     size: 10,
+  },
+})
+
+export const orderDataState = atom({
+  key: "orderDataState",
+  default: {
     count: 0,
-    data: [] as myBotsDto[],
+    data: [] as ordersDto[],
   },
 })

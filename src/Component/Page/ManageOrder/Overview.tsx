@@ -9,9 +9,13 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import { deleteMyBot, getAllMyBots } from "../../../Recoil/actions/manageOrders"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { botValueUpdateState, myBotsState } from "../../../Recoil/atoms"
+import {
+  orderValueUpdateState,
+  orderPagingState,
+  orderDataState,
+} from "../../../Recoil/atoms"
 import useCopyToClipboard from "../../../Middleware/copyToClipboard"
-import { botUpdateValueReq } from "../../../Recoil/atoms/coins"
+import { orderUpdateValueReq } from "../../../Recoil/atoms/coins"
 import { MdContentCopy, MdDelete } from "react-icons/md"
 import UpdateBot from "../../Dialog/UpdateOrder.dialog"
 import { IconButton, Tooltip } from "@mui/material"
@@ -20,8 +24,9 @@ import { FaEdit } from "react-icons/fa"
 const Overview = React.memo(() => {
   const copy = useCopyToClipboard()[1]
   const [open, setOpen] = React.useState(false)
-  const [myBots, setMyBots] = useRecoilState(myBotsState)
-  const setValue = useSetRecoilState(botValueUpdateState)
+  const [paging, setPaging] = useRecoilState(orderPagingState)
+  const [orderList, setOrderList] = useRecoilState(orderDataState)
+  const setValue = useSetRecoilState(orderValueUpdateState)
 
   const handleUpdate = (bot: any) => {
     const data = {
@@ -34,23 +39,23 @@ const Overview = React.memo(() => {
       type: bot.type,
       amount: bot.amount,
       amountType: bot.amountType,
-    } as botUpdateValueReq
+    } as orderUpdateValueReq
     setValue(data)
     setOpen(true)
   }
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setMyBots({ ...myBots, page: newPage })
+    setPaging({ ...paging, page: newPage })
   }
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setMyBots({ ...myBots, size: parseInt(event.target.value, 10), page: 0 })
+    setPaging({ ...paging, size: parseInt(event.target.value, 10), page: 0 })
   }
 
-  const handleChangeFetchingMyBots = async () => {
-    getAllMyBots(myBots, setMyBots)
+  const handleChangeFetchingOrders = async () => {
+    getAllMyBots(paging, setOrderList)
   }
   const handleChangeDelete = async (id: number, name: string) => {
     Swal.fire({
@@ -58,17 +63,17 @@ const Overview = React.memo(() => {
       title: `Are you sure to delete this ${name}?`,
       confirmButtonText: "Delete",
       confirmButtonColor: "red",
-      preConfirm: () => deleteMyBot(id, handleChangeFetchingMyBots),
+      preConfirm: () => deleteMyBot(id, handleChangeFetchingOrders),
       showCancelButton: true,
     })
   }
 
   React.useEffect(() => {
     function fetchData() {
-      getAllMyBots(myBots, setMyBots)
+      getAllMyBots(paging, setOrderList)
     }
     fetchData()
-  }, [setMyBots])
+  }, [paging, setOrderList])
 
   return (
     <>
@@ -86,7 +91,7 @@ const Overview = React.memo(() => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {myBots.data.map((row, i) => (
+            {orderList.data.map((row, i) => (
               <TableRow key={i}>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="center">
@@ -129,9 +134,9 @@ const Overview = React.memo(() => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={myBots.count}
-        rowsPerPage={myBots.size}
-        page={myBots.page}
+        count={orderList.count}
+        rowsPerPage={paging.size}
+        page={paging.page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
