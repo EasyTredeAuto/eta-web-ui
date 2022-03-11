@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
-import { deleteMyBot, getAllMyBots } from "../../../Recoil/actions/manageOrders"
+import { deleteOrder, getAllMyBots } from "../../../Recoil/actions/manageOrders"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
   orderValueUpdateState,
@@ -63,7 +63,7 @@ const Overview = React.memo(() => {
       title: `Are you sure to delete this ${name}?`,
       confirmButtonText: "Delete",
       confirmButtonColor: "red",
-      preConfirm: () => deleteMyBot(id, handleChangeFetchingOrders),
+      preConfirm: () => deleteOrder(id, handleChangeFetchingOrders),
       showCancelButton: true,
     })
   }

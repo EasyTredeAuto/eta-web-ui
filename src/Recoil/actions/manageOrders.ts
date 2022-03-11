@@ -41,7 +41,7 @@ export const updateToken = async (value: orderUpdateValueReq) => {
     .catch((err) => err)
 }
 
-export const deleteMyBot = async (
+export const deleteOrder = async (
   id: number,
   callBack: { (): Promise<void>; (): void }
 ) => {
