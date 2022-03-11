@@ -80,7 +80,12 @@ const Overview = React.memo(() => {
 
   return (
     <>
-      <TableContainer sx={{ minHeight: 420, maxHeight: "calc(100vh - 240px)" }}>
+      <TableContainer
+        sx={{
+          minHeight: 460,
+          maxHeight: "calc(100vh - 250px)",
+        }}
+      >
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>

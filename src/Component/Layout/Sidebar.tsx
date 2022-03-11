@@ -73,11 +73,11 @@ const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
 
 const menuAdminList = [
-  { path: "/dashboard/admin", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/user/admin", name: "Users", icon: iconAdmin },
+  { path: "/dashboard", name: "Dashboard", icon: iconDashboard },
+  { path: "/manage/user", name: "Users", icon: iconAdmin },
   { path: "/manage/orders", name: "Orders", icon: iconOrders },
   { path: "/manage/bot", name: "System bot", icon: iconRobot },
-  { path: "/history/admin", name: "History", icon: iconHistory },
+  { path: "/history", name: "History", icon: iconHistory },
 ]
 
 const menuList = [

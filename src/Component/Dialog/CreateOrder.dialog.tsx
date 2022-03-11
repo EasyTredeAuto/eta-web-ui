@@ -287,7 +287,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
           </Button>
           <Button
             variant="contained"
-            color="error"
+            color="secondary"
             sx={{ background: "#aaa", width: "100%", marginLeft: "0.5rem" }}
             autoFocus
             onClick={handleClose}

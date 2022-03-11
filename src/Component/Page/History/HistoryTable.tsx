@@ -45,7 +45,7 @@ const HistoryTable = memo(() => {
 
   return (
     <BoxContent>
-      <TableContainer>
+      <TableContainer sx={{ minHeight: 360, maxHeight: "calc(100vh - 240px)" }}>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
