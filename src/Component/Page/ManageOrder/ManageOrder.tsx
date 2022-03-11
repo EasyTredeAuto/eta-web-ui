@@ -3,7 +3,7 @@ import { memo, useState } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { BsPlusCircleFill } from 'react-icons/bs';
-import { BoxContent, BoxSearch, Component } from '../../Element/ManageBot.Element';
+import { BoxContent, BoxSearch, Component } from '../../Element/OrdersComponent.Element';
 import Overview from './Overview';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
@@ -54,7 +54,9 @@ const StyledInputBase = styled(InputBase)(({ theme }: any) => ({
   },
 }))
 
-const ManageBot = memo(() => {
+const OrdersComponent = memo(() => {
+  console.log(9)
+
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -100,4 +102,4 @@ console.log(1)
   )
 })
 
-export default ManageBot
+export default OrdersComponent

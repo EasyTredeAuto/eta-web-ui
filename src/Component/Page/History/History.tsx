@@ -12,6 +12,8 @@ const GridStyle = {
 }
 
 const History = memo(() => {
+  console.log(8)
+
   const options = [
     { value: "spot", label: "Spot" },
     // { value: "futures", label: "Futures" },
@@ -24,7 +26,7 @@ const History = memo(() => {
           <TextFieldSearch
             fullWidth
             type="text"
-            label="Bot Name"
+            label="Api Name"
             name="botName"
           />
         </Grid>

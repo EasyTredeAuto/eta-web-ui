@@ -7,7 +7,10 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
-import { deleteOrder, getListOrders } from "../../../Recoil/actions/manageOrders"
+import {
+  deleteOrder,
+  getListOrders,
+} from "../../../Recoil/actions/manageOrders"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
   orderValueUpdateState,
@@ -22,23 +25,24 @@ import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
 
 const Overview = React.memo(() => {
-  const copy = useCopyToClipboard()[1]
+  console.log(10)
+
   const [open, setOpen] = React.useState(false)
   const [paging, setPaging] = useRecoilState(orderPagingState)
   const [orderList, setOrderList] = useRecoilState(orderDataState)
   const setValue = useSetRecoilState(orderValueUpdateState)
 
-  const handleUpdate = (bot: any) => {
+  const handleUpdate = (Api: any) => {
     const data = {
-      id: bot.id,
-      name: bot.name,
-      symbol: bot.symbol,
-      asset: bot.asset,
-      currency: bot.currency,
-      side: bot.side,
-      type: bot.type,
-      amount: bot.amount,
-      amountType: bot.amountType,
+      id: Api.id,
+      name: Api.name,
+      symbol: Api.symbol,
+      asset: Api.asset,
+      currency: Api.currency,
+      side: Api.side,
+      type: Api.type,
+      amount: Api.amount,
+      amountType: Api.amountType,
     } as orderUpdateValueReq
     setValue(data)
     setOpen(true)
@@ -109,7 +113,11 @@ const Overview = React.memo(() => {
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center">
                   <Tooltip title="Copy url" placement="top">
-                    <IconButton onClick={() => copy(row.url)}>
+                    <IconButton
+                      onClick={() => {
+                        navigator.clipboard.writeText(row.url)
+                      }}
+                    >
                       <MdContentCopy />
                     </IconButton>
                   </Tooltip>

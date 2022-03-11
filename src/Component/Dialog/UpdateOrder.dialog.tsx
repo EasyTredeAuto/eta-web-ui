@@ -16,15 +16,19 @@ import {
   NumberFormatCustom,
   TextFieldName,
 } from "../Element/CustomMaterial.element"
-import { assetState, botValueUpdateState } from "../../Recoil/atoms/coins"
-import useCopyToClipboard from "../../Middleware/copyToClipboard"
 import { SelectBase } from "../Element/CustomReact.element"
 import { Checkbox, FormControlLabel } from "@mui/material"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { coinsState, myBotsState } from "../../Recoil/atoms"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+import {
+  coinsState,
+  orderDataState,
+  orderValueUpdateState,
+  assetState,
+  orderPagingState,
+} from "../../Recoil/atoms"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getAllMyBots, updateToken } from "../../Recoil/actions/manageOrders"
+import { getListOrders, updateToken } from "../../Recoil/actions/manageOrders"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -71,18 +75,19 @@ interface Props {
 }
 
 const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
+  console.log(2)
+
   const handleClose = () => {
     setOpen(false)
   }
 
   const [options, setOptions] = useState([] as any)
-  const copy = useCopyToClipboard()[1]
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
-  const [value, setValue] = useRecoilState(botValueUpdateState)
-
-  const [myBots, setMyBots] = useRecoilState(myBotsState)
+  const [value, setValue] = useRecoilState(orderValueUpdateState)
+  const paging = useRecoilValue(orderPagingState)
+  const setOrderList = useSetRecoilState(orderDataState)
 
   const handleSelectSymbol = (_e: any) => {
     const asset = assets.data.find((asset: string) =>
@@ -147,7 +152,7 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
           title: "Copied!",
           icon: "success",
         })
-        copy(result.url)
+        navigator.clipboard.writeText(result.url)
       })
     } else {
       setOpen(false)
@@ -159,7 +164,7 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
   }
 
   const handleChangeFetchingMyBots = async () => {
-    getAllMyBots(myBots, setMyBots)
+    getListOrders(paging, setOrderList)
   }
 
   useEffect(() => {
@@ -253,7 +258,7 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
               <TextFieldName
                 fullWidth
                 type="text"
-                placeholder="Bot Name"
+                placeholder="Api Name"
                 name="name"
                 value={value.name}
                 onChange={handleChange}

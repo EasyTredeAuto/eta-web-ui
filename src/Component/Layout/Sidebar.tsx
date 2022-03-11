@@ -75,8 +75,8 @@ const iconAdmin = <RiAdminFill />
 const menuAdminList = [
   { path: "/dashboard/admin", name: "Dashboard", icon: iconDashboard },
   { path: "/manage/user/admin", name: "Users", icon: iconAdmin },
-  { path: "/manage/orders/admin", name: "Orders", icon: iconOrders },
-  { path: "/manage/orders", name: "System bot", icon: iconRobot },
+  { path: "/manage/orders", name: "Orders", icon: iconOrders },
+  { path: "/manage/bot", name: "System bot", icon: iconRobot },
   { path: "/history/admin", name: "History", icon: iconHistory },
 ]
 
@@ -88,6 +88,8 @@ const menuList = [
 ]
 
 const Sidebar = React.memo(() => {
+  console.log(4)
+
   const theme = useTheme()
 
   const navigate = useNavigate()

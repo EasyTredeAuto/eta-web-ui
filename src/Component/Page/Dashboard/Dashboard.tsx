@@ -9,6 +9,8 @@ import { GiPayMoney, GiMoneyStack, GiTakeMyMoney } from "react-icons/gi"
 import TransactionLatest from "./TransactionLatest"
 
 const Dashboard = React.memo(() => {
+  console.log(5)
+
   const data = 100000
   return (
     <Component col={"100%"}>

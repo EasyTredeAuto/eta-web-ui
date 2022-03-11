@@ -12,6 +12,8 @@ import { transactionsState } from "../../../Recoil/atoms"
 import moment from "moment"
 
 const TransactionLatest = React.memo(() => {
+  console.log(6)
+
   const [transaction, setTransaction] = useRecoilState(transactionsState)
 
   React.useEffect(() => {

@@ -17,6 +17,8 @@ import { getTransaction } from "../../../Recoil/actions/transaction"
 import { Bade } from "../../Element/Dashboard.Element"
 
 const HistoryTable = memo(() => {
+  console.log(7)
+
   const [paging, setPaging] = useRecoilState(transactionPagingState)
   const [transactions, setTransactions] = useRecoilState(transactionsState)
 
