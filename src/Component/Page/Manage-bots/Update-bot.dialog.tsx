@@ -18,7 +18,7 @@ import { TextField } from "@mui/material"
 import {
   assetState,
   coinsState,
-  botValueState,
+  botValueUpdateState,
   botPagingState,
   botDataState,
 } from "../../../Recoil/atoms"
@@ -27,7 +27,7 @@ import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 import {
   getListBots,
-  createBots,
+  updateBots,
 } from "../../../Recoil/actions/Manage-bot.action"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
@@ -84,7 +84,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
-  const [value, setValue] = useRecoilState(botValueState)
+  const [value, setValue] = useRecoilState(botValueUpdateState)
   const paging = useRecoilValue(botPagingState)
   const setBotList = useSetRecoilState(botDataState)
 
@@ -102,8 +102,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     setValue({ ...value, [elementName]: elementValue })
   }
 
-  const handleCreateBot = async () => {
-    const result = await createBots(value)
+  const handleUpdateBot = async () => {
+    const result = await updateBots(value)
     if (result?.urlBuy && result?.urlSell) {
       await handleChangeFetchingMyBots()
       setOpen(false)
@@ -154,7 +154,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        New System Bot
+        Edit System Bot
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -205,10 +205,15 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={!value.symbol || value.name === "" || value.detail === ""}
-            onClick={handleCreateBot}
+            disabled={
+              !value.id ||
+              !value.symbol ||
+              value.name === "" ||
+              value.detail === ""
+            }
+            onClick={handleUpdateBot}
           >
-            Create
+            Save
           </Button>
           <Button
             variant="contained"

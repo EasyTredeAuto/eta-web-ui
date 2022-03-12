@@ -19,6 +19,27 @@ export const botValueState = atom({
   } as botValueDto,
 })
 
+export interface botValueUpdateDto {
+  id: number | undefined
+  symbol: string | undefined
+  name: string
+  detail: string
+  asset: string | undefined
+  currency: string | undefined
+}
+
+export const botValueUpdateState = atom({
+  key: "botValueUpdateState",
+  default: {
+    id: undefined,
+    symbol: undefined,
+    name: "",
+    detail: "",
+    asset: undefined,
+    currency: undefined,
+  } as botValueUpdateDto,
+})
+
 export const botPagingState = atom({
   key: "botPagingState",
   default: {
@@ -30,11 +51,14 @@ export const botPagingState = atom({
 export interface botsDto {
   id: number
   symbol: string
+  asset: string
+  currency: string
   name: string
   detail: string
   urlBuy: string
   urlSell: string
   round: number
+  userAmount: number
   active: boolean
   createdAt: Date
   updatedAt: Date

@@ -8,7 +8,7 @@ import {
   orderValueState,
 } from "./coins"
 import { orderPagingState, orderDataState } from "./orders"
-import { botValueState, botPagingState, botDataState } from "./bots"
+import { botValueState, botPagingState, botDataState, botValueUpdateState } from "./bots"
 
 export {
   // auth
@@ -29,6 +29,7 @@ export {
   orderValueUpdateState,
   //bots
   botValueState,
+  botValueUpdateState,
   botPagingState,
   botDataState,
 }

@@ -1,6 +1,6 @@
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
-import { botValueDto, botsDto } from "../atoms/bots"
+import { botValueDto, botsDto, botValueUpdateDto } from "../atoms/bots"
 
 export const getListBots = async (
   paging: {
@@ -26,23 +26,23 @@ export const createBots = async (value: botValueDto) => {
     .catch((err) => err)
 }
 
-// export const updateToken = async (value: orderUpdateValueReq) => {
-//   return await ajax
-//     .put(`/manage-orders`, value)
-//     .then((result) => result)
-//     .catch((err) => err)
-// }
+export const updateBots = async (value: botValueUpdateDto) => {
+  return await ajax
+    .put(`/manage-bot-admin`, value)
+    .then((result) => result)
+    .catch((err) => err)
+}
 
-// export const deleteOrder = async (
-//   id: number,
-//   callBack: { (): Promise<void>; (): void }
-// ) => {
-//   const result = await ajax
-//     .remove(`/manage-orders/${id}`)
-//     .then((result) => result)
-//     .catch((err) => console.log(err))
+export const deleteBots = async (
+  id: number,
+  callBack: { (): Promise<void>; (): void }
+) => {
+  const result = await ajax
+    .remove(`/manage-bot-admin/${id}`)
+    .then((result) => result)
+    .catch((err) => console.log(err))
 
-//   if (result?.data) {
-//     callBack()
-//   }
-// }
+  if (result?.data) {
+    callBack()
+  }
+}
