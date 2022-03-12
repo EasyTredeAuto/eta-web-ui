@@ -11,24 +11,21 @@ import {
   BoxHeader,
   Component,
   BoxFooter,
-} from "../Element/CreateOrder.Dialog.Element"
+} from "../../StyledComponent/CreateOrder.Dialog.Element"
+import { SelectBase } from "../../StyledComponent/CustomReact.element"
+import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
+import { TextField } from "@mui/material"
 import {
-  NumberFormatCustom,
-  TextFieldName,
-} from "../Element/CustomMaterial.element"
-import { SelectBase } from "../Element/CustomReact.element"
-import { Checkbox, FormControlLabel } from "@mui/material"
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import {
+  assetState,
+  orderValueState,
   coinsState,
   orderDataState,
-  orderValueUpdateState,
-  assetState,
   orderPagingState,
-} from "../../Recoil/atoms"
+} from "../../../Recoil/atoms"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getListOrders, updateToken } from "../../Recoil/actions/manageOrders"
+import { getListOrders, createToken } from "../../../Recoil/actions/manageOrders"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -74,9 +71,8 @@ interface Props {
   setOpen: any
 }
 
-const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
-  console.log(2)
-
+const CreateOrder = React.memo(({ open, setOpen }: Props) => {
+  console.log(1)
   const handleClose = () => {
     setOpen(false)
   }
@@ -85,7 +81,7 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
-  const [value, setValue] = useRecoilState(orderValueUpdateState)
+  const [value, setValue] = useRecoilState(orderValueState)
   const paging = useRecoilValue(orderPagingState)
   const setOrderList = useSetRecoilState(orderDataState)
 
@@ -97,43 +93,14 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
     setValue({ ...value, asset, currency, symbol: _e.value })
   }
 
-  const handleChangeSide = (_e: any) => {
-    setValue({ ...value, side: _e.value })
-  }
-
-  const handleChangeType = (_e: any) => {
-    setValue({ ...value, type: _e.value })
-  }
-
-  const handleChangeAmountType = (_e: any) => {
-    if (_e.target.checked) {
-      const amount = value.amount && value.amount > 100 ? 100 : value.amount
-      setValue({ ...value, amountType: "percent", amount })
-    } else {
-      setValue({ ...value, amountType: "amount" })
-    }
-  }
-
-  const handleChangeAmount = (e: any) => {
-    const elementValue = parseFloat(e.target.value.split(",").join(""))
-    const elementName = e.target.name
-    if (value.amountType === "percent") {
-      const amount = elementValue > 100 ? 100 : elementValue
-      setValue({
-        ...value,
-        [elementName]: amount,
-      })
-    } else setValue({ ...value, [elementName]: elementValue })
-  }
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const elementValue = e.target.value
     const elementName = e.target.name
     setValue({ ...value, [elementName]: elementValue })
   }
 
-  const handleUpdateOrder = async () => {
-    const result = await updateToken(value)
+  const handleCreateOrder = async () => {
+    const result = await createToken(value)
     if (result.url) {
       await handleChangeFetchingMyBots()
       setOpen(false)
@@ -163,23 +130,13 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
     }
   }
 
-  const handleChangeFetchingMyBots = async () => {
-    getListOrders(paging, setOrderList)
-  }
-
   useEffect(() => {
     setOptions(coins.data)
   }, [coins.data])
 
-  const optionSide = [
-    { value: "buy", label: "Buy" },
-    { value: "sell", label: "Sell" },
-  ]
-
-  const optionType = [
-    { value: "limit", label: "Limit" },
-    { value: "market", label: "Market" },
-  ]
+  const handleChangeFetchingMyBots = async () => {
+    getListOrders(paging, setOrderList)
+  }
 
   return (
     <BootstrapDialog
@@ -189,7 +146,7 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Create Api Order
+        Create Bot System
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -207,58 +164,24 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
                 onChange={handleSelectSymbol}
               />
             </BoxContent>
-            <BoxHeader>Side:</BoxHeader>
-            <Component col={"40% 7% 40%"}>
-              <BoxContent>
-                <SelectBase
-                  options={optionSide}
-                  value={optionSide.find((v) => v.value === value.side)}
-                  onChange={handleChangeSide}
-                  menuPosition={"fixed"}
-                  placeholder="Buy/Sell"
-                />
-              </BoxContent>
-              <BoxHeader>Type:</BoxHeader>
-              <BoxContent>
-                <SelectBase
-                  options={optionType}
-                  value={optionType.find((v) => v.value === value.type)}
-                  onChange={handleChangeType}
-                  menuPosition={"fixed"}
-                  placeholder="Limit/Market"
-                />
-              </BoxContent>
-            </Component>
-            <BoxHeader>Amount:</BoxHeader>
-            <Component col={"50% 50%"}>
-              <BoxContent>
-                <NumberFormatCustom
-                  placeholder={
-                    value.amountType !== "percent" ? "Minimum 15 token" : ""
-                  }
-                  name="amount"
-                  value={value.amount}
-                  thousandSeparator
-                  isNumericString
-                  onChange={handleChangeAmount}
-                />
-              </BoxContent>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    defaultChecked={value.amountType === "percent"}
-                    onChange={handleChangeAmountType}
-                  />
-                }
-                label="%"
-              />
-            </Component>
-            <BoxHeader>Api Name:</BoxHeader>
+            <BoxHeader>Name:</BoxHeader>
             <BoxContent>
               <TextFieldName
                 fullWidth
                 type="text"
-                placeholder="Api Name"
+                name="name"
+                value={value.name}
+                onChange={handleChange}
+              />
+            </BoxContent>
+            <BoxHeader>Detail:</BoxHeader>
+            <BoxContent>
+              <TextField
+                fullWidth
+                multiline
+                minRows={3}
+                maxRows={3}
+                type="text"
                 name="name"
                 value={value.name}
                 onChange={handleChange}
@@ -271,19 +194,18 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
         <BoxFooter>
           <Button
             variant="contained"
-            color="success"
+            color="primary"
             sx={{ width: "100%" }}
             autoFocus
             disabled={
-              !value.id ||
               !value.name ||
               !value.symbol ||
               !value.amount ||
               (value.amountType === "amount" && value.amount < 15)
             }
-            onClick={handleUpdateOrder}
+            onClick={handleCreateOrder}
           >
-            Save
+            Create
           </Button>
           <Button
             variant="contained"
@@ -300,4 +222,4 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
   )
 })
 
-export default UpdateOrder
+export default CreateOrder

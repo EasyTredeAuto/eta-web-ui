@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material"
 import React, { memo } from "react"
 import Select from "react-select"
-import { TextFieldSearch } from "../../Element/CustomMaterial.element"
-import { Component } from "../../Element/History.Element"
-import SpotHistoryTable from "./HistoryTable"
+import { TextFieldSearch } from "../../StyledComponent/CustomMaterial.element"
+import { Component } from "../../StyledComponent/History.Element"
+import SpotHistoryTable from "./transaction-table"
 
 const GridStyle = {
   gridGap: "1rem",

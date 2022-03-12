@@ -7,11 +7,11 @@ import {
   BoxContent,
   BoxSearch,
   Component,
-} from "../../Element/OrdersComponent.Element"
-import Overview from "./Overview"
+} from "../../StyledComponent/OrdersComponent.Element"
+import ListBot from "./Bots-table"
 import SearchIcon from "@mui/icons-material/Search"
 import InputBase from "@mui/material/InputBase"
-import CreateOrder from "../../Dialog/CreateOrder.dialog"
+import CreateBot from "./Create-bot.dialog"
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
@@ -58,15 +58,12 @@ const StyledInputBase = styled(InputBase)(({ theme }: any) => ({
   },
 }))
 
-const OrdersComponent = memo(() => {
-  console.log(9)
-
+const BotsComponent = memo(() => {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
-  console.log(1)
   return (
     <Component col={"100%"}>
       <Component col={"15% 85%"}>
@@ -75,7 +72,7 @@ const OrdersComponent = memo(() => {
           endIcon={<BsPlusCircleFill />}
           onClick={handleClickOpen}
         >
-          Create Order
+          New System Bot
         </Button>
         <BoxSearch>
           <Search>
@@ -99,11 +96,11 @@ const OrdersComponent = memo(() => {
         </BoxSearch>
       </Component>
       <BoxContent>
-        <Overview />
+        <ListBot />
       </BoxContent>
-      <CreateOrder open={open} setOpen={setOpen} />
+      <CreateBot open={open} setOpen={setOpen} />
     </Component>
   )
 })
 
-export default OrdersComponent
+export default BotsComponent

@@ -50,7 +50,7 @@ export const deleteOrder = async (
     .then((result) => result)
     .catch((err) => console.log(err))
 
-  if (result.data) {
+  if (result?.data) {
     callBack()
   }
 }

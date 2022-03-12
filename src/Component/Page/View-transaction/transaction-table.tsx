@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
-import { BoxContent } from "../../Element/History.Element"
+import { BoxContent } from "../../StyledComponent/History.Element"
 import { useRecoilState } from "recoil"
 import {
   transactionsState,
@@ -14,7 +14,7 @@ import {
 } from "../../../Recoil/atoms"
 import moment from "moment"
 import { getTransaction } from "../../../Recoil/actions/transaction"
-import { Bade } from "../../Element/Dashboard.Element"
+import { Bade } from "../../StyledComponent/Dashboard.Element"
 
 const HistoryTable = memo(() => {
   console.log(7)

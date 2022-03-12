@@ -6,26 +6,30 @@ import DialogTitle from "@mui/material/DialogTitle"
 import DialogContent from "@mui/material/DialogContent"
 import DialogActions from "@mui/material/DialogActions"
 import IconButton from "@mui/material/IconButton"
+
 import {
   BoxContent,
   BoxHeader,
   Component,
   BoxFooter,
-} from "../Element/CreateOrder.Dialog.Element"
-import { SelectBase } from "../Element/CustomReact.element"
-import { TextFieldName } from "../Element/CustomMaterial.element"
-import { TextField } from "@mui/material"
+} from "../../StyledComponent/CreateOrder.Dialog.Element"
+import { SelectBase } from "../../StyledComponent/CustomReact.element"
+import {
+  NumberFormatCustom,
+  TextFieldName,
+} from "../../StyledComponent/CustomMaterial.element"
+import { Checkbox, FormControlLabel } from "@mui/material"
 import {
   assetState,
   orderValueState,
   coinsState,
   orderDataState,
   orderPagingState,
-} from "../../Recoil/atoms"
+} from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getListOrders, createToken } from "../../Recoil/actions/manageOrders"
+import { getListOrders, createToken } from "../../../Recoil/actions/manageOrders"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -93,6 +97,35 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     setValue({ ...value, asset, currency, symbol: _e.value })
   }
 
+  const handleChangeSide = (_e: any) => {
+    setValue({ ...value, side: _e.value })
+  }
+
+  const handleChangeType = (_e: any) => {
+    setValue({ ...value, type: _e.value })
+  }
+
+  const handleChangeAmountType = (_e: any) => {
+    if (_e.target.checked) {
+      const amount = value.amount && value.amount > 100 ? 100 : value.amount
+      setValue({ ...value, amountType: "percent", amount })
+    } else {
+      setValue({ ...value, amountType: "amount" })
+    }
+  }
+
+  const handleChangeAmount = (e: any) => {
+    const elementValue = parseFloat(e.target.value.split(",").join(""))
+    const elementName = e.target.name
+    if (value.amountType === "percent") {
+      const amount = elementValue > 100 ? 100 : elementValue
+      setValue({
+        ...value,
+        [elementName]: amount,
+      })
+    } else setValue({ ...value, [elementName]: elementValue })
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const elementValue = e.target.value
     const elementName = e.target.name
@@ -134,6 +167,16 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     setOptions(coins.data)
   }, [coins.data])
 
+  const optionSide = [
+    { value: "buy", label: "Buy" },
+    { value: "sell", label: "Sell" },
+  ]
+
+  const optionType = [
+    { value: "limit", label: "Limit" },
+    { value: "market", label: "Market" },
+  ]
+
   const handleChangeFetchingMyBots = async () => {
     getListOrders(paging, setOrderList)
   }
@@ -146,7 +189,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Create Bot System
+        Create Api Order
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -164,24 +207,59 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 onChange={handleSelectSymbol}
               />
             </BoxContent>
-            <BoxHeader>Name:</BoxHeader>
+            <BoxHeader>Side:</BoxHeader>
+            <Component col={"40% 7% 40%"}>
+              <BoxContent>
+                <SelectBase
+                  options={optionSide}
+                  value={optionSide.find((v) => v.value === value.side)}
+                  onChange={handleChangeSide}
+                  menuPosition={"fixed"}
+                  placeholder="Buy/Sell"
+                />
+              </BoxContent>
+              <BoxHeader>Type:</BoxHeader>
+              <BoxContent>
+                <SelectBase
+                  options={optionType}
+                  value={optionType.find((v) => v.value === value.type)}
+                  onChange={handleChangeType}
+                  menuPosition={"fixed"}
+                  placeholder="Limit/Market"
+                />
+              </BoxContent>
+            </Component>
+
+            <BoxHeader>Amount:</BoxHeader>
+            <Component col={"50% 50%"}>
+              <BoxContent>
+                <NumberFormatCustom
+                  placeholder={
+                    value.amountType !== "percent" ? "Minimum 15 token" : ""
+                  }
+                  name="amount"
+                  value={value.amount}
+                  thousandSeparator
+                  isNumericString
+                  onChange={handleChangeAmount}
+                />
+              </BoxContent>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    defaultChecked={value.amountType === "percent"}
+                    onChange={handleChangeAmountType}
+                  />
+                }
+                label="%"
+              />
+            </Component>
+            <BoxHeader>Order Name:</BoxHeader>
             <BoxContent>
               <TextFieldName
                 fullWidth
                 type="text"
-                name="name"
-                value={value.name}
-                onChange={handleChange}
-              />
-            </BoxContent>
-            <BoxHeader>Detail:</BoxHeader>
-            <BoxContent>
-              <TextField
-                fullWidth
-                multiline
-                minRows={3}
-                maxRows={3}
-                type="text"
+                placeholder="Order Name"
                 name="name"
                 value={value.name}
                 onChange={handleChange}

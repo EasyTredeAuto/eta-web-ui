@@ -11,11 +11,11 @@ import Navbar from "./Component/Layout/Navbar"
 import Sidebar from "./Component/Layout/Sidebar"
 
 // main page
-import ManageBot from "./Component/Page/ManageBots"
+import ManageBot from "./Component/Page/Manage-bots"
 
 import Dashboard from "./Component/Page/Dashboard/Dashboard"
-import History from "./Component/Page/History/History"
-import ManageOrder from "./Component/Page/ManageOrder/ManageOrder"
+import History from "./Component/Page/View-transaction"
+import ManageOrder from "./Component/Page/Manage-api-orders"
 
 import AccessDenied from "./Component/Page/AccessDenied"
 

@@ -19,7 +19,7 @@ import {
 } from "../../../Recoil/atoms"
 import { orderUpdateValueReq } from "../../../Recoil/atoms/coins"
 import { MdContentCopy, MdDelete } from "react-icons/md"
-import UpdateBot from "../../Dialog/UpdateOrder.dialog"
+import UpdateBot from "./Update-api-order.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
 

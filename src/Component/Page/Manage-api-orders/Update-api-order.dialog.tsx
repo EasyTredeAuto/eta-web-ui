@@ -6,30 +6,29 @@ import DialogTitle from "@mui/material/DialogTitle"
 import DialogContent from "@mui/material/DialogContent"
 import DialogActions from "@mui/material/DialogActions"
 import IconButton from "@mui/material/IconButton"
-
 import {
   BoxContent,
   BoxHeader,
   Component,
   BoxFooter,
-} from "../Element/CreateOrder.Dialog.Element"
-import { SelectBase } from "../Element/CustomReact.element"
+} from "../../StyledComponent/CreateOrder.Dialog.Element"
 import {
   NumberFormatCustom,
   TextFieldName,
-} from "../Element/CustomMaterial.element"
+} from "../../StyledComponent/CustomMaterial.element"
+import { SelectBase } from "../../StyledComponent/CustomReact.element"
 import { Checkbox, FormControlLabel } from "@mui/material"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import {
-  assetState,
-  orderValueState,
   coinsState,
   orderDataState,
+  orderValueUpdateState,
+  assetState,
   orderPagingState,
-} from "../../Recoil/atoms"
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+} from "../../../Recoil/atoms"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getListOrders, createToken } from "../../Recoil/actions/manageOrders"
+import { getListOrders, updateToken } from "../../../Recoil/actions/manageOrders"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -75,8 +74,9 @@ interface Props {
   setOpen: any
 }
 
-const CreateOrder = React.memo(({ open, setOpen }: Props) => {
-  console.log(1)
+const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
+  console.log(2)
+
   const handleClose = () => {
     setOpen(false)
   }
@@ -85,7 +85,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
-  const [value, setValue] = useRecoilState(orderValueState)
+  const [value, setValue] = useRecoilState(orderValueUpdateState)
   const paging = useRecoilValue(orderPagingState)
   const setOrderList = useSetRecoilState(orderDataState)
 
@@ -132,8 +132,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     setValue({ ...value, [elementName]: elementValue })
   }
 
-  const handleCreateOrder = async () => {
-    const result = await createToken(value)
+  const handleUpdateOrder = async () => {
+    const result = await updateToken(value)
     if (result.url) {
       await handleChangeFetchingMyBots()
       setOpen(false)
@@ -163,6 +163,10 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     }
   }
 
+  const handleChangeFetchingMyBots = async () => {
+    getListOrders(paging, setOrderList)
+  }
+
   useEffect(() => {
     setOptions(coins.data)
   }, [coins.data])
@@ -176,10 +180,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     { value: "limit", label: "Limit" },
     { value: "market", label: "Market" },
   ]
-
-  const handleChangeFetchingMyBots = async () => {
-    getListOrders(paging, setOrderList)
-  }
 
   return (
     <BootstrapDialog
@@ -229,7 +229,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 />
               </BoxContent>
             </Component>
-
             <BoxHeader>Amount:</BoxHeader>
             <Component col={"50% 50%"}>
               <BoxContent>
@@ -254,12 +253,12 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 label="%"
               />
             </Component>
-            <BoxHeader>Order Name:</BoxHeader>
+            <BoxHeader>Api Name:</BoxHeader>
             <BoxContent>
               <TextFieldName
                 fullWidth
                 type="text"
-                placeholder="Order Name"
+                placeholder="Api Name"
                 name="name"
                 value={value.name}
                 onChange={handleChange}
@@ -272,18 +271,19 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
         <BoxFooter>
           <Button
             variant="contained"
-            color="primary"
+            color="success"
             sx={{ width: "100%" }}
             autoFocus
             disabled={
+              !value.id ||
               !value.name ||
               !value.symbol ||
               !value.amount ||
               (value.amountType === "amount" && value.amount < 15)
             }
-            onClick={handleCreateOrder}
+            onClick={handleUpdateOrder}
           >
-            Create
+            Save
           </Button>
           <Button
             variant="contained"
@@ -300,4 +300,4 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   )
 })
 
-export default CreateOrder
+export default UpdateOrder

@@ -17,7 +17,7 @@ export const getTransaction = async (
     .then((result) => result)
     .catch((err) => console.log(err))
 
-  if (result.data) {
+  if (result?.data) {
     let data = []
     for (const row of result.data) {
       data.push({
@@ -42,7 +42,7 @@ export const getTransactionDashboard = async (
     .then((result) => result)
     .catch((err) => console.log(err))
 
-  if (result.data) {
+  if (result?.data) {
     let data = []
     for (const row of result.data) {
       data.push({
