@@ -17,15 +17,18 @@ import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
 import { TextField } from "@mui/material"
 import {
   assetState,
-  orderValueState,
   coinsState,
-  orderDataState,
-  orderPagingState,
+  botValueState,
+  botPagingState,
+  botDataState,
 } from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getListOrders, createToken } from "../../../Recoil/actions/manageOrders"
+import {
+  getListBots,
+  createBots,
+} from "../../../Recoil/actions/Manage-bot.action"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -81,9 +84,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
 
   const coins = useRecoilValue(coinsState)
   const assets = useRecoilValue(assetState)
-  const [value, setValue] = useRecoilState(orderValueState)
-  const paging = useRecoilValue(orderPagingState)
-  const setOrderList = useSetRecoilState(orderDataState)
+  const [value, setValue] = useRecoilState(botValueState)
+  const paging = useRecoilValue(botPagingState)
+  const setBotList = useSetRecoilState(botDataState)
 
   const handleSelectSymbol = (_e: any) => {
     const asset = assets.data.find((asset: string) =>
@@ -100,26 +103,31 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   }
 
   const handleCreateOrder = async () => {
-    const result = await createToken(value)
-    if (result.url) {
+    const result = await createBots(value)
+    if (result?.urlBuy && result?.urlSell) {
       await handleChangeFetchingMyBots()
       setOpen(false)
-      Swal.fire({
+      await Swal.fire({
         icon: "success",
-        title: result.message,
-        html: `<div>
-        <label>Url</label>
-        <input  type="text" disabled value="${result.url}" />
-        </div>`,
+        title: "The purchase order URL.",
+        input: "textarea",
+        inputValue: result.urlBuy,
         confirmButtonText: "Copy",
-      }).then(() => {
-        Swal.fire({
-          showConfirmButton: false,
-          timer: 1500,
-          title: "Copied!",
-          icon: "success",
-        })
-        navigator.clipboard.writeText(result.url)
+        preConfirm: () => navigator.clipboard.writeText(result.urlBuy),
+      })
+      await Swal.fire({
+        icon: "success",
+        title: "The sales order URL.",
+        input: "textarea",
+        inputValue: result.urlSell,
+        confirmButtonText: "Copy",
+        preConfirm: () => navigator.clipboard.writeText(result.urlSell),
+      })
+      Swal.fire({
+        showConfirmButton: false,
+        timer: 1500,
+        title: "done!",
+        icon: "success",
       })
     } else {
       setOpen(false)
@@ -135,7 +143,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   }, [coins.data])
 
   const handleChangeFetchingMyBots = async () => {
-    getListOrders(paging, setOrderList)
+    getListBots(paging, setBotList)
   }
 
   return (
@@ -146,7 +154,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Create Bot System
+        New System Bot
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -182,8 +190,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 minRows={3}
                 maxRows={3}
                 type="text"
-                name="name"
-                value={value.name}
+                name="detail"
+                value={value.detail}
                 onChange={handleChange}
               />
             </BoxContent>
@@ -197,12 +205,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={
-              !value.name ||
-              !value.symbol ||
-              !value.amount ||
-              (value.amountType === "amount" && value.amount < 15)
-            }
+            disabled={!value.symbol || value.name === "" || value.detail === ""}
             onClick={handleCreateOrder}
           >
             Create

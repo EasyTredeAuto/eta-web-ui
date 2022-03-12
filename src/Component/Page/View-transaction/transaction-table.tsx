@@ -13,7 +13,7 @@ import {
   transactionPagingState,
 } from "../../../Recoil/atoms"
 import moment from "moment"
-import { getTransaction } from "../../../Recoil/actions/transaction"
+import { getTransaction } from "../../../Recoil/actions/Transaction.action"
 import { Bade } from "../../StyledComponent/Dashboard.Element"
 
 const HistoryTable = memo(() => {

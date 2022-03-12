@@ -29,7 +29,7 @@ import {
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getListOrders, createToken } from "../../../Recoil/actions/manageOrders"
+import { getListOrders, createToken } from "../../../Recoil/actions/Manage-orders.action"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {

@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow"
 import {
   deleteOrder,
   getListOrders,
-} from "../../../Recoil/actions/manageOrders"
+} from "../../../Recoil/actions/Manage-orders.action"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
   orderValueUpdateState,
