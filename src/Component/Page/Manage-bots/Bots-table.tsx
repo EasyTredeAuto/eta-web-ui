@@ -32,8 +32,8 @@ const ListBotsTable = React.memo(() => {
   const [paging, setPaging] = useRecoilState(botPagingState)
   const [botList, setBotList] = useRecoilState(botDataState)
   const setValue = useSetRecoilState(botValueUpdateState)
-  console.log(botList)
   const handleUpdate = (Api: any) => {
+    console.log(Api)
     const data = {
       id: Api.id,
       name: Api.name,
@@ -46,7 +46,6 @@ const ListBotsTable = React.memo(() => {
     setOpen(true)
   }
   const handleView = (Api: any) => {
-    console.log(Api)
     const data = {
       id: Api.id,
       name: Api.name,
