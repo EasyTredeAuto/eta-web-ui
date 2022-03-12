@@ -77,13 +77,14 @@ const menuAdminList = [
   { path: "/manage/user", name: "Users", icon: iconAdmin },
   { path: "/manage/orders", name: "Orders", icon: iconOrders },
   { path: "/manage/bot", name: "System bot", icon: iconRobot },
+  { path: "/used/bot", name: "System bot", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },
 ]
 
 const menuList = [
   { path: "/", name: "Dashboard", icon: iconDashboard },
   { path: "/manage/orders", name: "Manage orders", icon: iconOrders },
-  { path: "/manage/bot", name: "System bot", icon: iconRobot },
+  { path: "/used/bot", name: "System bot", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },
 ]
 

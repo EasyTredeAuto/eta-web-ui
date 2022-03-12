@@ -8,52 +8,57 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
-  botDataState,
-  botPagingState,
-  botValueUpdateState,
+  botUserDataState,
+  botUserPagingState,
+  botValueUserUpdateState,
+  botDataOptionState,
 } from "../../../Recoil/atoms"
-import { botValueUpdateDto } from "../../../Recoil/atoms/bots"
+import {
+  botsUserDto,
+  botsUserViewDiaDto,
+  botValueUserUpdateDto,
+  botUserViewState
+} from "../../../Recoil/atoms/usedBot"
 import { MdContentCopy, MdDelete } from "react-icons/md"
-import ViewBot from "./Detail-bot.dialog"
 import UpdateBot from "./Update-bot.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
 import {
   deleteBots,
   getListBots,
-} from "../../../Recoil/actions/Manage-bot.action"
+  getListBotsOption,
+} from "../../../Recoil/actions/Used-bot.action"
 import Swal from "sweetalert2"
 import moment from "moment"
 import { TextName } from "../../StyledComponent/Fontsize.element"
+import ViewBot from "./Detail-bot.dialog"
 
 const ListBotsTable = React.memo(() => {
   const [open, setOpen] = React.useState(false)
   const [openView, setOpenDiaView] = React.useState(false)
-  const [paging, setPaging] = useRecoilState(botPagingState)
-  const [botList, setBotList] = useRecoilState(botDataState)
-  const setValue = useSetRecoilState(botValueUpdateState)
+  const [paging, setPaging] = useRecoilState(botUserPagingState)
+  const [botList, setBotList] = useRecoilState(botUserDataState)
+  const setBotListOption = useSetRecoilState(botDataOptionState)
+  const setValue = useSetRecoilState(botValueUserUpdateState)
+  const setValueView = useSetRecoilState(botUserViewState)
   const handleUpdate = (Api: any) => {
     const data = {
       id: Api.id,
-      name: Api.name,
-      detail: Api.detail,
-      symbol: Api.symbol,
-      asset: Api.asset,
-      currency: Api.currency,
-    } as botValueUpdateDto
+      type: Api.type,
+      amount: Api.amount,
+      amountType: Api.amountType,
+      botId: Api.botIds,
+    } as botValueUserUpdateDto
     setValue(data)
     setOpen(true)
   }
+
   const handleView = (Api: any) => {
     const data = {
-      id: Api.id,
       name: Api.name,
       detail: Api.detail,
-      symbol: Api.symbol,
-      asset: Api.asset,
-      currency: Api.currency,
-    } as botValueUpdateDto
-    setValue(data)
+    } as botsUserViewDiaDto
+    setValueView(data)
     setOpenDiaView(true)
   }
 
@@ -70,13 +75,13 @@ const ListBotsTable = React.memo(() => {
   const handleChangeFetchingOrders = async () => {
     getListBots(paging, setBotList)
   }
-  const handleChangeDelete = async (id: number, name: string) => {
+  const handleChangeDelete = async (row: botsUserDto, name: string) => {
     Swal.fire({
       icon: "info",
       title: `Are you sure to delete this ${name}?`,
       confirmButtonText: "Delete",
       confirmButtonColor: "red",
-      preConfirm: () => deleteBots(id, handleChangeFetchingOrders),
+      preConfirm: () => deleteBots(row, handleChangeFetchingOrders),
       showCancelButton: true,
     })
   }
@@ -87,6 +92,13 @@ const ListBotsTable = React.memo(() => {
     }
     fetchData()
   }, [paging, setBotList])
+
+  React.useEffect(() => {
+    function fetchData() {
+      getListBotsOption(setBotListOption)
+    }
+    fetchData()
+  }, [setBotListOption])
 
   return (
     <>
@@ -101,6 +113,7 @@ const ListBotsTable = React.memo(() => {
             <TableRow>
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Symbol</TableCell>
+              <TableCell align="center">Amount / Unit</TableCell>
               <TableCell align="center">Round</TableCell>
               <TableCell align="center">Create Date</TableCell>
               <TableCell align="center">Action</TableCell>
@@ -117,29 +130,16 @@ const ListBotsTable = React.memo(() => {
                 <TableCell align="center">
                   {row.symbol.toLocaleUpperCase()}
                 </TableCell>
+                <TableCell align="center">
+                  {`${parseFloat(row.amount)} ${
+                    row.amountType === "amount" ? row.currency : "%"
+                  }`}
+                </TableCell>
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center">
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
                 </TableCell>
                 <TableCell align="center">
-                  <Tooltip title="Copy purchase url" placement="top">
-                    <IconButton
-                      onClick={() => {
-                        navigator.clipboard.writeText(row.urlBuy)
-                      }}
-                    >
-                      <MdContentCopy />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Copy sales url" placement="top">
-                    <IconButton
-                      onClick={() => {
-                        navigator.clipboard.writeText(row.urlSell)
-                      }}
-                    >
-                      <MdContentCopy />
-                    </IconButton>
-                  </Tooltip>
                   <Tooltip title="Edit" placement="top">
                     <IconButton onClick={() => handleUpdate(row)}>
                       <FaEdit />
@@ -147,7 +147,7 @@ const ListBotsTable = React.memo(() => {
                   </Tooltip>
                   <Tooltip title="Delete" placement="top">
                     <IconButton
-                      onClick={() => handleChangeDelete(row.id, row.name)}
+                      onClick={() => handleChangeDelete(row, row.name)}
                     >
                       <MdDelete />
                     </IconButton>

@@ -16,7 +16,7 @@ export const login = async (user: LoginDto) => {
     .post(url, user, { headers: headerFirstAuth })
     .then((result) => result.data)
     .catch((err) => err)
-
+console.log(result)
   if (result.data) {
     const accessToken = result.data.accessToken
     const { id, email, roles } = result.data.user
@@ -88,6 +88,7 @@ export const remove = async (path: string) => {
 }
 
 const isNotUser = () => {
+  console.log('isNotUser')
   sessionStorage.removeItem("accessToken")
   sessionStorage.removeItem("email")
   sessionStorage.removeItem("id")
