@@ -103,7 +103,6 @@ const ListBotsTable = React.memo(() => {
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Symbol</TableCell>
               <TableCell align="center">Round</TableCell>
-              <TableCell align="center">User Amount</TableCell>
               <TableCell align="center">Create Date</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
@@ -120,7 +119,6 @@ const ListBotsTable = React.memo(() => {
                   {row.symbol.toLocaleUpperCase()}
                 </TableCell>
                 <TableCell align="center">{row.round}</TableCell>
-                <TableCell align="center">{row.userAmount}</TableCell>
                 <TableCell align="center">
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
                 </TableCell>

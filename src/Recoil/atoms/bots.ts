@@ -58,7 +58,6 @@ export interface botsDto {
   urlBuy: string
   urlSell: string
   round: number
-  userAmount: number
   active: boolean
   createdAt: Date
   updatedAt: Date
