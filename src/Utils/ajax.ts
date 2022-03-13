@@ -89,8 +89,8 @@ export const remove = async (path: string) => {
 
 const isNotUser = () => {
   console.log('isNotUser')
-  sessionStorage.removeItem("accessToken")
-  sessionStorage.removeItem("email")
-  sessionStorage.removeItem("id")
-  sessionStorage.removeItem("roles")
+  // sessionStorage.removeItem("accessToken")
+  // sessionStorage.removeItem("email")
+  // sessionStorage.removeItem("id")
+  // sessionStorage.removeItem("roles")
 }
