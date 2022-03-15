@@ -10,6 +10,7 @@ import {
 import { orderPagingState, orderDataState } from "./orders"
 import { botValueState, botPagingState, botDataState, botValueUpdateState } from "./bots"
 import { botValueUserState, botValueUserUpdateState, botUserPagingState, botUserDataState, botDataOptionState, botUserViewState } from "./usedBot"
+import { apikeyState, exchangeState } from "./apikey"
 
 export {
   // auth
@@ -40,5 +41,9 @@ export {
   botUserPagingState,
   botUserDataState,
   botDataOptionState,
-  botUserViewState
+  botUserViewState,
+
+  // api key
+  apikeyState,
+  exchangeState
 }

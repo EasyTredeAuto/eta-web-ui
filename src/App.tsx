@@ -13,6 +13,7 @@ import Sidebar from "./Component/Layout/Sidebar"
 // main page
 import ManageBot from "./Component/Page/Manage-bots"
 import UsedBot from "./Component/Page/Used-bots"
+import Setting from "./Component/Page/settings"
 
 import Dashboard from "./Component/Page/Dashboard/Dashboard"
 import History from "./Component/Page/View-transaction"
@@ -62,6 +63,7 @@ function App() {
               <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={ManageOrder} />}/>
               <Route path="/used/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={UsedBot} />}/>
               <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={History} />}/>
+              <Route path="/setting" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Setting} />}/>
               <Route path="/login" element={<PublicRoute component={Login} />}/>
               <Route path="/register" element={<PublicRoute component={Login} />}/>
               <Route path="*" element={<AccessDenied />}/>
