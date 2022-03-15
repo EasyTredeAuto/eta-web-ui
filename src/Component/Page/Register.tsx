@@ -3,16 +3,16 @@ import { BiLogInCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
 import { registerState } from "../../Recoil/atoms"
-import { TextFieldBase } from "../Element/CustomMaterial.element"
-import { TextHeaderH1 } from "../Element/Fontsize.element"
-import { ButtonLogin, LinkSignUp } from "../Element/Login.element"
+import { TextFieldBase } from "../StyledComponent/CustomMaterial.element"
+import { TextHeaderH1 } from "../StyledComponent/Fontsize.element"
+import { ButtonLogin, LinkSignUp } from "../StyledComponent/Login.element"
 import * as ajax from "../../Utils/ajax"
 import {
   BoxContent,
   BoxFooter,
   BoxRegister,
   Container,
-} from "../Element/Register.element"
+} from "../StyledComponent/Register.element"
 import { LoginDto } from "../../Recoil/atoms/auth"
 import Swal from "sweetalert2"
 

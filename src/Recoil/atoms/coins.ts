@@ -14,14 +14,14 @@ export interface Assets {
 }
 
 export const coinsState = atom({
-  key: "coins",
+  key: "coinsState",
   default: {
     data: [] as unknown as Coins,
   },
 })
 
 export const assetState = atom({
-  key: "asset",
+  key: "assetState",
   default: {
     data: [] as unknown as Assets,
   },
@@ -39,7 +39,7 @@ export interface orderValueReq {
 }
 
 export const orderValueState = atom({
-  key: "botValue",
+  key: "orderValueState",
   default: {
     name: "",
     symbol: undefined,
@@ -65,7 +65,7 @@ export interface orderUpdateValueReq {
 }
 
 export const orderValueUpdateState = atom({
-  key: "orderUpdateValue",
+  key: "orderValueUpdateState",
   default: {
     id: undefined,
     name: "",

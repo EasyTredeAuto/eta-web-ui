@@ -11,6 +11,8 @@ import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
 import { FaFirstOrder, FaRobot } from "react-icons/fa"
 import { RiAdminFill, RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
+import { AiFillSetting } from "react-icons/ai"
+import { GiRobotAntennas } from "react-icons/gi"
 import { useNavigate } from "react-router-dom"
 import { openSidebar } from "../../Recoil/atoms"
 import { useRecoilState } from "recoil"
@@ -68,23 +70,28 @@ const Drawer = styled(MuiDrawer, {
 }))
 const iconDashboard = <RiDashboardFill />
 const iconRobot = <FaRobot />
+const iconGrRobot = <GiRobotAntennas />
 const iconOrders = <FaFirstOrder />
 const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
+const iconSetting = <AiFillSetting />
 
 const menuAdminList = [
-  { path: "/dashboard/admin", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/user/admin", name: "Users", icon: iconAdmin },
+  { path: "/dashboard", name: "Dashboard", icon: iconDashboard },
+  { path: "/manage/user", name: "Users", icon: iconAdmin },
   { path: "/manage/orders", name: "Orders", icon: iconOrders },
-  { path: "/manage/bot", name: "System bot", icon: iconRobot },
-  { path: "/history/admin", name: "History", icon: iconHistory },
+  { path: "/manage/bot", name: "Manage bot", icon: iconGrRobot },
+  { path: "/used/bot", name: "System bot", icon: iconRobot },
+  { path: "/history", name: "History", icon: iconHistory },
+  { path: "/setting", name: "Setting", icon: iconSetting },
 ]
 
 const menuList = [
   { path: "/", name: "Dashboard", icon: iconDashboard },
   { path: "/manage/orders", name: "Manage orders", icon: iconOrders },
-  { path: "/manage/bot", name: "System bot", icon: iconRobot },
+  { path: "/used/bot", name: "System bot", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },
+  { path: "/setting", name: "Setting", icon: iconSetting },
 ]
 
 const Sidebar = React.memo(() => {

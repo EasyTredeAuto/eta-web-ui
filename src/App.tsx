@@ -11,9 +11,14 @@ import Navbar from "./Component/Layout/Navbar"
 import Sidebar from "./Component/Layout/Sidebar"
 
 // main page
+import ManageBot from "./Component/Page/Manage-bots"
+import UsedBot from "./Component/Page/Used-bots"
+import Setting from "./Component/Page/settings"
+
 import Dashboard from "./Component/Page/Dashboard/Dashboard"
-import History from "./Component/Page/History/History"
-import ManageBot from "./Component/Page/ManageOrder/ManageOrder"
+import History from "./Component/Page/View-transaction"
+import ManageOrder from "./Component/Page/Manage-api-orders"
+
 import AccessDenied from "./Component/Page/AccessDenied"
 
 // recoil
@@ -52,9 +57,13 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <DrawerHeader />
             <Routes>
-              <Route path="/" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
-              <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={ManageBot} />}/>
+              <Route path="/manage/bot" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
+
+              <Route path="/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
+              <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={ManageOrder} />}/>
+              <Route path="/used/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={UsedBot} />}/>
               <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={History} />}/>
+              <Route path="/setting" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Setting} />}/>
               <Route path="/login" element={<PublicRoute component={Login} />}/>
               <Route path="/register" element={<PublicRoute component={Login} />}/>
               <Route path="*" element={<AccessDenied />}/>

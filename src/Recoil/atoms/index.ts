@@ -8,6 +8,9 @@ import {
   orderValueState,
 } from "./coins"
 import { orderPagingState, orderDataState } from "./orders"
+import { botValueState, botPagingState, botDataState, botValueUpdateState } from "./bots"
+import { botValueUserState, botValueUserUpdateState, botUserPagingState, botUserDataState, botDataOptionState, botUserViewState } from "./usedBot"
+import { apikeyState, exchangeState } from "./apikey"
 
 export {
   // auth
@@ -21,10 +24,26 @@ export {
   // transaction
   transactionPagingState,
   transactionsState,
-
   // order
   orderPagingState,
   orderDataState,
   orderValueState,
   orderValueUpdateState,
+  //bots
+  botValueState,
+  botValueUpdateState,
+  botPagingState,
+  botDataState,
+
+  // bots user
+  botValueUserState,
+  botValueUserUpdateState,
+  botUserPagingState,
+  botUserDataState,
+  botDataOptionState,
+  botUserViewState,
+
+  // api key
+  apikeyState,
+  exchangeState
 }

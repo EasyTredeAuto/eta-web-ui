@@ -3,10 +3,10 @@ import {
   BoxContent,
   BoxHeader,
   Component,
-} from "../../Element/Dashboard.Element"
-import { Title } from "../../Element/Fontsize.element"
+} from "../../StyledComponent/Dashboard.Element"
+import { Title } from "../../StyledComponent/Fontsize.element"
 import { GiPayMoney, GiMoneyStack, GiTakeMyMoney } from "react-icons/gi"
-import TransactionLatest from "./TransactionLatest"
+import TransactionLatest from "./Transaction-vidget"
 
 const Dashboard = React.memo(() => {
   console.log(5)

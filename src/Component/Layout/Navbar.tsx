@@ -10,11 +10,11 @@ import Badge from "@mui/material/Badge"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import AccountCircle from "@mui/icons-material/AccountCircle"
 import { Menu, MenuItem } from "@mui/material"
-import { logout } from "../../Recoil/actions/auth"
+import { logout } from "../../Recoil/actions/Authentication.action"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import { coinsState, openSidebar } from "../../Recoil/atoms"
-import { getAsset, getSymbol } from "../../Recoil/actions/coin"
+import { getAsset, getSymbol } from "../../Recoil/actions/Coin.action"
 import { assetState } from "../../Recoil/atoms/coins"
 
 const drawerWidth = 240

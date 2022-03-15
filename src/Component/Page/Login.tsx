@@ -2,8 +2,8 @@ import {
   CheckboxRemember,
   FormLabel,
   TextFieldBase,
-} from "../Element/CustomMaterial.element"
-import { TextHeaderH1 } from "../Element/Fontsize.element"
+} from "../StyledComponent/CustomMaterial.element"
+import { TextHeaderH1 } from "../StyledComponent/Fontsize.element"
 import {
   BoxContent,
   BoxFooter,
@@ -12,7 +12,7 @@ import {
   Container,
   LinkForgotPassword,
   LinkSignUp,
-} from "../Element/Login.element"
+} from "../StyledComponent/Login.element"
 import { BiLogInCircle } from "react-icons/bi"
 import { memo, useRef } from "react"
 import { useRecoilState } from "recoil"
