@@ -126,7 +126,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
 
   const handleUpdateBot = async () => {
     const result = await updateBots(value)
-    console.log(result)
     if (result?.data && result.message === "successful") {
       await handleChangeFetchingMyBots()
       setOpen(false)
@@ -168,7 +167,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
           <Component col={"20% 80%"}>
             <BoxHeader>System Bot:</BoxHeader>
             <BoxContent>
-              {console.log(value)}
               <SelectBase
                 options={options}
                 value={options.find(

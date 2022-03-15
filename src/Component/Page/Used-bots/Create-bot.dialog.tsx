@@ -171,7 +171,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 )}
                 onChange={handleChangeBot}
                 menuPosition={"fixed"}
-                placeholder="Limit/Market"
               />
             </BoxContent>
 
