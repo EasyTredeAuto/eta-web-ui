@@ -17,6 +17,12 @@ export const transactionPagingState = atom({
   default: {
     page: 0,
     size: 10,
+    from: new Date(),
+    to: new Date(),
+    exchange: "binance",
+    symbol: null,
+    side: null,
+    type: null,
   },
 })
 

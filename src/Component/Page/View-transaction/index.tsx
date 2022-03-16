@@ -1,6 +1,13 @@
 import { Grid } from "@mui/material"
-import React, { memo } from "react"
+import moment from "moment"
+import React, { memo, useState, useEffect } from "react"
 import Select from "react-select"
+import { useRecoilState, useRecoilValue } from "recoil"
+import {
+  coinsState,
+  exchangeState,
+  transactionPagingState,
+} from "../../../Recoil/atoms"
 import { TextFieldSearch } from "../../StyledComponent/CustomMaterial.element"
 import { Component } from "../../StyledComponent/History.Element"
 import SpotHistoryTable from "./transaction-table"
@@ -10,14 +17,36 @@ const GridStyle = {
   padding: "1rem",
   boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 }
-
+const sideOption = [
+  { label: "Buy", value: "buy" },
+  { label: "Sell", value: "sell" },
+]
+const typeOption = [
+  { label: "Limit", value: "limit" },
+  { label: "Market", value: "market" },
+]
+interface optionDto {
+  label: string
+  value: string
+}
 const History = memo(() => {
-  console.log(8)
+  const [paging, setPaging] = useRecoilState(transactionPagingState)
+  const exchangesOption = useRecoilValue(exchangeState)
+  const coins = useRecoilValue(coinsState)
+  const [options, setOptions] = useState([] as optionDto[])
 
-  const options = [
-    { value: "spot", label: "Spot" },
-    // { value: "futures", label: "Futures" },
-  ]
+  const handleChangeSide = (e: any) => {
+    if (e) setPaging({ ...paging, side: e.value })
+    else setPaging({ ...paging, side: null })
+  }
+  const handleChangeType = (e: any) => {
+    if (e) setPaging({ ...paging, type: e.value })
+    else setPaging({ ...paging, type: null })
+  }
+
+  useEffect(() => {
+    setOptions(coins.data)
+  }, [coins.data])
 
   return (
     <Component style={GridStyle} col={"100%"}>
@@ -25,20 +54,36 @@ const History = memo(() => {
         <Grid item xs={4}>
           <TextFieldSearch
             fullWidth
-            type="text"
-            label="Api Name"
-            name="botName"
+            defaultValue={moment().startOf("day").format("YYYY-MM-DDTHH:mm")}
+            type="datetime-local"
+            name="timeFrame"
           />
         </Grid>
         <Grid item xs={4}>
-          <TextFieldSearch fullWidth type="datetime-local" name="timeFrame" />
+          <TextFieldSearch
+            fullWidth
+            defaultValue={moment().endOf("day").format("YYYY-MM-DDTHH:mm")}
+            type="datetime-local"
+            name="timeFrame"
+          />
         </Grid>
         <Grid item xs={4}>
-          <TextFieldSearch fullWidth type="datetime-local" name="timeFrame" />
+          <Select
+            options={exchangesOption}
+            value={exchangesOption.find((x) => x.value === paging.exchange)}
+            isClearable
+            isSearchable
+            placeholder="Exchange"
+            styles={{
+              // Fixes the overlapping problem of the component
+              menu: (provided) => ({ ...provided, zIndex: 9999 }),
+            }}
+          />
         </Grid>
         <Grid item xs={4}>
           <Select
             options={options}
+            value={options.find((x) => x.value === paging.symbol)}
             isClearable
             isSearchable
             placeholder="Symbol"
@@ -50,7 +95,9 @@ const History = memo(() => {
         </Grid>
         <Grid item xs={4}>
           <Select
-            options={options}
+            options={sideOption}
+            value={sideOption.find((x) => x.value === paging.side)}
+            onChange={handleChangeSide}
             isClearable
             isSearchable
             placeholder="Side"
@@ -62,7 +109,9 @@ const History = memo(() => {
         </Grid>
         <Grid item xs={4}>
           <Select
-            options={options}
+            options={typeOption}
+            value={typeOption.find((x) => x.value === paging.type)}
+            onChange={handleChangeType}
             isClearable
             isSearchable
             placeholder="Type"

@@ -28,7 +28,10 @@ import {
 } from "../../../Recoil/atoms"
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getListOrders, updateToken } from "../../../Recoil/actions/Manage-orders.action"
+import {
+  getListOrders,
+  updateToken,
+} from "../../../Recoil/actions/Manage-orders.action"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -90,11 +93,9 @@ const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
   const setOrderList = useSetRecoilState(orderDataState)
 
   const handleSelectSymbol = (_e: any) => {
-    const asset = assets.data.find((asset: string) =>
-      _e.value.startsWith(asset)
-    )
+    const asset = assets.data.find((x) => _e.value.startsWith(x.value))
     const currency = _e.value.split(asset)[1]
-    setValue({ ...value, asset, currency, symbol: _e.value })
+    setValue({ ...value, asset: asset?.value, currency, symbol: _e.value })
   }
 
   const handleChangeSide = (_e: any) => {

@@ -1,29 +1,25 @@
 import { atom } from "recoil"
 
 export interface Coins {
-  data: [
-    {
-      label: string
-      value: string
-    }
-  ]
+  label: string
+  value: string
 }
 export interface Assets {
-  find: any
-  data: [string]
+  label: string
+  value: string
 }
 
 export const coinsState = atom({
   key: "coinsState",
   default: {
-    data: [] as unknown as Coins,
+    data: [] as Coins[],
   },
 })
 
 export const assetState = atom({
   key: "assetState",
   default: {
-    data: [] as unknown as Assets,
+    data: [] as Assets[],
   },
 })
 

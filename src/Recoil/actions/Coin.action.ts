@@ -2,7 +2,7 @@ import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
 import { Assets, Coins } from "../atoms/coins"
 
-export const getSymbol = async (setCoins: SetterOrUpdater<{ data: Coins }>) => {
+export const getSymbol = async (setCoins: SetterOrUpdater<{ data: Coins[] }>) => {
   const result = await ajax
     .get(`/binance-coin/coins/price`)
     .then((result) => result)
@@ -17,7 +17,7 @@ export const getSymbol = async (setCoins: SetterOrUpdater<{ data: Coins }>) => {
   }
 }
 
-export const getAsset = async (setAsset: SetterOrUpdater<{ data: Assets }>) => {
+export const getAsset = async (setAsset: SetterOrUpdater<{ data: Assets[] }>) => {
   const result = await ajax
     .get(`/binance-coin/coins/asset`)
     .then((result) => result)
