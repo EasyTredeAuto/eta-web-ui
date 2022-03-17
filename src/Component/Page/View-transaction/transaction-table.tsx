@@ -13,7 +13,7 @@ import {
   transactionPagingState,
 } from "../../../Recoil/atoms"
 import moment from "moment"
-import { getTransaction } from "../../../Recoil/actions/Transaction.action"
+import { getAllTransactions } from "../../../Recoil/actions/Transaction.action"
 import { Bade } from "../../StyledComponent/Dashboard.Element"
 
 const HistoryTable = memo(() => {
@@ -38,7 +38,7 @@ const HistoryTable = memo(() => {
 
   useEffect(() => {
     async function handleFetchData() {
-      await getTransaction(paging, setTransactions)
+      await getAllTransactions(paging, setTransactions)
     }
     handleFetchData()
   }, [paging, setTransactions])
@@ -49,20 +49,20 @@ const HistoryTable = memo(() => {
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell align="center">No.</TableCell>
+              <TableCell align="center">Name</TableCell>
               <TableCell align="center">Symbol</TableCell>
               <TableCell align="center">Side</TableCell>
               <TableCell align="center">Type</TableCell>
-              <TableCell align="center">Quantity</TableCell>
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Amount</TableCell>
+              <TableCell align="right">Quantity</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Amount</TableCell>
               <TableCell align="center">Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {transactions.data.map((row, index) => (
               <TableRow key={index}>
-                <TableCell align="center">{index + 1}</TableCell>
+                <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
                 <TableCell align="center" sx={{ width: 50 }}>
                   <Bade

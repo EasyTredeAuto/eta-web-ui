@@ -79,7 +79,7 @@ const iconSetting = <AiFillSetting />
 const menuAdminList = [
   { path: "/dashboard", name: "Dashboard", icon: iconDashboard },
   { path: "/manage/user", name: "Users", icon: iconAdmin },
-  { path: "/manage/orders", name: "Orders", icon: iconOrders },
+  { path: "/manage/orders", name: "Url orders", icon: iconOrders },
   { path: "/manage/bot", name: "Manage bot", icon: iconGrRobot },
   { path: "/used/bot", name: "System bot", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },

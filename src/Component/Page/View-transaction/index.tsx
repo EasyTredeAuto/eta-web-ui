@@ -35,6 +35,14 @@ const History = memo(() => {
   const coins = useRecoilValue(coinsState)
   const [options, setOptions] = useState([] as optionDto[])
 
+  const handleChangeExchange = (e: any) => {
+    if (e) setPaging({ ...paging, exchange: e.value })
+    else setPaging({ ...paging, exchange: null })
+  }
+  const handleChangeSymbol = (e: any) => {
+    if (e) setPaging({ ...paging, symbol: e.value })
+    else setPaging({ ...paging, symbol: null })
+  }
   const handleChangeSide = (e: any) => {
     if (e) setPaging({ ...paging, side: e.value })
     else setPaging({ ...paging, side: null })
@@ -42,6 +50,9 @@ const History = memo(() => {
   const handleChangeType = (e: any) => {
     if (e) setPaging({ ...paging, type: e.value })
     else setPaging({ ...paging, type: null })
+  }
+  const handleChangeDate = (e: any) => {
+    setPaging({ ...paging, [e.target.name]: e.target.value })
   }
 
   useEffect(() => {
@@ -55,22 +66,25 @@ const History = memo(() => {
           <TextFieldSearch
             fullWidth
             defaultValue={moment().startOf("day").format("YYYY-MM-DDTHH:mm")}
+            onChange={handleChangeDate}
             type="datetime-local"
-            name="timeFrame"
+            name="from"
           />
         </Grid>
         <Grid item xs={4}>
           <TextFieldSearch
             fullWidth
             defaultValue={moment().endOf("day").format("YYYY-MM-DDTHH:mm")}
+            onChange={handleChangeDate}
             type="datetime-local"
-            name="timeFrame"
+            name="to"
           />
         </Grid>
         <Grid item xs={4}>
           <Select
             options={exchangesOption}
             value={exchangesOption.find((x) => x.value === paging.exchange)}
+            onChange={handleChangeExchange}
             isClearable
             isSearchable
             placeholder="Exchange"
@@ -84,6 +98,7 @@ const History = memo(() => {
           <Select
             options={options}
             value={options.find((x) => x.value === paging.symbol)}
+            onChange={handleChangeSymbol}
             isClearable
             isSearchable
             placeholder="Symbol"

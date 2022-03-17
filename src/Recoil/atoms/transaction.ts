@@ -2,12 +2,14 @@ import { atom } from "recoil"
 
 export interface transactionDto {
   id: number
+  name: string
   amount: number
   price: number
   quantity: number
   side: string
   symbol: string
   type: string
+  exchange: string
   createdAt: Date
   updatedAt: Date
 }
@@ -19,7 +21,7 @@ export const transactionPagingState = atom({
     size: 10,
     from: new Date(),
     to: new Date(),
-    exchange: "binance",
+    exchange: null,
     symbol: null,
     side: null,
     type: null,
