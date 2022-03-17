@@ -27,7 +27,7 @@ export const TextFieldBase = styled(TextField)`
 `
 export const TextFieldSearch = styled(TextField)`
   & label {
-    color: #cccccc;
+    color: #888;
     padding: 0;
     line-height: 10px;
   }
@@ -39,7 +39,7 @@ export const TextFieldSearch = styled(TextField)`
     padding: 7.5px 16px;
   }
   & .MuiOutlinedInput-root {
-    color: #cccc;
+    color: #888;
     & fieldset {
       border-color: #ccc;
     }
