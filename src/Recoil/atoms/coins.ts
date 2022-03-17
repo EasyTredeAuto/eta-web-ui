@@ -5,21 +5,21 @@ export interface Coins {
   value: string
 }
 export interface Assets {
-  label: string
-  value: string
+  find: any
+  data: [string]
 }
 
 export const coinsState = atom({
   key: "coinsState",
   default: {
-    data: [] as Coins[],
+    data: [] as unknown as Coins[],
   },
 })
 
 export const assetState = atom({
   key: "assetState",
   default: {
-    data: [] as Assets[],
+    data: [] as unknown as Assets,
   },
 })
 

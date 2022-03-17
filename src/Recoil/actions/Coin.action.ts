@@ -17,7 +17,7 @@ export const getSymbol = async (setCoins: SetterOrUpdater<{ data: Coins[] }>) =>
   }
 }
 
-export const getAsset = async (setAsset: SetterOrUpdater<{ data: Assets[] }>) => {
+export const getAsset = async (setAsset: SetterOrUpdater<{ data: Assets }>) => {
   const result = await ajax
     .get(`/binance-coin/coins/asset`)
     .then((result) => result)
