@@ -55,6 +55,13 @@ export const updateBots = async (value: botValueUserUpdateDto) => {
     .catch((err) => err)
 }
 
+export const updateActive = async (id: number, active: boolean) => {
+  return await ajax
+    .put(`/use-bot-user/${id}`, { active })
+    .then((result) => result)
+    .catch((err) => err)
+}
+
 export const deleteBots = async (
   row: botsUserDto,
   callBack: { (): Promise<void>; (): void }

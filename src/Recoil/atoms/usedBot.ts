@@ -75,7 +75,7 @@ export interface botsUserDto {
 }
 
 export const botUserDataState = atom({
-  key: "botDataState",
+  key: "botUserDataState",
   default: {
     count: 0,
     data: [] as botsUserDto[],
