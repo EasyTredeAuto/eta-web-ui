@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
+import Switch from "@mui/material/Switch"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
   botUserDataState,
@@ -17,9 +18,9 @@ import {
   botsUserDto,
   botsUserViewDiaDto,
   botValueUserUpdateDto,
-  botUserViewState
+  botUserViewState,
 } from "../../../Recoil/atoms/usedBot"
-import { MdContentCopy, MdDelete } from "react-icons/md"
+import { MdDelete } from "react-icons/md"
 import UpdateBot from "./Update-bot.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
@@ -27,6 +28,7 @@ import {
   deleteBots,
   getListBots,
   getListBotsOption,
+  updateActive,
 } from "../../../Recoil/actions/Used-bot.action"
 import Swal from "sweetalert2"
 import moment from "moment"
@@ -35,6 +37,7 @@ import ViewBot from "./Detail-bot.dialog"
 
 const ListBotsTable = React.memo(() => {
   const [open, setOpen] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [openView, setOpenDiaView] = React.useState(false)
   const [paging, setPaging] = useRecoilState(botUserPagingState)
   const [botList, setBotList] = useRecoilState(botUserDataState)
@@ -75,6 +78,25 @@ const ListBotsTable = React.memo(() => {
   const handleChangeFetchingOrders = async () => {
     getListBots(paging, setBotList)
   }
+  const handleActiveBot = async (row: any) => {
+    setLoading(true)
+    const result = await updateActive(row.id, !row.active)
+    if (result.data) {
+      const res = result.data
+      let newdata = []
+      for (const list of botList.data) {
+        if (list.id === res.id) {
+          newdata.push({
+            ...list,
+            active: list.active ? false : true,
+          } as botsUserDto)
+        } else newdata.push(list as botsUserDto)
+      }
+      setBotList({ ...botList, data: newdata })
+    }
+    setLoading(false)
+  }
+
   const handleChangeDelete = async (row: botsUserDto, name: string) => {
     Swal.fire({
       icon: "info",
@@ -100,6 +122,8 @@ const ListBotsTable = React.memo(() => {
     fetchData()
   }, [setBotListOption])
 
+  const label = { inputProps: { "aria-label": "Switch demo" } }
+
   return (
     <>
       <TableContainer
@@ -116,6 +140,7 @@ const ListBotsTable = React.memo(() => {
               <TableCell align="center">Amount / Unit</TableCell>
               <TableCell align="center">Round</TableCell>
               <TableCell align="center">Create Date</TableCell>
+              <TableCell align="center">Active</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -127,9 +152,7 @@ const ListBotsTable = React.memo(() => {
                     {row.name}
                   </TextName>
                 </TableCell>
-                <TableCell align="center">
-                  {row.symbol.toLocaleUpperCase()}
-                </TableCell>
+                <TableCell align="center">{row.symbol}</TableCell>
                 <TableCell align="center">
                   {`${parseFloat(row.amount)} ${
                     row.amountType === "amount" ? row.currency : "%"
@@ -138,6 +161,14 @@ const ListBotsTable = React.memo(() => {
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center">
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
+                </TableCell>
+                <TableCell align="center">
+                  <Switch
+                    {...label}
+                    checked={row.active}
+                    disabled={loading}
+                    onChange={() => handleActiveBot(row)}
+                  />
                 </TableCell>
                 <TableCell align="center">
                   <Tooltip title="Edit" placement="top">

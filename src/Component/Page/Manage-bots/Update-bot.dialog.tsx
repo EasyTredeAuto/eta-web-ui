@@ -102,7 +102,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
 
   const handleUpdateBot = async () => {
     const result = await updateBots(value)
-    console.log(result)
     if (result?.urlBuy && result?.urlSell) {
       await handleChangeFetchingMyBots()
       setOpen(false)

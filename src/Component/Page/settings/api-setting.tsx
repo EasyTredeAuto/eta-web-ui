@@ -27,7 +27,6 @@ const ApiSetting = React.memo(() => {
     } else {
       setLoading(true)
       const resu = await CreateOrUpdateApiKey(api)
-      console.log(resu)
       setApi({ ...api, edit: false })
       setLoading(false)
     }
