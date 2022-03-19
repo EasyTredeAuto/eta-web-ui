@@ -6,13 +6,14 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
+import Switch from "@mui/material/Switch"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
   botDataState,
   botPagingState,
   botValueUpdateState,
 } from "../../../Recoil/atoms"
-import { botValueUpdateDto } from "../../../Recoil/atoms/bots"
+import { botsDto, botValueUpdateDto } from "../../../Recoil/atoms/bots"
 import { MdContentCopy, MdDelete } from "react-icons/md"
 import ViewBot from "./Detail-bot.dialog"
 import UpdateBot from "./Update-bot.dialog"
@@ -21,6 +22,7 @@ import { FaEdit } from "react-icons/fa"
 import {
   deleteBots,
   getListBots,
+  updateActive,
 } from "../../../Recoil/actions/Manage-bot.action"
 import Swal from "sweetalert2"
 import moment from "moment"
@@ -28,6 +30,7 @@ import { TextName } from "../../StyledComponent/Fontsize.element"
 
 const ListBotsTable = React.memo(() => {
   const [open, setOpen] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [openView, setOpenDiaView] = React.useState(false)
   const [paging, setPaging] = useRecoilState(botPagingState)
   const [botList, setBotList] = useRecoilState(botDataState)
@@ -70,6 +73,24 @@ const ListBotsTable = React.memo(() => {
   const handleChangeFetchingOrders = async () => {
     getListBots(paging, setBotList)
   }
+  const handleActiveBot = async (row: any) => {
+    setLoading(true)
+    const result = await updateActive(row.id, !row.active)
+    if (result.data) {
+      const res = result.data
+      let newdata = []
+      for (const list of botList.data) {
+        if (list.id === res.id) {
+          newdata.push({
+            ...list,
+            active: list.active ? false : true,
+          } as botsDto)
+        } else newdata.push(list as botsDto)
+      }
+      setBotList({ ...botList, data: newdata })
+    }
+    setLoading(false)
+  }
   const handleChangeDelete = async (id: number, name: string) => {
     Swal.fire({
       icon: "info",
@@ -87,6 +108,7 @@ const ListBotsTable = React.memo(() => {
     }
     fetchData()
   }, [paging, setBotList])
+  const label = { inputProps: { "aria-label": "Switch demo" } }
 
   return (
     <>
@@ -103,6 +125,7 @@ const ListBotsTable = React.memo(() => {
               <TableCell align="center">Symbol</TableCell>
               <TableCell align="center">Round</TableCell>
               <TableCell align="center">Create Date</TableCell>
+              <TableCell align="center">Active</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -120,6 +143,14 @@ const ListBotsTable = React.memo(() => {
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center">
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
+                </TableCell>
+                <TableCell align="center">
+                  <Switch
+                    {...label}
+                    checked={row.active}
+                    disabled={loading}
+                    onChange={() => handleActiveBot(row)}
+                  />
                 </TableCell>
                 <TableCell align="center">
                   <Tooltip title="Copy purchase url" placement="top">

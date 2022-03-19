@@ -25,6 +25,12 @@ export const createBots = async (value: botValueDto) => {
     .then((result) => result)
     .catch((err) => err)
 }
+export const updateActive = async (id: number, active: boolean) => {
+  return await ajax
+    .put(`/manage-bot-admin/${id}`, { active })
+    .then((result) => result)
+    .catch((err) => err)
+}
 
 export const updateBots = async (value: botValueUpdateDto) => {
   return await ajax

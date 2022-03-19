@@ -20,7 +20,7 @@ import {
   botValueUserUpdateDto,
   botUserViewState,
 } from "../../../Recoil/atoms/usedBot"
-import { MdContentCopy, MdDelete } from "react-icons/md"
+import { MdDelete } from "react-icons/md"
 import UpdateBot from "./Update-bot.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
@@ -90,7 +90,7 @@ const ListBotsTable = React.memo(() => {
             ...list,
             active: list.active ? false : true,
           } as botsUserDto)
-        } else newdata.push(res as botsUserDto)
+        } else newdata.push(list as botsUserDto)
       }
       setBotList({ ...botList, data: newdata })
     }
