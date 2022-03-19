@@ -13,10 +13,8 @@ export const Container = styled.div`
 `
 
 export const Layout = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 45% 45%;
-  grid-gap: 5%;
+  width: 50%;
+  display: flex;
   justify-content: center;
 `
 
@@ -29,6 +27,15 @@ export const InputKeyContainer = styled.div`
   margin-top: 15px;
 `
 
+export const InputKeyContainerTwo = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 19% 72% 5%;
+  grid-gap: 2%;
+  justify-content: center;
+  margin-top: 15px;
+`
+
 export const Label = styled.div`
     width: 100%;
     display: flex;
@@ -36,7 +43,17 @@ export const Label = styled.div`
     justify-content: flex-end;
 `
 
+
 export const SelectBase = styled(Select)`
   width: 100%;
   margin-top: 15px;
+`
+
+export const H3 = styled.h3`
+  color: red;
+`
+
+export const P = styled.h3`
+  color: red;
+  font-size: 14px;
 `

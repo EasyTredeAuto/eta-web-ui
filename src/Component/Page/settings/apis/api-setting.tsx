@@ -1,19 +1,23 @@
 import { Button } from "@mui/material"
 import React from "react"
+import { BsQuestionLg } from "react-icons/bs"
 import { useRecoilState, useRecoilValue } from "recoil"
 import {
   CreateOrUpdateApiKey,
   getApiKey,
-} from "../../../Recoil/actions/Api-key.action"
-import { apikeyState, exchangeState } from "../../../Recoil/atoms"
-import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
-import { SelectBase } from "./styled.css"
+} from "../../../../Recoil/actions/Api-key.action"
+import { apikeyState, exchangeState } from "../../../../Recoil/atoms"
+import { TextFieldName } from "../../../StyledComponent/CustomMaterial.element"
+import { InputKeyContainerTwo, SelectBase } from "./styled.css"
 import { InputKeyContainer, Label } from "./styled.css"
+import { IconButton, Tooltip } from "@mui/material"
+import ApiAbout from "./binance-about"
 
 const ApiSetting = React.memo(() => {
   const [api, setApi] = useRecoilState(apikeyState)
   const exchanges = useRecoilValue(exchangeState)
   const [loading, setLoading] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     setApi({ ...api, [e.target.name]: e.target.value })
@@ -43,17 +47,29 @@ const ApiSetting = React.memo(() => {
 
   return (
     <div style={{ width: "100%" }}>
-      <SelectBase
-        className="basic-single"
-        classNamePrefix="select"
-        value={exchanges.find((ex) => ex.value === api.exchange)}
-        isSearchable
-        name="exchange"
-        onChange={handleChangeSelect}
-        options={exchanges}
-        isDisabled={loading}
-        isLoading={loading}
-      />
+      <InputKeyContainerTwo>
+        <Label>Exchange</Label>
+        <SelectBase
+          className="basic-single"
+          classNamePrefix="select"
+          value={exchanges.find((ex) => ex.value === api.exchange)}
+          isSearchable
+          name="exchange"
+          onChange={handleChangeSelect}
+          options={exchanges}
+          isDisabled={loading}
+          isLoading={loading}
+        />
+        <Tooltip title="How to add api" placement="top">
+          <IconButton
+            size="small"
+            style={{ marginTop: 15 }}
+            onClick={() => setOpen(true)}
+          >
+            <BsQuestionLg />
+          </IconButton>
+        </Tooltip>
+      </InputKeyContainerTwo>
       <InputKeyContainer>
         <Label>Api key</Label>
         <TextFieldName
@@ -95,6 +111,7 @@ const ApiSetting = React.memo(() => {
           ? "New Api key"
           : "Change Api key"}
       </Button>
+      <ApiAbout open={open} setOpen={setOpen} />
     </div>
   )
 })
