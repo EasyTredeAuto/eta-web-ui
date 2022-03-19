@@ -23,3 +23,10 @@ export const CreateOrUpdateApiKey = async (api: any) => {
     .then((result) => result)
     .catch((err) => console.log(err))
 }
+
+export const isCheckUserApi = async () => {
+  return await ajax
+    .get(`/setting-api/check`)
+    .then((result) => result)
+    .catch((err) => err)
+}

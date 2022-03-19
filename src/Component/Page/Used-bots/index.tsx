@@ -64,6 +64,7 @@ const BotsComponent = memo(() => {
   const handleClickOpen = () => {
     setOpen(true)
   }
+
   return (
     <Component col={"100%"}>
       <Component col={"15% 85%"}>
