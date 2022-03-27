@@ -14,6 +14,7 @@ import InputBase from "@mui/material/InputBase"
 import CreateBot from "./Create-bot.dialog"
 import { botPagingState } from "../../../Recoil/atoms"
 import { useRecoilState } from "recoil"
+import { isMobileOnly } from "mobile-device-detect"
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
@@ -85,7 +86,7 @@ const BotsComponent = memo(() => {
 
   return (
     <Component col={"100%"}>
-      <Component col={"15% 85%"}>
+      <Component col={isMobileOnly ? "1fr" :"15% 85%"}>
         <Button
           variant="contained"
           endIcon={<BsPlusCircleFill />}
@@ -102,7 +103,7 @@ const BotsComponent = memo(() => {
               style={{
                 border: "1px solid #4444",
                 borderRadius: "5px",
-                marginRight: "1rem",
+                marginRight: isMobileOnly ? 0 : "1rem",
               }}
             >
               <StyledInputBase

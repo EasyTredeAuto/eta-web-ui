@@ -13,7 +13,6 @@ export const Container = styled.div`
 `
 
 export const Layout = styled.div`
-  width: 50%;
   display: flex;
   justify-content: center;
 `
@@ -37,12 +36,10 @@ export const InputKeyContainerTwo = styled.div`
 `
 
 export const Label = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  width: 100%;
+  display: flex;
+  align-items: center;
 `
-
 
 export const SelectBase = styled(Select)`
   width: 100%;

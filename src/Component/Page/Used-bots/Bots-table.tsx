@@ -34,6 +34,7 @@ import Swal from "sweetalert2"
 import moment from "moment"
 import { TextName } from "../../StyledComponent/Fontsize.element"
 import ViewBot from "./Detail-bot.dialog"
+import { isMobileOnly } from "mobile-device-detect"
 
 const ListBotsTable = React.memo(() => {
   const [open, setOpen] = React.useState(false)
@@ -128,8 +129,10 @@ const ListBotsTable = React.memo(() => {
     <>
       <TableContainer
         sx={{
-          minHeight: 460,
-          maxHeight: "calc(100vh - 250px)",
+          minHeight: isMobileOnly ? "60vh" : 460,
+          maxHeight: isMobileOnly
+            ? "calc(100vh - 330px)"
+            : "calc(100vh - 250px)",
         }}
       >
         <Table size="small" aria-label="sticky table" stickyHeader>
@@ -148,18 +151,18 @@ const ListBotsTable = React.memo(() => {
             {botList.data.map((row, i) => (
               <TableRow key={i}>
                 <TableCell align="left">
-                  <TextName onClick={() => handleView(row)}>
+                  <TextName onClick={() => handleView(row)}style={{ minWidth: 200 }}>
                     {row.name}
                   </TextName>
                 </TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ minWidth: 150 }}>
                   {`${parseFloat(row.amount)} ${
                     row.amountType === "amount" ? row.currency : "%"
                   }`}
                 </TableCell>
                 <TableCell align="center">{row.round}</TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ minWidth: 200 }}>
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
                 </TableCell>
                 <TableCell align="center">
@@ -170,7 +173,7 @@ const ListBotsTable = React.memo(() => {
                     onChange={() => handleActiveBot(row)}
                   />
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center"style={{ minWidth: 120 }}>
                   <Tooltip title="Edit" placement="top">
                     <IconButton onClick={() => handleUpdate(row)}>
                       <FaEdit />

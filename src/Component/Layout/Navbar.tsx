@@ -16,8 +16,9 @@ import { useRecoilState, useSetRecoilState } from "recoil"
 import { coinsState, openSidebar } from "../../Recoil/atoms"
 import { getAsset, getSymbol } from "../../Recoil/actions/Coin.action"
 import { assetState } from "../../Recoil/atoms/coins"
+import { isMobileOnly } from "mobile-device-detect"
 
-const drawerWidth = 240
+const drawerWidth = isMobileOnly ? 0 : 240
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
@@ -68,7 +69,7 @@ const Navbar = React.memo(() => {
   }
 
   const handleDrawerOpen = () => {
-    setOpenSidebar({ open: true })
+    setOpenSidebar({ open: !sidebar.open })
   }
 
   const menuId = "primary-search-account-menu"
@@ -97,7 +98,7 @@ const Navbar = React.memo(() => {
           edge="start"
           sx={{
             marginRight: "36px",
-            ...(sidebar.open && { display: "none" }),
+            ...(sidebar.open && !isMobileOnly && { display: "none" }),
           }}
         >
           <MenuIcon />
@@ -105,7 +106,7 @@ const Navbar = React.memo(() => {
         <Typography variant="h6" noWrap component="div">
           Easy Trade Auto
         </Typography>
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+        <Box sx={{ display: { md: "flex" } }}>
           <IconButton
             size="large"
             aria-label="show 17 new notifications"

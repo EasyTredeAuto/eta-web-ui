@@ -2,7 +2,6 @@ import React from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
-import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
@@ -11,6 +10,8 @@ import { userPagingState, userListDataState } from "../../../Recoil/atoms"
 import moment from "moment"
 import { getUserList } from "../../../Recoil/actions/Users"
 import { Switch } from "@mui/material"
+import { isMobileOnly } from "mobile-device-detect"
+import { TableContainer } from "../../StyledComponent/CustomTable.Mui"
 
 const ListBotsTable = React.memo(() => {
   const [paging, setPaging] = useRecoilState(userPagingState)
@@ -39,7 +40,7 @@ const ListBotsTable = React.memo(() => {
     <>
       <TableContainer
         sx={{
-          minHeight: 460,
+          minHeight: isMobileOnly ? "70vh" : 460,
           maxHeight: "calc(100vh - 250px)",
         }}
       >
@@ -57,14 +58,14 @@ const ListBotsTable = React.memo(() => {
             {userList.data.map((row, i) => (
               <TableRow key={i}>
                 <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{row.roles}</TableCell>
-                <TableCell align="center">
+                <TableCell align="center">{row.roles}</TableCell>
+                <TableCell align="center" style={{ minWidth: 120 }}>
                   <Switch {...label} checked={row.active} disabled />
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ minWidth: 120 }}>
                   <Switch {...label} checked={row.apiActive} disabled />
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ minWidth: 200 }}>
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
                 </TableCell>
               </TableRow>

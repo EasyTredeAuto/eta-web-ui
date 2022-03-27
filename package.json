@@ -24,6 +24,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "material-auto-rotating-carousel": "^3.0.2",
+    "mobile-device-detect": "^0.4.3",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.2.1",
