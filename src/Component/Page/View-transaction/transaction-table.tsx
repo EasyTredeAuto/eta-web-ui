@@ -15,6 +15,7 @@ import {
 import moment from "moment"
 import { getAllTransactions } from "../../../Recoil/actions/Transaction.action"
 import { Bade } from "../../StyledComponent/Dashboard.Element"
+import { isMobileOnly } from "mobile-device-detect"
 
 const HistoryTable = memo(() => {
   console.log(7)
@@ -45,7 +46,14 @@ const HistoryTable = memo(() => {
 
   return (
     <BoxContent>
-      <TableContainer sx={{ minHeight: 360, maxHeight: "calc(100vh - 240px)" }}>
+      <TableContainer
+        sx={{
+          minHeight: isMobileOnly ? "45vh" : 360,
+          maxHeight: isMobileOnly
+            ? "calc(100vh - 350px)"
+            : "calc(100vh - 240px)",
+        }}
+      >
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
@@ -62,7 +70,9 @@ const HistoryTable = memo(() => {
           <TableBody>
             {transactions.data.map((row, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="left" style={{ minWidth: 200 }}>
+                  {row.name}
+                </TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
                 <TableCell align="center" sx={{ width: 50 }}>
                   <Bade
@@ -87,7 +97,7 @@ const HistoryTable = memo(() => {
                 <TableCell align="right">
                   {row.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ minWidth: 200 }}>
                   {moment(row.createdAt).format("DD-MMM-YYYY HH:mm:ss")}
                 </TableCell>
               </TableRow>

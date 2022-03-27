@@ -19,10 +19,11 @@ import { useRecoilState } from "recoil"
 import { AppRoles } from "../../Utils/roles"
 import { Collapse } from "@mui/material"
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
+import { isMobileOnly } from "mobile-device-detect"
 
 const role = sessionStorage.getItem("roles") as AppRoles | null
 
-const drawerWidth = 240
+const drawerWidth = isMobileOnly ? "100%" : 240
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -58,6 +59,9 @@ const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   width: drawerWidth,
+  position: isMobileOnly ? "fixed" : "static",
+  left: 0,
+  zIndex: 999,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -107,12 +111,19 @@ const Sidebar = React.memo(() => {
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
 
   const handleDrawerClose = () => {
-    setOpenSidebar({ open: false })
+    setOpenSidebar({ open: !sidebar.open })
+  }
+  const handleLinkPage = (path: string) => {
+    navigate(path)
+    if (isMobileOnly) setOpenSidebar({ open: false })
   }
 
   return (
     <Drawer
-      sx={{ background: "#212121" }}
+      sx={{
+        background: "#212121",
+        transform: isMobileOnly && !sidebar.open ? "translateX(-100%)" : null,
+      }}
       variant="permanent"
       open={sidebar.open}
     >
@@ -129,13 +140,21 @@ const Sidebar = React.memo(() => {
       <List>
         {role === "ADMIN"
           ? menuAdminList.map((text, i) => (
-              <ListItem button key={i} onClick={() => navigate(text.path)}>
+              <ListItem
+                button
+                key={i}
+                onClick={() => handleLinkPage(text.path)}
+              >
                 <ListItemIcon sx={{ fontSize: 26 }}>{text.icon}</ListItemIcon>
                 <ListItemText primary={text.name} />
               </ListItem>
             ))
           : menuList.map((text, i) => (
-              <ListItem button key={i} onClick={() => navigate(text.path)}>
+              <ListItem
+                button
+                key={i}
+                onClick={() => handleLinkPage(text.path)}
+              >
                 <ListItemIcon sx={{ fontSize: 26 }}>{text.icon}</ListItemIcon>
                 <ListItemText primary={text.name} />
               </ListItem>
@@ -152,7 +171,7 @@ const Sidebar = React.memo(() => {
             <ListItem
               sx={{ pl: 4 }}
               button
-              onClick={() => navigate("/setting-api")}
+              onClick={() => handleLinkPage("/setting-api")}
             >
               <ListItemIcon sx={{ fontSize: 26 }}>{iconApi}</ListItemIcon>
               <ListItemText primary={"Exchange Api"} />

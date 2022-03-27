@@ -62,7 +62,7 @@ const History = memo(() => {
   return (
     <Component style={GridStyle} col={"100%"}>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <TextFieldSearch
             fullWidth
             defaultValue={moment().startOf("day").format("YYYY-MM-DDTHH:mm")}
@@ -71,7 +71,7 @@ const History = memo(() => {
             name="from"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <TextFieldSearch
             fullWidth
             defaultValue={moment().endOf("day").format("YYYY-MM-DDTHH:mm")}
@@ -80,7 +80,7 @@ const History = memo(() => {
             name="to"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <Select
             options={exchangesOption}
             value={exchangesOption.find((x) => x.value === paging.exchange)}
@@ -94,7 +94,7 @@ const History = memo(() => {
             }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <Select
             options={options}
             value={options.find((x) => x.value === paging.symbol)}
@@ -108,7 +108,7 @@ const History = memo(() => {
             }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <Select
             options={sideOption}
             value={sideOption.find((x) => x.value === paging.side)}
@@ -122,7 +122,7 @@ const History = memo(() => {
             }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6} sm={4}>
           <Select
             options={typeOption}
             value={typeOption.find((x) => x.value === paging.type)}

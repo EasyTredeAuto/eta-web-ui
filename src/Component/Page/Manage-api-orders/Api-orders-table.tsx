@@ -22,6 +22,7 @@ import { MdContentCopy, MdDelete } from "react-icons/md"
 import UpdateBot from "./Update-api-order.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
+import { isMobileOnly } from "mobile-device-detect"
 
 const Overview = React.memo(() => {
   console.log(10)
@@ -82,8 +83,10 @@ const Overview = React.memo(() => {
     <>
       <TableContainer
         sx={{
-          minHeight: 460,
-          maxHeight: "calc(100vh - 250px)",
+          minHeight: isMobileOnly ? "60vh" : 460,
+          maxHeight: isMobileOnly
+            ? "calc(100vh - 330px)"
+            : "calc(100vh - 250px)",
         }}
       >
         <Table size="small" aria-label="sticky table" stickyHeader>

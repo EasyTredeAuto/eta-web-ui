@@ -58,7 +58,8 @@ export const TextFieldName = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: #333;
     & fieldset {
-      border-color: #ccc;
+      border-color: transparent;
+      background-color: transparent;
       height: 36 !important;
     }
     &:hover fieldset {
@@ -76,6 +77,7 @@ export const NumberFormatCustom = styled(NumberFormat)`
   border-radius: 5px;
   border: 1px solid #ccc;
   padding-left: 10px;
+  width: 100%;
 `
 
 export const FormLabel = styled(FormControlLabel)`

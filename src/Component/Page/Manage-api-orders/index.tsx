@@ -12,6 +12,7 @@ import Overview from "./Api-orders-table"
 import SearchIcon from "@mui/icons-material/Search"
 import InputBase from "@mui/material/InputBase"
 import CreateOrder from "./Create-api-order.dialog"
+import { isMobileOnly } from "mobile-device-detect"
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
@@ -69,7 +70,7 @@ const OrdersComponent = memo(() => {
   console.log(1)
   return (
     <Component col={"100%"}>
-      <Component col={"15% 85%"}>
+      <Component col={isMobileOnly ? "1fr" :"15% 85%"}>
         <Button
           variant="contained"
           endIcon={<BsPlusCircleFill />}
@@ -86,7 +87,7 @@ const OrdersComponent = memo(() => {
               style={{
                 border: "1px solid #4444",
                 borderRadius: "5px",
-                marginRight: "1rem",
+                marginRight: isMobileOnly ? 0 : "1rem",
               }}
             >
               <StyledInputBase

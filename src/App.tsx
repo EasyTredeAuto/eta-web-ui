@@ -34,6 +34,9 @@ import { PublicRoute } from "./Middleware/publicRoute"
 import { useState, useEffect } from "react"
 import { isCheckUserApi } from "./Recoil/actions/Api-key.action"
 
+// check device
+import { isMobileOnly } from "mobile-device-detect"
+
 const DrawerHeader = styled("div")(({ theme }:any) => ({
   display: "flex",
   alignItems: "center",
@@ -70,7 +73,7 @@ function App() {
           <CssBaseline />
           <Navbar />
           <Sidebar />
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Box component="main" sx={{ flexGrow: 1, p: isMobileOnly ? 2 : 3, pt:3, width: isMobileOnly ? "100%" : "auto" }}>
             <DrawerHeader />
             <Routes>
               <Route path="/manage/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>

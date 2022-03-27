@@ -14,7 +14,7 @@ import {
 } from "../../StyledComponent/CreateOrder.Dialog.Element"
 import { SelectBase } from "../../StyledComponent/CustomReact.element"
 import { NumberFormatCustom } from "../../StyledComponent/CustomMaterial.element"
-import { Checkbox, FormControlLabel } from "@mui/material"
+import { Checkbox, FormControlLabel, Grid } from "@mui/material"
 import {
   botValueUserUpdateState,
   botUserPagingState,
@@ -27,6 +27,7 @@ import {
   getListBots,
   updateBots,
 } from "../../../Recoil/actions/Used-bot.action"
+import { isMobileOnly } from "mobile-device-detect"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -151,6 +152,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleChangeFetchingMyBots = async () => {
     getListBots(paging, setBotList)
   }
+  const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
+  const StyleContent = { width: isMobileOnly ? "100%" : "90%" }
 
   return (
     <BootstrapDialog
@@ -164,44 +167,57 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
-          <Component col={"20% 80%"}>
-            <BoxHeader>System Bot:</BoxHeader>
-            <BoxContent>
-              <SelectBase
-                options={options}
-                value={options.find(
-                  (v: { value: number | undefined }) => v.value === value.botId
-                )}
-                onChange={handleChangeBot}
-                menuPosition={"fixed"}
-              />
-            </BoxContent>
-
-            <BoxHeader>Type:</BoxHeader>
-            <BoxContent>
-              <SelectBase
-                options={optionType}
-                value={optionType.find((v) => v.value === value.type)}
-                onChange={handleChangeType}
-                menuPosition={"fixed"}
-                placeholder="Limit/Market"
-              />
-            </BoxContent>
-
-            <BoxHeader>Amount:</BoxHeader>
-            <Component col={"50% 50%"}>
-              <BoxContent>
-                <NumberFormatCustom
-                  placeholder={
-                    value.amountType !== "percent" ? "Minimum 15 token" : ""
-                  }
-                  name="amount"
-                  value={value.amount}
-                  thousandSeparator
-                  isNumericString
-                  onChange={handleChangeAmount}
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>System Bot:</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={9}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  options={options}
+                  value={options.find(
+                    (v: { value: number | undefined }) =>
+                      v.value === value.botId
+                  )}
+                  onChange={handleChangeBot}
+                  menuPosition={"fixed"}
                 />
               </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>Type:</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={9}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  options={optionType}
+                  value={optionType.find((v) => v.value === value.type)}
+                  onChange={handleChangeType}
+                  menuPosition={"fixed"}
+                  placeholder="Limit/Market"
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>Amount:</BoxHeader>
+            </Grid>
+            <Grid item xs={9} sm={4} lg={6}>
+              <NumberFormatCustom
+                placeholder={
+                  value.amountType !== "percent" ? "Minimum 15 token" : ""
+                }
+                name="amount"
+                value={value.amount}
+                thousandSeparator
+                isNumericString
+                onChange={handleChangeAmount}
+              />
+            </Grid>
+            <Grid item xs={3} sm={4} lg={2}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -211,8 +227,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 }
                 label="%"
               />
-            </Component>
-          </Component>
+            </Grid>
+          </Grid>
         </Component>
       </DialogContent>
       <DialogActions>

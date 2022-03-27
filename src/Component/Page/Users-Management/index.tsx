@@ -11,6 +11,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import InputBase from "@mui/material/InputBase"
 import { useRecoilState } from "recoil"
 import { userPagingState } from "../../../Recoil/atoms"
+import { deviceDetect, isMobileOnly } from "mobile-device-detect"
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
@@ -58,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }: any) => ({
 }))
 
 const BotsComponent = memo(() => {
+  console.log(deviceDetect(), isMobileOnly)
   const [paging, setPaging] = useRecoilState(userPagingState)
   const [debouncedTerm, setDebouncedTerm] = useState(paging.search)
 
@@ -76,8 +78,8 @@ const BotsComponent = memo(() => {
 
   return (
     <Component col={"100%"}>
-      <Component col={"15% 85%"}>
-        <h4>Is all user</h4>
+      <Component col={isMobileOnly ? "100%" : "15% 85%"}>
+        {!isMobileOnly && <h4>Is all user</h4>}
         <BoxSearch>
           <Search>
             <SearchIconWrapper>
@@ -87,7 +89,7 @@ const BotsComponent = memo(() => {
               style={{
                 border: "1px solid #4444",
                 borderRadius: "5px",
-                marginRight: "1rem",
+                marginRight: isMobileOnly ? 0 : "1rem",
               }}
             >
               <StyledInputBase
