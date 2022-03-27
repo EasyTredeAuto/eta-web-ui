@@ -13,6 +13,7 @@ import Sidebar from "./Component/Layout/Sidebar"
 
 // main page
 import ManageBot from "./Component/Page/Manage-bots"
+import ManageUser from "./Component/Page/Users-Management"
 import UsedBot from "./Component/Page/Used-bots"
 import SettingApi from "./Component/Page/settings/apis"
 
@@ -72,6 +73,7 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <DrawerHeader />
             <Routes>
+              <Route path="/manage/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
               <Route path="/manage/bot" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
               <Route path="/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
               <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/>

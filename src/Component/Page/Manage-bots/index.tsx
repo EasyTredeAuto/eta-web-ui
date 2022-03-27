@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { memo, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { styled, alpha } from "@mui/material/styles"
 import Button from "@mui/material/Button"
 import { BsPlusCircleFill } from "react-icons/bs"
@@ -12,6 +12,8 @@ import ListBot from "./Bots-table"
 import SearchIcon from "@mui/icons-material/Search"
 import InputBase from "@mui/material/InputBase"
 import CreateBot from "./Create-bot.dialog"
+import { botPagingState } from "../../../Recoil/atoms"
+import { useRecoilState } from "recoil"
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",
@@ -64,6 +66,23 @@ const BotsComponent = memo(() => {
   const handleClickOpen = () => {
     setOpen(true)
   }
+
+  const [paging, setPaging] = useRecoilState(botPagingState)
+  const [debouncedTerm, setDebouncedTerm] = useState(paging.search)
+
+  // update 'term' value after 1 second from the last update of 'debouncedTerm'
+  useEffect(() => {
+    const timer = setTimeout(
+      () => setPaging({ ...paging, search: debouncedTerm }),
+      1000
+    )
+    return () => clearTimeout(timer)
+  }, [debouncedTerm])
+
+  const handleSearch = async (e: any) => {
+    setDebouncedTerm(e.target.value)
+  }
+
   return (
     <Component col={"100%"}>
       <Component col={"15% 85%"}>
@@ -90,6 +109,7 @@ const BotsComponent = memo(() => {
                 id="search"
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                onChange={handleSearch}
               />
             </div>
           </Search>
