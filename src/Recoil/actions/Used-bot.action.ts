@@ -11,11 +11,12 @@ export const getListBots = async (
   paging: {
     page: number
     size: number
+    search: string
   },
   setBotList: SetterOrUpdater<{ count: number; data: botsUserDto[] }>
 ) => {
   const result = await ajax
-    .get(`/use-bot-user/${paging.page}/${paging.size}`)
+    .get(`/use-bot-user/${paging.page}/${paging.size}?search=${paging.search}`)
     .then((result) => result)
     .catch((err) => console.log(err))
 

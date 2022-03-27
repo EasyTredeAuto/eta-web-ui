@@ -36,12 +36,19 @@ export const botValueUserUpdateState = atom({
   } as botValueUserUpdateDto,
 })
 
+export interface PagingDto {
+  page: number
+  size: number
+  search: string
+}
+
 export const botUserPagingState = atom({
   key: "botPagingState",
   default: {
     page: 0,
     size: 10,
-  },
+    search: "",
+  } as PagingDto,
 })
 
 export interface botsUserViewDiaDto {
