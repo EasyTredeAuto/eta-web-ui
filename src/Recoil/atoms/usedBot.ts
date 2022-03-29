@@ -43,7 +43,7 @@ export interface PagingDto {
 }
 
 export const botUserPagingState = atom({
-  key: "botPagingState",
+  key: "botUserPagingState",
   default: {
     page: 0,
     size: 10,

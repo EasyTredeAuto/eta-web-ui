@@ -14,7 +14,7 @@ import {
 } from "../../StyledComponent/CreateOrder.Dialog.Element"
 import { SelectBase } from "../../StyledComponent/CustomReact.element"
 import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
-import { TextField } from "@mui/material"
+import { Grid, TextField } from "@mui/material"
 import {
   assetState,
   coinsState,
@@ -29,6 +29,7 @@ import {
   getListBots,
   createBots,
 } from "../../../Recoil/actions/Manage-bot.action"
+import { isMobileOnly } from "mobile-device-detect"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -89,7 +90,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const setBotList = useSetRecoilState(botDataState)
 
   const handleSelectSymbol = (_e: any) => {
-    const asset = assets.data.find((x:string) => _e.value.startsWith(x))
+    const asset = assets.data.find((x: string) => _e.value.startsWith(x))
     const currency = _e.value.split(asset)[1]
     setValue({ ...value, asset, currency, symbol: _e.value })
   }
@@ -144,6 +145,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     getListBots(paging, setBotList)
   }
 
+  const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
+  const StyleContent = { width: isMobileOnly ? "100%" : "90%" }
+
   return (
     <BootstrapDialog
       onClose={handleClose}
@@ -156,44 +160,61 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
-          <Component col={"20% 80%"}>
-            <BoxHeader>Symbol:</BoxHeader>
-            <BoxContent>
-              <SelectBase
-                options={options}
-                isSearchable
-                value={options.find(
-                  (v: { value: string | undefined }) => v.value === value.symbol
-                )}
-                menuPosition={"fixed"}
-                placeholder="Select Symbol"
-                onChange={handleSelectSymbol}
-              />
-            </BoxContent>
-            <BoxHeader>Name:</BoxHeader>
-            <BoxContent>
-              <TextFieldName
-                fullWidth
-                type="text"
-                name="name"
-                value={value.name}
-                onChange={handleChange}
-              />
-            </BoxContent>
-            <BoxHeader>Detail:</BoxHeader>
-            <BoxContent>
-              <TextField
-                fullWidth
-                multiline
-                minRows={3}
-                maxRows={3}
-                type="text"
-                name="detail"
-                value={value.detail}
-                onChange={handleChange}
-              />
-            </BoxContent>
-          </Component>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Symbol</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  options={options}
+                  isSearchable
+                  value={options.find(
+                    (v: { value: string | undefined }) =>
+                      v.value === value.symbol
+                  )}
+                  menuPosition={"fixed"}
+                  placeholder="Select Symbol"
+                  onChange={handleSelectSymbol}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Name</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
+                <TextFieldName
+                  fullWidth
+                  type="text"
+                  name="name"
+                  value={value.name}
+                  onChange={handleChange}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Detail</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
+                <TextField
+                  fullWidth
+                  multiline
+                  minRows={3}
+                  maxRows={3}
+                  type="text"
+                  name="detail"
+                  value={value.detail}
+                  onChange={handleChange}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
         </Component>
       </DialogContent>
       <DialogActions>

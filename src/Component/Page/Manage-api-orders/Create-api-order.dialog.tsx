@@ -18,7 +18,7 @@ import {
   NumberFormatCustom,
   TextFieldName,
 } from "../../StyledComponent/CustomMaterial.element"
-import { Checkbox, FormControlLabel } from "@mui/material"
+import { Checkbox, FormControlLabel, Grid } from "@mui/material"
 import {
   assetState,
   orderValueState,
@@ -33,6 +33,7 @@ import {
   getListOrders,
   createToken,
 } from "../../../Recoil/actions/Manage-orders.action"
+import { isMobileOnly } from "mobile-device-detect"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -182,6 +183,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     getListOrders(paging, setOrderList)
   }
 
+  const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
+  const StyleContent = { width: isMobileOnly ? "100%" : "90%" }
+
   return (
     <BootstrapDialog
       onClose={handleClose}
@@ -190,27 +194,36 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Create Api Order
+        Create Api
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
-          <Component col={"20% 80%"}>
-            <BoxHeader>Symbol:</BoxHeader>
-            <BoxContent>
-              <SelectBase
-                options={options}
-                isSearchable
-                value={options.find(
-                  (v: { value: string | undefined }) => v.value === value.symbol
-                )}
-                menuPosition={"fixed"}
-                placeholder="Select Symbol"
-                onChange={handleSelectSymbol}
-              />
-            </BoxContent>
-            <BoxHeader>Side:</BoxHeader>
-            <Component col={"40% 7% 40%"}>
-              <BoxContent>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Symbol</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  options={options}
+                  isSearchable
+                  value={options.find(
+                    (v: { value: string | undefined }) =>
+                      v.value === value.symbol
+                  )}
+                  menuPosition={"fixed"}
+                  placeholder="Select Symbol"
+                  onChange={handleSelectSymbol}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Side</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
                 <SelectBase
                   options={optionSide}
                   value={optionSide.find((v) => v.value === value.side)}
@@ -219,8 +232,14 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   placeholder="Buy/Sell"
                 />
               </BoxContent>
-              <BoxHeader>Type:</BoxHeader>
-              <BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Type</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
                 <SelectBase
                   options={optionType}
                   value={optionType.find((v) => v.value === value.type)}
@@ -229,11 +248,14 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   placeholder="Limit/Market"
                 />
               </BoxContent>
-            </Component>
-
-            <BoxHeader>Amount:</BoxHeader>
-            <Component col={"50% 50%"}>
-              <BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={3} lg={2}>
+              <BoxHeader style={label}>Amount</BoxHeader>
+            </Grid>
+            <Grid item xs={9} sm={7} lg={6}>
+              <BoxContent style={StyleContent}>
                 <NumberFormatCustom
                   placeholder={
                     value.amountType !== "percent" ? "Minimum 15 token" : ""
@@ -245,28 +267,38 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   onChange={handleChangeAmount}
                 />
               </BoxContent>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    defaultChecked={value.amountType === "percent"}
-                    onChange={handleChangeAmountType}
-                  />
-                }
-                label="%"
-              />
-            </Component>
-            <BoxHeader>Order Name:</BoxHeader>
-            <BoxContent>
-              <TextFieldName
-                fullWidth
-                type="text"
-                placeholder="Order Name"
-                name="name"
-                value={value.name}
-                onChange={handleChange}
-              />
-            </BoxContent>
-          </Component>
+            </Grid>
+            <Grid item xs={3} sm={2} lg={2}>
+              <BoxContent style={StyleContent}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      defaultChecked={value.amountType === "percent"}
+                      onChange={handleChangeAmountType}
+                    />
+                  }
+                  label="%"
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Api Name</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
+                <TextFieldName
+                  fullWidth
+                  type="text"
+                  placeholder="Api Name"
+                  name="name"
+                  value={value.name}
+                  onChange={handleChange}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
         </Component>
       </DialogContent>
       <DialogActions>

@@ -5,7 +5,7 @@ export const TextHeaderH1 = styled.h1`
   color: ${({ color }: { color?: string }) => color};
 `
 
-export const Title = styled.h3`
+export const Title = styled.h5`
   font-weight: ${({ bolder }: { bolder?: string }) => bolder};
   color: ${({ color }: { color?: string }) => color};
 `

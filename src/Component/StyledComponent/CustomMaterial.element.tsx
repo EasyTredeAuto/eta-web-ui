@@ -55,7 +55,7 @@ export const TextFieldName = styled(TextField)`
   & > div > input {
     padding: 7.5px 16px;
   }
-  & .MuiOutlinedInput-root {
+  &.MuiOutlinedInput-root {
     color: #333;
     & fieldset {
       border-color: transparent;
