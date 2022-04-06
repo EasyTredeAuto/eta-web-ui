@@ -14,7 +14,7 @@ import {
   LinkSignUp,
 } from "../StyledComponent/Login.element"
 import { BiLogInCircle } from "react-icons/bi"
-import { memo, useRef } from "react"
+import { memo, useRef, useState, useEffect } from "react"
 import { useRecoilState } from "recoil"
 import { LoginDto, loginState } from "../../Recoil/atoms/auth"
 import { useNavigate } from "react-router-dom"
@@ -25,6 +25,7 @@ const Login: React.FunctionComponent = memo(() => {
   const homeRef = useRef<HTMLAnchorElement>(null)
   const btnSubmit = useRef<HTMLButtonElement>(null)
   const [user, setUser] = useRecoilState(loginState)
+  const [remember, setRemember] = useState(false)
   const navigate = useNavigate()
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
@@ -49,6 +50,13 @@ const Login: React.FunctionComponent = memo(() => {
 
       if (result.id) {
         navigate("/")
+        if (remember) {
+          localStorage.setItem("email", user.email)
+          localStorage.setItem("password", user.password)
+        } else {
+          localStorage.removeItem("email")
+          localStorage.removeItem("password")
+        }
         window.location.reload()
       } else {
         Swal.fire({
@@ -59,6 +67,16 @@ const Login: React.FunctionComponent = memo(() => {
       }
     }
   }
+
+  useEffect(() => {
+    function fetchData() {
+      const email = localStorage.getItem("email")
+      const password = localStorage.getItem("password")
+      console.log(email, password)
+      setUser({ email: email ? email : "", password: password ? password : "" })
+    }
+    fetchData()
+  }, [setUser])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const elementValue = e.target.value
@@ -87,8 +105,10 @@ const Login: React.FunctionComponent = memo(() => {
             onKeyPress={handleKeywordKeyPress}
           />
           <TextFieldBase
+            value={user.password}
             style={{ marginTop: "1rem" }}
             fullWidth
+            focused={user.password !== ""}
             type="password"
             label="Password"
             name="password"
@@ -100,6 +120,8 @@ const Login: React.FunctionComponent = memo(() => {
               control={
                 <CheckboxRemember
                   sx={{ "& .MuiSvgIcon-root": { fontSize: 14 } }}
+                  checked={remember}
+                  onClick={() => setRemember(!remember)}
                 />
               }
               label="Remember Me"
