@@ -11,10 +11,9 @@ export const getListBots = async (
   setBotList: SetterOrUpdater<{ count: number; data: botsDto[] }>
 ) => {
   const result = await ajax
-    .get(`/manage-bot-admin/${paging.page}/${paging.size}?search=${paging.search}`)
+    .get(`/indicator/${paging.page}/${paging.size}?search=${paging.search}`)
     .then((result) => result)
     .catch((err) => console.log(err))
-
   if (result?.data) {
     setBotList({ count: result.count, data: result.data })
   }
@@ -22,20 +21,20 @@ export const getListBots = async (
 
 export const createBots = async (value: botValueDto) => {
   return await ajax
-    .post(`/manage-bot-admin`, value)
+    .post(`/indicator`, value)
     .then((result) => result)
     .catch((err) => err)
 }
 export const updateActive = async (id: number, active: boolean) => {
   return await ajax
-    .put(`/manage-bot-admin/${id}`, { active })
+    .put(`/indicator/${id}`, { active })
     .then((result) => result)
     .catch((err) => err)
 }
 
 export const updateBots = async (value: botValueUpdateDto) => {
   return await ajax
-    .put(`/manage-bot-admin`, value)
+    .put(`/indicator`, value)
     .then((result) => result)
     .catch((err) => err)
 }
@@ -45,7 +44,7 @@ export const deleteBots = async (
   callBack: { (): Promise<void>; (): void }
 ) => {
   const result = await ajax
-    .remove(`/manage-bot-admin/${id}`)
+    .remove(`/indicator/${id}`)
     .then((result) => result)
     .catch((err) => console.log(err))
 

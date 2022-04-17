@@ -12,23 +12,19 @@ import {
   Component,
   BoxFooter,
 } from "../../StyledComponent/CreateOrder.Dialog.Element"
-import { SelectBase } from "../../StyledComponent/CustomReact.element"
 import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
 import { Grid, TextField } from "@mui/material"
 import {
-  assetState,
-  coinsState,
   botValueState,
   botPagingState,
   botDataState,
 } from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 import {
   getListBots,
   createBots,
-} from "../../../Recoil/actions/Manage-bot.action"
+} from "../../../Recoil/actions/Indicator.action"
 import { isMobileOnly } from "mobile-device-detect"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
@@ -81,19 +77,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     setOpen(false)
   }
 
-  const [options, setOptions] = useState([] as any)
-
-  const coins = useRecoilValue(coinsState)
-  const assets = useRecoilValue(assetState)
   const [value, setValue] = useRecoilState(botValueState)
   const paging = useRecoilValue(botPagingState)
   const setBotList = useSetRecoilState(botDataState)
-
-  const handleSelectSymbol = (_e: any) => {
-    const asset = assets.data.find((x: string) => _e.value.startsWith(x))
-    const currency = _e.value.split(asset)[1]
-    setValue({ ...value, asset, currency, symbol: _e.value })
-  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const elementValue = e.target.value
@@ -137,10 +123,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     }
   }
 
-  useEffect(() => {
-    setOptions(coins.data)
-  }, [coins.data])
-
   const handleChangeFetchingMyBots = async () => {
     getListBots(paging, setBotList)
   }
@@ -156,30 +138,10 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        New System Bot
+        New Indicator
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} sm={4} lg={2}>
-              <BoxHeader style={label}>Symbol</BoxHeader>
-            </Grid>
-            <Grid item xs={12} sm={8} lg={8}>
-              <BoxContent style={StyleContent}>
-                <SelectBase
-                  options={options}
-                  isSearchable
-                  value={options.find(
-                    (v: { value: string | undefined }) =>
-                      v.value === value.symbol
-                  )}
-                  menuPosition={"fixed"}
-                  placeholder="Select Symbol"
-                  onChange={handleSelectSymbol}
-                />
-              </BoxContent>
-            </Grid>
-          </Grid>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12} sm={4} lg={2}>
               <BoxHeader style={label}>Name</BoxHeader>
@@ -209,7 +171,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   maxRows={3}
                   type="text"
                   name="detail"
-                  value={value.detail}
+                  value={value.description}
                   onChange={handleChange}
                 />
               </BoxContent>
@@ -224,7 +186,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={!value.symbol || value.name === "" || value.detail === ""}
+            disabled={value.name === "" || value.description === ""}
             onClick={handleCreateBot}
           >
             Create

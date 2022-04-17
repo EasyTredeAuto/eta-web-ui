@@ -9,7 +9,7 @@ export const getApiKey = async (
   exchange: string
 ) => {
   const result = await ajax
-    .get(`/setting-api/exchange/${exchange}`)
+    .get(`/secret-api/exchange/${exchange}`)
     .then((result) => result)
     .catch((err) => console.log(err))
   if (result.data) {
@@ -19,14 +19,14 @@ export const getApiKey = async (
 
 export const CreateOrUpdateApiKey = async (api: any) => {
   return await ajax
-    .post(`/setting-api`, api)
+    .post(`/secret-api`, api)
     .then((result) => result)
     .catch((err) => console.log(err))
 }
 
 export const isCheckUserApi = async () => {
   return await ajax
-    .get(`/setting-api/check`)
+    .get(`/secret-api/check`)
     .then((result) => result)
     .catch((err) => err)
 }

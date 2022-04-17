@@ -14,7 +14,7 @@ import {
   botValueUpdateState,
 } from "../../../Recoil/atoms"
 import { botsDto, botValueUpdateDto } from "../../../Recoil/atoms/bots"
-import { MdContentCopy, MdDelete } from "react-icons/md"
+import { MdDelete } from "react-icons/md"
 import ViewBot from "./Detail-bot.dialog"
 import UpdateBot from "./Update-bot.dialog"
 import { IconButton, Tooltip } from "@mui/material"
@@ -23,7 +23,7 @@ import {
   deleteBots,
   getListBots,
   updateActive,
-} from "../../../Recoil/actions/Manage-bot.action"
+} from "../../../Recoil/actions/Indicator.action"
 import Swal from "sweetalert2"
 import moment from "moment"
 import { TextName } from "../../StyledComponent/Fontsize.element"
@@ -40,10 +40,7 @@ const ListBotsTable = React.memo(() => {
     const data = {
       id: Api.id,
       name: Api.name,
-      detail: Api.detail,
-      symbol: Api.symbol,
-      asset: Api.asset,
-      currency: Api.currency,
+      description: Api.description,
     } as botValueUpdateDto
     setValue(data)
     setOpen(true)
@@ -52,10 +49,7 @@ const ListBotsTable = React.memo(() => {
     const data = {
       id: Api.id,
       name: Api.name,
-      detail: Api.detail,
-      symbol: Api.symbol,
-      asset: Api.asset,
-      currency: Api.currency,
+      description: Api.description,
     } as botValueUpdateDto
     setValue(data)
     setOpenDiaView(true)
@@ -125,7 +119,6 @@ const ListBotsTable = React.memo(() => {
           <TableHead>
             <TableRow>
               <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Symbol</TableCell>
               <TableCell align="center">Round</TableCell>
               <TableCell align="center">Create Date</TableCell>
               <TableCell align="center">Active</TableCell>
@@ -135,13 +128,13 @@ const ListBotsTable = React.memo(() => {
           <TableBody>
             {botList.data.map((row, i) => (
               <TableRow key={i}>
-                <TableCell align="left">
-                  <TextName onClick={() => handleView(row)} style={{ minWidth: 200 }}>
-                    {row.name}
-                  </TextName>
-                </TableCell>
                 <TableCell align="center">
-                  {row.symbol.toLocaleUpperCase()}
+                  <TextName
+                    onClick={() => handleView(row)}
+                    style={{ minWidth: 200 }}
+                  >
+                    {row.name.toUpperCase()}
+                  </TextName>
                 </TableCell>
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
@@ -156,24 +149,6 @@ const ListBotsTable = React.memo(() => {
                   />
                 </TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
-                  <Tooltip title="Copy purchase url" placement="top">
-                    <IconButton
-                      onClick={() => {
-                        navigator.clipboard.writeText(row.urlBuy)
-                      }}
-                    >
-                      <MdContentCopy />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Copy sales url" placement="top">
-                    <IconButton
-                      onClick={() => {
-                        navigator.clipboard.writeText(row.urlSell)
-                      }}
-                    >
-                      <MdContentCopy />
-                    </IconButton>
-                  </Tooltip>
                   <Tooltip title="Edit" placement="top">
                     <IconButton onClick={() => handleUpdate(row)}>
                       <FaEdit />

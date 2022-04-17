@@ -76,8 +76,8 @@ const Navbar = React.memo(() => {
 
   React.useEffect(() => {
     function fetchData() {
-      getAsset(setAsset)
-      getSymbol(setCoins)
+      // getAsset(setAsset)
+      // getSymbol(setCoins)
     }
     fetchData()
   }, [setAsset, setCoins])
