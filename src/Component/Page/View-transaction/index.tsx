@@ -69,6 +69,7 @@ const History = memo(() => {
             onChange={handleChangeDate}
             type="datetime-local"
             name="from"
+            size="small"
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -78,6 +79,7 @@ const History = memo(() => {
             onChange={handleChangeDate}
             type="datetime-local"
             name="to"
+            size="small"
           />
         </Grid>
         <Grid item xs={6} sm={4}>

@@ -3,6 +3,7 @@ import { atom } from "recoil"
 export interface botValueDto {
   name: string
   description: string
+  exchange: string
 }
 
 export const botValueState = atom({
@@ -10,6 +11,7 @@ export const botValueState = atom({
   default: {
     name: "",
     description: "",
+    exchange: "binance"
   } as botValueDto,
 })
 
@@ -17,6 +19,7 @@ export interface botValueUpdateDto {
   id: number | undefined
   name: string
   description: string
+  exchange: string
 }
 
 export const botValueUpdateState = atom({
@@ -25,6 +28,7 @@ export const botValueUpdateState = atom({
     id: undefined,
     name: "",
     description: "",
+    exchange: "",
   } as botValueUpdateDto,
 })
 
@@ -45,13 +49,9 @@ export const botPagingState = atom({
 
 export interface botsDto {
   id: number
-  symbol: string
-  asset: string
-  currency: string
   name: string
   description: string
-  urlBuy: string
-  urlSell: string
+  exchange: string
   round: number
   active: boolean
   createdAt: Date

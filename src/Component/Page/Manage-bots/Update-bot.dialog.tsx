@@ -13,11 +13,12 @@ import {
   BoxFooter,
 } from "../../StyledComponent/CreateOrder.Dialog.Element"
 import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
-import { Grid, TextField } from "@mui/material"
+import { Grid } from "@mui/material"
 import {
   botValueUpdateState,
   botPagingState,
   botDataState,
+  exchangeState,
 } from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import Swal from "sweetalert2"
@@ -26,6 +27,7 @@ import {
   updateBots,
 } from "../../../Recoil/actions/Indicator.action"
 import { isMobileOnly } from "mobile-device-detect"
+import { SelectBase } from "../../StyledComponent/CustomReact.element"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -79,41 +81,32 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const [value, setValue] = useRecoilState(botValueUpdateState)
   const paging = useRecoilValue(botPagingState)
   const setBotList = useSetRecoilState(botDataState)
+  const exchanges = useRecoilValue(exchangeState)
+  const [loading, setLoading] = React.useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const elementValue = e.target.value
     const elementName = e.target.name
     setValue({ ...value, [elementName]: elementValue })
   }
-
+  const handleChangeSelect = async (e: any) => {
+    setValue({ ...value, exchange: e.value })
+  }
   const handleUpdateBot = async () => {
+    setLoading(true)
     const result = await updateBots(value)
-    if (result?.urlBuy && result?.urlSell) {
+    if (result.data) {
       await handleChangeFetchingMyBots()
+      setLoading(false)
       setOpen(false)
-      await Swal.fire({
-        icon: "success",
-        title: "The purchase order URL.",
-        input: "textarea",
-        inputValue: result.urlBuy,
-        confirmButtonText: "Copy",
-        preConfirm: () => navigator.clipboard.writeText(result.urlBuy),
-      })
-      await Swal.fire({
-        icon: "success",
-        title: "The sales order URL.",
-        input: "textarea",
-        inputValue: result.urlSell,
-        confirmButtonText: "Copy",
-        preConfirm: () => navigator.clipboard.writeText(result.urlSell),
-      })
       Swal.fire({
         showConfirmButton: false,
         timer: 1500,
-        title: "done!",
+        title: result.message,
         icon: "success",
       })
     } else {
+      setLoading(false)
       setOpen(false)
       Swal.fire({
         icon: "error",
@@ -127,7 +120,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   }
 
   const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
-  const StyleContent = { width: isMobileOnly ? "100%" : "90%" }
+  // const StyleContent = { width: isMobileOnly ? "100%" : "90%" }
 
   return (
     <BootstrapDialog
@@ -146,8 +139,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
               <BoxHeader style={label}>Name</BoxHeader>
             </Grid>
             <Grid item xs={12} sm={8} lg={8}>
-              <BoxContent style={StyleContent}>
+              <BoxContent>
                 <TextFieldName
+                  size="small"
                   fullWidth
                   type="text"
                   name="name"
@@ -162,18 +156,36 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
               <BoxHeader style={label}>Detail</BoxHeader>
             </Grid>
             <Grid item xs={12} sm={8} lg={8}>
-              <BoxContent style={StyleContent}>
-                <TextField
+              <BoxContent>
+                <TextFieldName
                   fullWidth
                   multiline
                   minRows={3}
                   maxRows={3}
                   type="text"
-                  name="detail"
+                  name="description"
                   value={value.description}
                   onChange={handleChange}
                 />
               </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={4} lg={2}>
+              <BoxHeader style={label}>Exchange</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <SelectBase
+                className="basic-single"
+                classNamePrefix="select"
+                value={exchanges.find((ex) => ex.value === value.exchange)}
+                isSearchable
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                name="exchange"
+                onChange={handleChangeSelect}
+                options={exchanges}
+              />
             </Grid>
           </Grid>
         </Component>
@@ -186,7 +198,10 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             sx={{ width: "100%" }}
             autoFocus
             disabled={
-              !value.id || value.name === "" || value.description === ""
+              !value.id ||
+              value.name === "" ||
+              value.description === "" ||
+              loading
             }
             onClick={handleUpdateBot}
           >
@@ -198,6 +213,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             sx={{ background: "#aaa", width: "100%", marginLeft: "0.5rem" }}
             autoFocus
             onClick={handleClose}
+            disabled={loading}
           >
             Cancel
           </Button>

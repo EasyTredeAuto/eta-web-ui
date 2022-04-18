@@ -79,7 +79,7 @@ function App() {
               <Route path="/manage/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
               <Route path="/manage/bot" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
               <Route path="/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
-              <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/>
+              {/* <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/> */}
               <Route path="/used/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? UsedBot : NotApiKey} />}/>
               <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? History : NotApiKey} />}/>
               <Route path="/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/>

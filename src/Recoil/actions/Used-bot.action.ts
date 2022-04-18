@@ -16,7 +16,7 @@ export const getListBots = async (
   setBotList: SetterOrUpdater<{ count: number; data: botsUserDto[] }>
 ) => {
   const result = await ajax
-    .get(`/use-bot-user/${paging.page}/${paging.size}?search=${paging.search}`)
+    .get(`/indicator-user-mapping/${paging.page}/${paging.size}?search=${paging.search}`)
     .then((result) => result)
     .catch((err) => console.log(err))
 
@@ -44,21 +44,21 @@ export const getListBotsOption = async (setBotListOption: {
 
 export const createBots = async (value: botValueUserDto) => {
   return await ajax
-    .post(`/use-bot-user`, value)
+    .post(`/indicator-user-mapping`, value)
     .then((result) => result)
     .catch((err) => err)
 }
 
 export const updateBots = async (value: botValueUserUpdateDto) => {
   return await ajax
-    .put(`/use-bot-user`, value)
+    .put(`/indicator-user-mapping`, value)
     .then((result) => result)
     .catch((err) => err)
 }
 
 export const updateActive = async (id: number, active: boolean) => {
   return await ajax
-    .put(`/use-bot-user/${id}`, { active })
+    .put(`/indicator-user-mapping/${id}`, { active })
     .then((result) => result)
     .catch((err) => err)
 }
@@ -68,7 +68,7 @@ export const deleteBots = async (
   callBack: { (): Promise<void>; (): void }
 ) => {
   const result = await ajax
-    .remove(`/use-bot-user/${row.botIds}/${row.id}`)
+    .remove(`/indicator-user-mapping/${row.botIds}/${row.id}`)
     .then((result) => result)
     .catch((err) => console.log(err))
 

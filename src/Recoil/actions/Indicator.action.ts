@@ -43,12 +43,9 @@ export const deleteBots = async (
   id: number,
   callBack: { (): Promise<void>; (): void }
 ) => {
-  const result = await ajax
+  await ajax
     .remove(`/indicator/${id}`)
     .then((result) => result)
     .catch((err) => console.log(err))
-
-  if (result?.data) {
-    callBack()
-  }
+  callBack()
 }

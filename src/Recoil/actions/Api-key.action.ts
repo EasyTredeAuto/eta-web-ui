@@ -25,8 +25,9 @@ export const CreateOrUpdateApiKey = async (api: any) => {
 }
 
 export const isCheckUserApi = async () => {
-  return await ajax
+  const result = await ajax
     .get(`/secret-api/check`)
     .then((result) => result)
     .catch((err) => err)
+  return result
 }

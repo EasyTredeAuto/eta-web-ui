@@ -26,48 +26,39 @@ export const TextFieldBase = styled(TextField)`
   }
 `
 export const TextFieldSearch = styled(TextField)`
-  & label {
-    color: #888;
-    padding: 0;
-    line-height: 10px;
-  }
-  &:hover label,
-  & label.Mui-focused {
-    color: #055cfd;
+  & > div {
+    color: #333;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   & > div > input {
-    padding: 7.5px 16px;
+    width: 95%;
   }
-  & .MuiOutlinedInput-root {
-    color: #888;
-    & fieldset {
-      border-color: #ccc;
-    }
-    &:hover fieldset {
-      border-color: #055cfd;
-    }
-    &.Mui-focused fieldset {
-      border-color: #055cfd;
-    }
+  & > div:hover,
+  & > div:focus {
+    border-color: #055cfd;
+  }
+  & > div > fieldset {
+    display: none !important;
   }
 `
 export const TextFieldName = styled(TextField)`
-  & > div > input {
-    padding: 7.5px 16px;
-  }
-  &.MuiOutlinedInput-root {
+  & > div {
     color: #333;
-    & fieldset {
-      border-color: transparent;
-      background-color: transparent;
-      height: 36 !important;
-    }
-    &:hover fieldset {
-      border-color: #055cfd;
-    }
-    &.Mui-focused fieldset {
-      border-color: #055cfd;
-    }
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  & > div > input {
+    width: 95%;
+  }
+  & > div:hover,
+  & > div:focus {
+    border-color: #055cfd;
+  }
+  & > div > fieldset {
+    display: none !important;
   }
 `
 

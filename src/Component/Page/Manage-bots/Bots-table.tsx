@@ -41,6 +41,7 @@ const ListBotsTable = React.memo(() => {
       id: Api.id,
       name: Api.name,
       description: Api.description,
+      exchange: Api.exchange,
     } as botValueUpdateDto
     setValue(data)
     setOpen(true)
@@ -119,6 +120,7 @@ const ListBotsTable = React.memo(() => {
           <TableHead>
             <TableRow>
               <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Exchange</TableCell>
               <TableCell align="center">Round</TableCell>
               <TableCell align="center">Create Date</TableCell>
               <TableCell align="center">Active</TableCell>
@@ -135,6 +137,10 @@ const ListBotsTable = React.memo(() => {
                   >
                     {row.name.toUpperCase()}
                   </TextName>
+                </TableCell>
+                <TableCell align="center">
+                  {(row.exchange || "").charAt(0).toUpperCase() +
+                    (row.exchange || "").slice(1)}
                 </TableCell>
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
