@@ -60,7 +60,7 @@ const ListBotsTable = React.memo(() => {
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="center">{row.roles}</TableCell>
                 <TableCell align="center" style={{ minWidth: 120 }}>
-                  <Switch {...label} checked={row.active} disabled />
+                  <Switch {...label} checked={row.status === 'active'} disabled />
                 </TableCell>
                 <TableCell align="center" style={{ minWidth: 120 }}>
                   <Switch {...label} checked={row.apiActive} disabled />
