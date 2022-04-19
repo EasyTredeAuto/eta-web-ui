@@ -119,17 +119,14 @@ const ListBotsTable = React.memo(() => {
   }, [setBotListOption])
 
   const label = { inputProps: { "aria-label": "Switch demo" } }
+  const xsStyle = {
+    minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",
+    maxHeight: isMobileOnly ? "calc(100vh - 150px)" : "calc(100vh - 340px)",
+  }
 
   return (
     <>
-      <TableContainer
-        sx={{
-          minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",
-          maxHeight: isMobileOnly
-            ? "calc(100vh - 150px)"
-            : "calc(100vh - 340px)",
-        }}
-      >
+      <TableContainer sx={xsStyle}>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>

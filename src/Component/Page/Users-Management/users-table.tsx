@@ -10,7 +10,6 @@ import { userPagingState, userListDataState } from "../../../Recoil/atoms"
 import moment from "moment"
 import { getUserList } from "../../../Recoil/actions/Users"
 import { Switch } from "@mui/material"
-import { isMobileOnly } from "mobile-device-detect"
 import { TableContainer } from "../../StyledComponent/CustomTable.Mui"
 
 const ListBotsTable = React.memo(() => {

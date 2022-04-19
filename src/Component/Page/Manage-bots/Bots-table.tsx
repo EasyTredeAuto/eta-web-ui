@@ -36,7 +36,7 @@ const ListBotsTable = React.memo(() => {
   const [paging, setPaging] = useRecoilState(botPagingState)
   const [botList, setBotList] = useRecoilState(botDataState)
   const setValue = useSetRecoilState(botValueUpdateState)
-  const handleUpdate = (Api: any) => {
+  const handleUpdate = (Api: botsDto) => {
     const data = {
       id: Api.id,
       name: Api.name,
@@ -46,7 +46,7 @@ const ListBotsTable = React.memo(() => {
     setValue(data)
     setOpen(true)
   }
-  const handleView = (Api: any) => {
+  const handleView = (Api: botsDto) => {
     const data = {
       id: Api.id,
       name: Api.name,
@@ -71,7 +71,7 @@ const ListBotsTable = React.memo(() => {
   }
   const handleActiveBot = async (row: any) => {
     setLoading(true)
-    const result = await updateActive(row.id, !row.active)
+    await updateActive(row.id, !row.active)
     handleChangeFetchingOrders()
     setLoading(false)
   }
@@ -93,17 +93,13 @@ const ListBotsTable = React.memo(() => {
     fetchData()
   }, [paging, setBotList])
   const label = { inputProps: { "aria-label": "Switch demo" } }
-
+  const sxStyle = {
+    minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",
+    maxHeight: isMobileOnly ? "calc(100vh - 350px)" : "calc(100vh - 340px)",
+  }
   return (
     <>
-      <TableContainer
-        sx={{
-          minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",
-          maxHeight: isMobileOnly
-            ? "calc(100vh - 350px)"
-            : "calc(100vh - 340px)",
-        }}
-      >
+      <TableContainer sx={sxStyle}>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
