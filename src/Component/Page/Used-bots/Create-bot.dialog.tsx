@@ -20,6 +20,7 @@ import {
   botUserPagingState,
   botUserDataState,
   botDataOptionState,
+  binanceAssetState,
 } from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import Swal from "sweetalert2"
@@ -81,6 +82,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const [value, setValue] = useRecoilState(botValueUserState)
   const paging = useRecoilValue(botUserPagingState)
   const data = useRecoilValue(botDataOptionState)
+  const symbols = useRecoilValue(binanceAssetState)
+
   const setBotList = useSetRecoilState(botUserDataState)
   React.useEffect(() => {
     function fetOptions() {
@@ -94,11 +97,25 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   }, [data, setOptions])
 
   const handleChangeBot = (_e: any) => {
-    setValue({ ...value, botId: _e.value })
+    setValue({ ...value, indicatorIds: _e.value })
   }
 
   const handleChangeType = (_e: any) => {
     setValue({ ...value, type: _e.value })
+  }
+  const handleChangeTimeFleam = (_e: any) => {
+    setValue({ ...value, timeFleam: _e.value })
+  }
+  const handleChangeRange = (_e: any) => {
+    setValue({ ...value, range: _e.value })
+  }
+  const handleChangeSymbol = (_e: any) => {
+    setValue({
+      ...value,
+      symbol: _e.value,
+      asset: _e.value.split("USDT").join(""),
+      base: "USDT",
+    })
   }
 
   const handleChangeAmountType = (_e: any) => {
@@ -106,7 +123,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       const amount = value.amount && value.amount > 100 ? 100 : value.amount
       setValue({ ...value, amountType: "percent", amount })
     } else {
-      setValue({ ...value, amountType: "amount" })
+      setValue({ ...value, amountType: "currency" })
     }
   }
 
@@ -124,13 +141,14 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
 
   const handleCreateBot = async () => {
     const result = await createBots(value)
-    if (result?.data && result.message === "successful") {
+    if (result?.data) {
       await handleChangeFetchingMyBots()
       setOpen(false)
-      await Swal.fire({
-        icon: "success",
+      Swal.fire({
+        showConfirmButton: false,
+        timer: 1500,
         title: result.message,
-        confirmButtonText: "OK",
+        icon: "success",
       })
     } else {
       setOpen(false)
@@ -144,6 +162,16 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const optionType = [
     { value: "limit", label: "Limit" },
     { value: "market", label: "Market" },
+  ]
+  const optionTime = [
+    { value: "1m", label: "1m" },
+    { value: "30m", label: "30m" },
+    { value: "1h", label: "1h" },
+    { value: "1d", label: "1d" },
+  ]
+  const optionRang = [
+    { value: "sideway", label: "Sideway" },
+    { value: "trend", label: "Trend" },
   ]
 
   const handleChangeFetchingMyBots = async () => {
@@ -160,13 +188,13 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        New System Bot
+        Select Bot
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4} lg={3}>
-              <BoxHeader style={label}>System Bot:</BoxHeader>
+              <BoxHeader style={label}>Bot Indicator:</BoxHeader>
             </Grid>
             <Grid item xs={12} sm={8} lg={9}>
               <BoxContent style={StyleContent}>
@@ -174,9 +202,24 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   options={options}
                   value={options.find(
                     (v: { value: number | undefined }) =>
-                      v.value === value.botId
+                      v.value === value.indicatorIds
                   )}
                   onChange={handleChangeBot}
+                  menuPosition={"fixed"}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>Symbol:</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={9}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  options={symbols.data}
+                  value={symbols.data.find((v) => v.value === value.symbol)}
+                  onChange={handleChangeSymbol}
                   menuPosition={"fixed"}
                 />
               </BoxContent>
@@ -194,6 +237,36 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   onChange={handleChangeType}
                   menuPosition={"fixed"}
                   placeholder="Limit/Market"
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>TimeFleam:</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={9}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  options={optionTime}
+                  value={optionTime.find((v) => v.value === value.timeFleam)}
+                  onChange={handleChangeTimeFleam}
+                  menuPosition={"fixed"}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>Range:</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={9}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  options={optionRang}
+                  value={optionRang.find((v) => v.value === value.range)}
+                  onChange={handleChangeRange}
+                  menuPosition={"fixed"}
                 />
               </BoxContent>
             </Grid>
@@ -235,7 +308,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={!value.amount || !value.botId || !value.type}
+            disabled={!value.amount || !value.indicatorIds || !value.type}
             onClick={handleCreateBot}
           >
             Create

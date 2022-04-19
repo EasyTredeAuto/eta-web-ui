@@ -92,7 +92,7 @@ const BotsComponent = memo(() => {
           endIcon={<BsPlusCircleFill />}
           onClick={handleClickOpen}
         >
-          New System Bot
+          Add Bot
         </Button>
         <BoxSearch>
           <Search>

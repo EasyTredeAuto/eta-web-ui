@@ -72,19 +72,7 @@ const ListBotsTable = React.memo(() => {
   const handleActiveBot = async (row: any) => {
     setLoading(true)
     const result = await updateActive(row.id, !row.active)
-    if (result.data) {
-      const res = result.data
-      let newdata = []
-      for (const list of botList.data) {
-        if (list.id === res.id) {
-          newdata.push({
-            ...list,
-            active: list.active ? false : true,
-          } as botsDto)
-        } else newdata.push(list as botsDto)
-      }
-      setBotList({ ...botList, data: newdata })
-    }
+    handleChangeFetchingOrders()
     setLoading(false)
   }
   const handleChangeDelete = async (id: number, name: string) => {

@@ -13,10 +13,11 @@ import { Menu, MenuItem } from "@mui/material"
 import { logout } from "../../Recoil/actions/Authentication.action"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { coinsState, openSidebar } from "../../Recoil/atoms"
+import { coinsState, openSidebar, binanceAssetState } from "../../Recoil/atoms"
 import { getAsset, getSymbol } from "../../Recoil/actions/Coin.action"
 import { assetState } from "../../Recoil/atoms/coins"
 import { isMobileOnly } from "mobile-device-detect"
+import { getBinanceAsset } from "../../Recoil/actions/Used-bot.action"
 
 const drawerWidth = isMobileOnly ? 0 : 240
 
@@ -53,6 +54,7 @@ const Navbar = React.memo(() => {
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
   const setAsset = useSetRecoilState(assetState)
   const setCoins = useSetRecoilState(coinsState)
+  const setBinanceAsset = useSetRecoilState(binanceAssetState)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -78,9 +80,10 @@ const Navbar = React.memo(() => {
     function fetchData() {
       // getAsset(setAsset)
       // getSymbol(setCoins)
+      getBinanceAsset(setBinanceAsset)
     }
     fetchData()
-  }, [setAsset, setCoins])
+  }, [setBinanceAsset])
   
   return (
     <AppBar position="fixed" open={sidebar.open}>

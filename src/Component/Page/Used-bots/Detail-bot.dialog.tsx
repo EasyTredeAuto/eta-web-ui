@@ -73,7 +73,7 @@ const ViewBot = React.memo(({ open, setOpen }: Props) => {
           {value.name}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {value.detail}
+          {value.description}
         </Typography>
       </DialogContent>
     </BootstrapDialog>

@@ -1,38 +1,66 @@
 import { atom } from "recoil"
 
 export interface botValueUserDto {
+  symbol: string | undefined
+  asset: string | undefined
+  base: string | undefined
+  active: boolean
+  allSymbol: boolean
   amount: number | undefined
   amountType: string
   type: string | undefined
-  botId: number | undefined
+  timeFleam: string | undefined
+  range: string | undefined
+  indicatorIds: number | undefined
 }
 
 export const botValueUserState = atom({
   key: "botValueUserState",
   default: {
+    symbol: undefined,
+    asset: undefined,
+    base: undefined,
+    active: true,
+    allSymbol: false,
     amount: undefined,
-    amountType: "amount",
-    type: undefined,
-    botId: undefined,
+    amountType: "currency",
+    type: 'limit',
+    timeFleam: '1d',
+    range: 'trend',
+    indicatorIds: undefined,
   } as botValueUserDto,
 })
 
 export interface botValueUserUpdateDto {
   id: number | undefined
+  symbol: string | undefined
+  asset: string | undefined
+  base: string | undefined
+  active: boolean
+  allSymbol: boolean
   amount: number | undefined
   amountType: string
-  type: string
-  botId: number | undefined
+  type: string | undefined
+  timeFleam: string | undefined
+  range: string | undefined
+  indicatorIds: number | undefined
 }
 
 export const botValueUserUpdateState = atom({
   key: "botValueUserUpdateState",
   default: {
     id: undefined,
+    symbol: undefined,
+    asset: undefined,
+    base: undefined,
+    active: true,
+    allSymbol: false,
     amount: undefined,
-    amountType: "",
-    type: "",
-    botId: undefined,
+    amountType: "currency",
+    type: 'limit',
+    timeFleam: '1d',
+    range: 'trend',
+    indicatorIds: undefined,
   } as botValueUserUpdateDto,
 })
 
@@ -53,14 +81,14 @@ export const botUserPagingState = atom({
 
 export interface botsUserViewDiaDto {
   name: string
-  detail: string
+  description: string
 }
 
 export const botUserViewState = atom({
   key: "botUserViewState",
   default: {
     name: "",
-    detail: "",
+    description: "",
   } as botsUserViewDiaDto,
 })
 
@@ -68,14 +96,16 @@ export interface botsUserDto {
   id: number
   symbol: string
   asset: string
-  currency: string
+  base: string
   name: string
-  detail: string
+  description: string
   amount: string
   amountType: string
   type: string
-  botIds: number
+  indicatorIds: number
   round: number
+  timeFleam: string
+  range: string
   active: boolean
   createdAt: Date
   updatedAt: Date
@@ -91,11 +121,8 @@ export const botUserDataState = atom({
 
 export interface botsOptionDto {
   id: number
-  symbol: string
-  asset: string
-  currency: string
   name: string
-  detail: string
+  description: string
 }
 
 export const botDataOptionState = atom({

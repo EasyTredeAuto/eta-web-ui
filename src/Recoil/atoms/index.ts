@@ -4,6 +4,7 @@ import { transactionPagingState, transactionsState } from "./transaction"
 import {
   coinsState,
   assetState,
+  binanceAssetState,
   orderValueUpdateState,
   orderValueState,
 } from "./coins"
@@ -34,6 +35,7 @@ export {
   // list
   coinsState,
   assetState,
+  binanceAssetState,
   // transaction
   transactionPagingState,
   transactionsState,
