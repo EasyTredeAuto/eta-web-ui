@@ -38,12 +38,7 @@ const ListBotsTable = React.memo(() => {
 
   return (
     <>
-      <TableContainer
-        sx={{
-          minHeight: isMobileOnly ? "70vh" : 460,
-          maxHeight: "calc(100vh - 250px)",
-        }}
-      >
+      <TableContainer>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
@@ -60,7 +55,11 @@ const ListBotsTable = React.memo(() => {
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="center">{row.roles}</TableCell>
                 <TableCell align="center" style={{ minWidth: 120 }}>
-                  <Switch {...label} checked={row.status === 'active'} disabled />
+                  <Switch
+                    {...label}
+                    checked={row.status === "active"}
+                    disabled
+                  />
                 </TableCell>
                 <TableCell align="center" style={{ minWidth: 120 }}>
                   <Switch {...label} checked={row.apiActive} disabled />

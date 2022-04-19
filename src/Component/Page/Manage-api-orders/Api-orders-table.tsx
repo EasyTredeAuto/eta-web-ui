@@ -82,12 +82,12 @@ const Overview = React.memo(() => {
   return (
     <>
       <TableContainer
-        sx={{
-          minHeight: isMobileOnly ? "60vh" : 460,
-          maxHeight: isMobileOnly
-            ? "calc(100vh - 330px)"
-            : "calc(100vh - 250px)",
-        }}
+        // sx={{
+        //   minHeight: isMobileOnly ? "60vh" : 460,
+        //   maxHeight: isMobileOnly
+        //     ? "calc(100vh - 330px)"
+        //     : "calc(100vh - 250px)",
+        // }}
       >
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>

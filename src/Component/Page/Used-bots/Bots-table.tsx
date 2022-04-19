@@ -124,10 +124,10 @@ const ListBotsTable = React.memo(() => {
     <>
       <TableContainer
         sx={{
-          minHeight: isMobileOnly ? "60vh" : 460,
+          minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",
           maxHeight: isMobileOnly
-            ? "calc(100vh - 330px)"
-            : "calc(100vh - 250px)",
+            ? "calc(100vh - 150px)"
+            : "calc(100vh - 340px)",
         }}
       >
         <Table size="small" aria-label="sticky table" stickyHeader>

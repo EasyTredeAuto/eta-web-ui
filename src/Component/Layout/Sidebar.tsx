@@ -86,17 +86,17 @@ const iconApi = <AiFillApi />
 const menuAdminList = [
   { path: "/dashboard", name: "Dashboard", icon: iconDashboard },
   { path: "/manage/user", name: "Users", icon: iconAdmin },
-  { path: "/manage/orders", name: "Url orders", icon: iconOrders },
-  { path: "/manage/bot", name: "Manage bot", icon: iconGrRobot },
-  { path: "/used/bot", name: "System bot", icon: iconRobot },
+  { path: "/manage/orders", name: "Orders", icon: iconOrders },
+  { path: "/manage/bot", name: "Indicators", icon: iconGrRobot },
+  { path: "/used/bot", name: "Use Indicator", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },
   // { path: "/setting", name: "Setting", icon: iconSetting },
 ]
 
 const menuList = [
   { path: "/", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/orders", name: "Manage orders", icon: iconOrders },
-  { path: "/used/bot", name: "System bot", icon: iconRobot },
+  { path: "/manage/orders", name: "Orders", icon: iconOrders },
+  { path: "/used/bot", name: "Indicator", icon: iconRobot },
   { path: "/history", name: "History", icon: iconHistory },
   // { path: "/setting", name: "Setting", icon: iconSetting },
 ]
@@ -169,7 +169,7 @@ const Sidebar = React.memo(() => {
         <Collapse in={collapseSetting} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem
-              sx={{ pl: 4 }}
+              sx={{ pl: sidebar.open ? 4 : 2 }}
               button
               onClick={() => handleLinkPage("/setting-api")}
             >
