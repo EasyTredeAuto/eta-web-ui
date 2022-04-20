@@ -110,11 +110,13 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     setValue({ ...value, range: _e.value })
   }
   const handleChangeSymbol = (_e: any) => {
+    const [asset, base] = _e.value.split("/")
+    const symbol = `${asset}${base}`
     setValue({
       ...value,
-      symbol: _e.value,
-      asset: _e.value.split("USDT").join(""),
-      base: "USDT",
+      symbol,
+      asset,
+      base,
     })
   }
 
