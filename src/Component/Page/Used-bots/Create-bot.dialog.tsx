@@ -145,6 +145,19 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     const result = await createBots(value)
     if (result?.data) {
       await handleChangeFetchingMyBots()
+      setValue({
+        symbol: undefined,
+        asset: undefined,
+        base: undefined,
+        active: true,
+        allSymbol: false,
+        amount: undefined,
+        amountType: "currency",
+        type: "limit",
+        timeFleam: "1d",
+        range: "trend",
+        indicatorIds: undefined,
+      })
       setOpen(false)
       Swal.fire({
         showConfirmButton: false,
@@ -220,7 +233,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
               <BoxContent style={StyleContent}>
                 <SelectBase
                   options={symbols.data}
-                  value={symbols.data.find((v) => v.value === value.symbol)}
+                  value={symbols.data.find(
+                    (v) => v.value.split("/").join("") === value.symbol
+                  )}
                   onChange={handleChangeSymbol}
                   menuPosition={"fixed"}
                 />

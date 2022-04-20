@@ -221,7 +221,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
               <BoxContent style={StyleContent}>
                 <SelectBase
                   options={symbols.data}
-                  value={symbols.data.find((v) => v.value === value.symbol)}
+                  value={symbols.data.find((v) => v.value.split("/").join("") === value.symbol)}
                   onChange={handleChangeSymbol}
                   menuPosition={"fixed"}
                 />

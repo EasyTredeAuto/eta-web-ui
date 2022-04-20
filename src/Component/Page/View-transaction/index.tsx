@@ -36,7 +36,7 @@ const History = memo(() => {
     else setPaging({ ...paging, exchange: null })
   }
   const handleChangeSymbol = (e: any) => {
-    if (e) setPaging({ ...paging, symbol: e.value })
+    if (e) setPaging({ ...paging, symbol: e.value.split("/").join("") })
     else setPaging({ ...paging, symbol: null })
   }
   const handleChangeSide = (e: any) => {
@@ -91,7 +91,9 @@ const History = memo(() => {
         <Grid item xs={6} sm={4}>
           <Select
             options={symbols.data}
-            value={symbols.data.find((x) => x.value === paging.symbol)}
+            value={symbols.data.find(
+              (x) => x.value.split("/").join("") === paging.symbol
+            )}
             onChange={handleChangeSymbol}
             isClearable
             isSearchable
