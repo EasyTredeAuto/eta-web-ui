@@ -77,7 +77,7 @@ export const getAllTransactions = async (
   if (paging.exchange) query = query + `&exchange=${paging.exchange}`
   const result = await ajax
     .get(
-      `/transaction/${paging.page}/${paging.size}?from=${paging.from}&to=${paging.to}` +
+      `/transaction/query/${paging.page}/${paging.size}?from=${paging.from}&to=${paging.to}` +
         query
     )
     .then((result) => result)

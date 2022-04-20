@@ -9,7 +9,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import { FaFirstOrder, FaRobot } from "react-icons/fa"
+import { FaFirstOrder, FaRobot, FaRegChartBar } from "react-icons/fa"
 import { RiAdminFill, RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
 import { AiFillSetting, AiFillApi } from "react-icons/ai"
 import { GiRobotAntennas } from "react-icons/gi"
@@ -82,23 +82,24 @@ const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
 const iconSetting = <AiFillSetting />
 const iconApi = <AiFillApi />
+const iconChart = <FaRegChartBar />
 
 const menuAdminList = [
-  { path: "/dashboard", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/user", name: "Users", icon: iconAdmin },
-  { path: "/manage/orders", name: "Orders", icon: iconOrders },
-  { path: "/manage/bot", name: "Indicators", icon: iconGrRobot },
-  { path: "/used/bot", name: "Use Indicator", icon: iconRobot },
-  { path: "/history", name: "History", icon: iconHistory },
-  // { path: "/setting", name: "Setting", icon: iconSetting },
+  { path: "/", name: "Dashboard", icon: iconDashboard },
+  { path: "/user/chart", name: "Chart", icon: iconChart },
+  { path: "/admin/user", name: "Users", icon: iconAdmin },
+  { path: "/admin/indicator", name: "Indicators", icon: iconGrRobot },
+  { path: "/user/bot", name: "Bot", icon: iconRobot },
+  { path: "/user/orders", name: "Orders", icon: iconOrders },
+  { path: "/user/history", name: "History", icon: iconHistory },
 ]
 
 const menuList = [
   { path: "/", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/orders", name: "Orders", icon: iconOrders },
-  { path: "/used/bot", name: "Indicator", icon: iconRobot },
-  { path: "/history", name: "History", icon: iconHistory },
-  // { path: "/setting", name: "Setting", icon: iconSetting },
+  { path: "/user/chart", name: "Chart", icon: iconChart },
+  { path: "/user/bot", name: "Bot", icon: iconRobot },
+  { path: "/user/orders", name: "Orders", icon: iconOrders },
+  { path: "/user/history", name: "History", icon: iconHistory },
 ]
 
 const Sidebar = React.memo(() => {

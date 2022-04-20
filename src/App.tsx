@@ -76,13 +76,13 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1, p: isMobileOnly ? 2 : 3, pt:3, width: isMobileOnly ? "100%" : "auto" }}>
             <DrawerHeader />
             <Routes>
-              <Route path="/manage/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
-              <Route path="/manage/bot" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
+              <Route path="/admin/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
+              <Route path="/admin/indicator" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
               <Route path="/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
               {/* <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/> */}
-              <Route path="/used/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? UsedBot : NotApiKey} />}/>
-              <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? History : NotApiKey} />}/>
-              <Route path="/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/>
+              <Route path="/user/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? UsedBot : NotApiKey} />}/>
+              <Route path="/user/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? History : NotApiKey} />}/>
+              <Route path="/user/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/>
               <Route path="/login" element={<PublicRoute component={Login} />}/>
               <Route path="/register" element={<PublicRoute component={Login} />}/>
               <Route path="*" element={<AccessDenied />}/>
