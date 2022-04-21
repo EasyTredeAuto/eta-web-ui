@@ -85,7 +85,7 @@ const iconApi = <AiFillApi />
 const iconChart = <FaRegChartBar />
 
 const menuAdminList = [
-  { path: "/", name: "Dashboard", icon: iconDashboard },
+  { path: "/user/dashboard", name: "Dashboard", icon: iconDashboard },
   { path: "/user/chart", name: "Chart", icon: iconChart },
   { path: "/admin/user", name: "Users", icon: iconAdmin },
   { path: "/admin/indicator", name: "Indicators", icon: iconGrRobot },
@@ -95,7 +95,7 @@ const menuAdminList = [
 ]
 
 const menuList = [
-  { path: "/", name: "Dashboard", icon: iconDashboard },
+  { path: "/user/dashboard", name: "Dashboard", icon: iconDashboard },
   { path: "/user/chart", name: "Chart", icon: iconChart },
   { path: "/user/bot", name: "Bot", icon: iconRobot },
   { path: "/user/orders", name: "Orders", icon: iconOrders },

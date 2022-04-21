@@ -36,6 +36,7 @@ import { isCheckUserApi } from "./Recoil/actions/Api-key.action"
 
 // check device
 import { isMobileOnly } from "mobile-device-detect"
+// import Charts from "./Component/Page/Charts";
 
 const DrawerHeader = styled("div")(({ theme }:any) => ({
   display: "flex",
@@ -78,8 +79,9 @@ function App() {
             <Routes>
               <Route path="/admin/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
               <Route path="/admin/indicator" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
-              <Route path="/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
+              <Route path="/user/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
               {/* <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/> */}
+              {/* <Route path="/user/chart" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Charts} />}/> */}
               <Route path="/user/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? UsedBot : NotApiKey} />}/>
               <Route path="/user/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? History : NotApiKey} />}/>
               <Route path="/user/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/>
