@@ -13,9 +13,7 @@ import { Menu, MenuItem } from "@mui/material"
 import { logout } from "../../Recoil/actions/Authentication.action"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { coinsState, openSidebar, binanceAssetState } from "../../Recoil/atoms"
-import { getAsset, getSymbol } from "../../Recoil/actions/Coin.action"
-import { assetState } from "../../Recoil/atoms/coins"
+import { openSidebar, binanceAssetState } from "../../Recoil/atoms"
 import { isMobileOnly } from "mobile-device-detect"
 import { getBinanceAsset } from "../../Recoil/actions/Used-bot.action"
 
@@ -52,8 +50,6 @@ const Navbar = React.memo(() => {
   const navigate = useNavigate()
 
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
-  const setAsset = useSetRecoilState(assetState)
-  const setCoins = useSetRecoilState(coinsState)
   const setBinanceAsset = useSetRecoilState(binanceAssetState)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -78,8 +74,6 @@ const Navbar = React.memo(() => {
 
   React.useEffect(() => {
     function fetchData() {
-      // getAsset(setAsset)
-      // getSymbol(setCoins)
       getBinanceAsset(setBinanceAsset)
     }
     fetchData()

@@ -247,180 +247,26 @@ export const series = [
 
 export const chartOptionsCandlestick = {
   chart: {
-    type: "candlestick",
-    id: "candles",
-    toolbar: {
-      autoSelected: "pan",
-      show: false,
-    },
-    zoom: {
-      enabled: false,
-    },
+  type: 'candlestick',
+  height: 290,
+  id: 'candles',
+  toolbar: {
+    autoSelected: 'pan',
+    show: false
   },
-  plotOptions: {
-    candlestick: {
-      colors: {
-        upward: "#3C90EB",
-        downward: "#DF7D46",
-      },
-    },
+  zoom: {
+    enabled: false
   },
-
-  xaxis: {
-    type: "datetime",
-    categories: [],
-    labels: {
-      show: true,
-      hideOverlappingLabels: false,
-      trim: false,
-      rotate: 0,
-      style: {
-        colors: "#fff",
-        fontSize: "10px",
-        fontFamily: "Helvetica, Arial, sans-serif",
-        cssClass: "apexcharts-xaxis-label",
-      },
-      offsetX: 0,
-      offsetY: 0,
-      format: undefined,
-      formatter: undefined,
-      datetimeFormatter: {
-        month: "MMM 'yy",
-        day: "dd MMM",
-        hour: "HH:mm",
-      },
-    },
-    axisBorder: {
-      show: true,
-      color: "#353942",
-      height: 0.25,
-      width: "100%",
-      offsetX: 0,
-      offsetY: 0,
-    },
-    axisTicks: {
-      show: true,
-      borderType: "solid",
-      color: "#78909C",
-      height: 6,
-      offsetX: 0,
-      offsetY: 0,
-    },
-    tickAmount: 6,
-    tickPlacement: "between",
-    min: undefined,
-    max: undefined,
-    range: undefined,
-    floating: false,
-    position: "bottom",
-    title: {
-      text: undefined,
-      offsetX: 0,
-      offsetY: 0,
-      style: {
-        color: undefined,
-        fontSize: "10px",
-        fontFamily: "Helvetica, Arial, sans-serif",
-        cssClass: "apexcharts-xaxis-title",
-      },
-    },
-    crosshairs: {
-      show: true,
-      width: 0.5,
-      position: "back",
-      opacity: 1,
-      stroke: {
-        color: "#b6b6b6",
-        width: 0,
-        dashArray: 0,
-        curve: "smooth",
-      },
-      fill: {
-        type: "solid",
-        color: "#B1B9C4",
-        gradient: {
-          colorFrom: "#D8E3F0",
-          colorTo: "#BED1E6",
-          stops: [0, 100],
-          opacityFrom: 0.4,
-          opacityTo: 0.5,
-        },
-      },
-      dropShadow: {
-        enabled: false,
-        top: 0,
-        left: 0,
-        blur: 1,
-        opacity: 0.4,
-      },
-    },
-    tooltip: {
-      enabled: true,
-      formatter: undefined,
-      offsetY: 0,
-    },
-  },
-  yaxis: {
-    tooltip: {
-      enabled: true,
-    },
-    opposite: true,
-    labels: {
-      show: true,
-      hideOverlappingLabels: true,
-      trim: false,
-      style: {
-        color: "#fff",
-        fontSize: "10px",
-        fontFamily: "Helvetica, Arial, sans-serif",
-        cssClass: "apexcharts-xaxis-label",
-      },
-      offsetX: -20,
-      offsetY: 0,
-      format: undefined,
-      formatter: undefined,
-    },
-
-    axisBorder: {
-      show: false,
-      color: "#353942",
-      height: 0.25,
-      width: "100%",
-      offsetX: 0,
-      offsetY: 0,
-    },
-  },
-  grid: {
-    show: true,
-    borderColor: "#353942",
-    position: "back",
-    xaxis: {
-      lines: {
-        show: true,
-        offsetX: 0,
-        offsetY: 0,
-      },
-    },
-    yaxis: {
-      lines: {
-        show: true,
-        offsetX: 0,
-        offsetY: 0,
-      },
-    },
-    row: {
-      colors: undefined,
-      opacity: 0.5,
-    },
-    column: {
-      colors: undefined,
-      opacity: 0.5,
-    },
-    padding: {
-      top: 0,
-      right: 10,
-      bottom: 0,
-      left: 0,
-    },
-  },
+},
+plotOptions: {
+  candlestick: {
+    colors: {
+      upward: '#3C90EB',
+      downward: '#DF7D46'
+    }
+  }
+},
+xaxis: {
+  type: 'datetime'
+}
 }

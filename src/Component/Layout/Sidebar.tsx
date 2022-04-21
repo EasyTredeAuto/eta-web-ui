@@ -9,7 +9,10 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import { FaFirstOrder, FaRobot, FaRegChartBar } from "react-icons/fa"
+import { FaRobot
+  // FaFirstOrder,
+  // FaRegChartBar
+} from "react-icons/fa"
 import { RiAdminFill, RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
 import { AiFillSetting, AiFillApi } from "react-icons/ai"
 import { GiRobotAntennas } from "react-icons/gi"
@@ -77,28 +80,28 @@ const Drawer = styled(MuiDrawer, {
 const iconDashboard = <RiDashboardFill />
 const iconRobot = <FaRobot />
 const iconGrRobot = <GiRobotAntennas />
-const iconOrders = <FaFirstOrder />
+//const iconOrders = <FaFirstOrder />
 const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
 const iconSetting = <AiFillSetting />
 const iconApi = <AiFillApi />
-const iconChart = <FaRegChartBar />
+//const iconChart = <FaRegChartBar />
 
 const menuAdminList = [
   { path: "/user/dashboard", name: "Dashboard", icon: iconDashboard },
-  { path: "/user/chart", name: "Chart", icon: iconChart },
+  //{ path: "/user/chart", name: "Chart", icon: iconChart },
   { path: "/admin/user", name: "Users", icon: iconAdmin },
   { path: "/admin/indicator", name: "Indicators", icon: iconGrRobot },
   { path: "/user/bot", name: "Bot", icon: iconRobot },
-  { path: "/user/orders", name: "Orders", icon: iconOrders },
+  //{ path: "/user/orders", name: "Orders", icon: iconOrders },
   { path: "/user/history", name: "History", icon: iconHistory },
 ]
 
 const menuList = [
   { path: "/user/dashboard", name: "Dashboard", icon: iconDashboard },
-  { path: "/user/chart", name: "Chart", icon: iconChart },
+  //{ path: "/user/chart", name: "Chart", icon: iconChart },
   { path: "/user/bot", name: "Bot", icon: iconRobot },
-  { path: "/user/orders", name: "Orders", icon: iconOrders },
+  //{ path: "/user/orders", name: "Orders", icon: iconOrders },
   { path: "/user/history", name: "History", icon: iconHistory },
 ]
 
