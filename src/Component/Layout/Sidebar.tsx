@@ -175,7 +175,7 @@ const Sidebar = React.memo(() => {
             <ListItem
               sx={{ pl: sidebar.open ? 4 : 2 }}
               button
-              onClick={() => handleLinkPage("/setting-api")}
+              onClick={() => handleLinkPage("/user/setting-api")}
             >
               <ListItemIcon sx={{ fontSize: 26 }}>{iconApi}</ListItemIcon>
               <ListItemText primary={"Exchange Api"} />
