@@ -66,6 +66,7 @@ function App() {
       {!accessToken ? (
         <Routes>
           <Route path="/login" element={<PublicRoute component={Login} />} />
+          <Route path="/login/:token" element={<PublicRoute component={Login} />} />
           <Route path="/register" element={<PublicRoute component={Register} />} />
           <Route path="*" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />} />
         </Routes>

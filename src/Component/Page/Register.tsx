@@ -52,9 +52,15 @@ const Register = memo(() => {
         .register({ email: user.email, password: user.password } as LoginDto)
         .then((result) => result)
         .catch((error) => error)
-      if (result.id) {
-        navigate("/")
-        window.location.reload()
+      if (result.data.status === "success") {
+        await Swal.fire({
+          title: "Successful",
+          icon: "success",
+          text: result.message,
+          confirmButtonText: 'Go to login',
+        })
+        navigate("/login")
+        // window.location.reload()
       } else {
         Swal.fire({
           title: "Warning",

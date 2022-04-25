@@ -17,9 +17,10 @@ import { BiLogInCircle } from "react-icons/bi"
 import { memo, useRef, useState, useEffect } from "react"
 import { useRecoilState } from "recoil"
 import { LoginDto, loginState } from "../../Recoil/atoms/auth"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import * as ajax from "../../Utils/ajax"
 import Swal from "sweetalert2"
+import { approveEmail } from "../../Recoil/actions/Authentication.action"
 
 const Login: React.FunctionComponent = memo(() => {
   const homeRef = useRef<HTMLAnchorElement>(null)
@@ -27,6 +28,13 @@ const Login: React.FunctionComponent = memo(() => {
   const [user, setUser] = useRecoilState(loginState)
   const [remember, setRemember] = useState(false)
   const navigate = useNavigate()
+  const { token } = useParams()
+
+  useEffect(() => {
+    if (token) {
+      approveEmail(token)
+    }
+  }, [token])
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
