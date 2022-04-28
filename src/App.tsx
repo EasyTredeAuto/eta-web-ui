@@ -15,7 +15,7 @@ import Sidebar from "./Component/Layout/Sidebar"
 import ManageBot from "./Component/Page/Manage-bots"
 import ManageUser from "./Component/Page/Users-Management"
 import UsedBot from "./Component/Page/Used-bots"
-import SettingApi from "./Component/Page/settings/apis"
+// import SettingApi from "./Component/Page/settings/apis"
 
 import Dashboard from "./Component/Page/Dashboard/Dashboard"
 import History from "./Component/Page/View-transaction"
@@ -88,7 +88,7 @@ function App() {
               <Route path="/user/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? UsedBot : NotApiKey} />}/>
               <Route path="/user/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? History : NotApiKey} />}/>
               <Route path="/user/access-token" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={AccessToken} />}/>
-              <Route path="/user/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/>
+              {/* <Route path="/user/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/> */}
               <Route path="/login" element={<PublicRoute component={Login} />}/>
               <Route path="/register" element={<PublicRoute component={Login} />}/>
               <Route path="*" element={<AccessDenied />}/>

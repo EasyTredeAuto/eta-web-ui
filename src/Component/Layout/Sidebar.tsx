@@ -14,14 +14,14 @@ import { FaRobot
   // FaRegChartBar
 } from "react-icons/fa"
 import { RiAdminFill, RiDashboardFill, RiFileHistoryLine, RiLockPasswordFill } from "react-icons/ri"
-import { AiFillSetting, AiFillApi } from "react-icons/ai"
+// import { AiFillSetting, AiFillApi } from "react-icons/ai"
 import { GiRobotAntennas } from "react-icons/gi"
 import { useNavigate } from "react-router-dom"
 import { openSidebar } from "../../Recoil/atoms"
 import { useRecoilState } from "recoil"
 import { AppRoles } from "../../Utils/roles"
-import { Collapse } from "@mui/material"
-import { ExpandLess, ExpandMore } from "@mui/icons-material"
+// import { Collapse } from "@mui/material"
+// import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { isMobileOnly } from "mobile-device-detect"
 
 const role = sessionStorage.getItem("roles") as AppRoles | null
@@ -83,8 +83,8 @@ const iconGrRobot = <GiRobotAntennas />
 //const iconOrders = <FaFirstOrder />
 const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
-const iconSetting = <AiFillSetting />
-const iconApi = <AiFillApi />
+// const iconSetting = <AiFillSetting />
+// const iconApi = <AiFillApi />
 const iconSecret = <RiLockPasswordFill />
 //const iconChart = <FaRegChartBar />
 
@@ -112,7 +112,7 @@ const Sidebar = React.memo(() => {
   console.log(4)
 
   const theme = useTheme()
-  const [collapseSetting, setCollapseSetting] = React.useState(false)
+  // const [collapseSetting, setCollapseSetting] = React.useState(false)
 
   const navigate = useNavigate()
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
@@ -167,7 +167,7 @@ const Sidebar = React.memo(() => {
               </ListItem>
             ))}
 
-        <ListItem button onClick={() => setCollapseSetting(!collapseSetting)}>
+        {/* <ListItem button onClick={() => setCollapseSetting(!collapseSetting)}>
           <ListItemIcon sx={{ fontSize: 26 }}>{iconSetting}</ListItemIcon>
           <ListItemText primary={"Setting"} />
           {collapseSetting ? <ExpandLess /> : <ExpandMore />}
@@ -184,7 +184,7 @@ const Sidebar = React.memo(() => {
               <ListItemText primary={"Exchange Api"} />
             </ListItem>
           </List>
-        </Collapse>
+        </Collapse> */}
       </List>
     </Drawer>
   )
