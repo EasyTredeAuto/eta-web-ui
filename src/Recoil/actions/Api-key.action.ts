@@ -1,5 +1,6 @@
 import * as ajax from "../../Utils/ajax"
-import { apikeyDto } from "../atoms/apikey"
+import { accessDto, accessValueDto, accessValueUpdateDto, apikeyDto, PagingDto } from "../atoms/apikey"
+import { SetterOrUpdater } from "recoil"
 
 export const getApiKey = async (
   settingApi: {
@@ -30,4 +31,52 @@ export const isCheckUserApi = async () => {
     .then((result) => result)
     .catch((err) => err)
   return result
+}
+
+//---------------------------->
+
+export const getAllApiKey = async (
+  pegging: PagingDto,
+  setData: SetterOrUpdater<{ count: number; data: accessDto[] }>
+) => {
+  const result = await ajax
+    .get(`/secret-api/${pegging.page}/${pegging.size}`)
+    .then((result) => result)
+    .catch((err) => console.log(err))
+  if (result.data) {
+    setData({ data: result.data, count: result.count })
+  } else setData({ data: [], count: 0 })
+}
+
+export const deleteAccess = async (
+  row: accessDto,
+  callBack: { (): Promise<void>; (): void }
+) => {
+  await ajax
+    .remove(`/secret-api/${row.id}`)
+    .then((result) => result)
+    .catch((err) => console.log(err))
+
+  callBack()
+}
+
+export const updateActive = async (id: number, active: boolean) => {
+  return await ajax
+    .put(`/secret-api/${id}`, { active })
+    .then((result) => result)
+    .catch((err) => err)
+}
+
+export const createAccess = async (value: accessValueDto) => {
+  return await ajax
+    .post(`/secret-api`, value)
+    .then((result) => result)
+    .catch((err) => err)
+}
+
+export const updateAccess = async (value: accessValueUpdateDto) => {
+  return await ajax
+    .put(`/secret-api`, value)
+    .then((result) => result)
+    .catch((err) => err)
 }

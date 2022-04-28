@@ -12,22 +12,22 @@ import {
   Component,
   BoxFooter,
 } from "../../StyledComponent/CreateOrder.Dialog.Element"
+import { SelectBase } from "../../StyledComponent/CustomReact.element"
+import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
 import { Grid } from "@mui/material"
 import {
-  botValueState,
-  botPagingState,
-  botDataState,
+  accessValueState,
   exchangeState,
+  accessPagingState,
+  accessDataState,
 } from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import Swal from "sweetalert2"
-import {
-  getListBots,
-  createBots,
-} from "../../../Recoil/actions/Indicator.action"
 import { isMobileOnly } from "mobile-device-detect"
-import { SelectBase } from "../../StyledComponent/CustomReact.element"
-import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
+import {
+  createAccess,
+  getAllApiKey,
+} from "../../../Recoil/actions/Api-key.action"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -60,9 +60,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
             top: 8,
             color: (theme) => theme.palette.grey[500],
           }}
-        >
-          {/* <CloseIcon /> */}
-        </IconButton>
+        ></IconButton>
       ) : null}
     </DialogTitle>
   )
@@ -78,27 +76,31 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleClose = () => {
     setOpen(false)
   }
-
-  const [value, setValue] = useRecoilState(botValueState)
-  const paging = useRecoilValue(botPagingState)
-  const setBotList = useSetRecoilState(botDataState)
+  const [value, setValue] = useRecoilState(accessValueState)
   const exchanges = useRecoilValue(exchangeState)
-  const [loading, setLoading] = React.useState(false)
+
+  const handleChangeSelect = async (e: any) => {
+    setValue({ ...value, exchange: e.value })
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const elementValue = e.target.value
     const elementName = e.target.name
     setValue({ ...value, [elementName]: elementValue })
   }
-  const handleChangeSelect = async (e: any) => {
-    setValue({ ...value, exchange: e.value })
-  }
+
+  const paging = useRecoilValue(accessPagingState)
+  const setAccess = useSetRecoilState(accessDataState)
+
   const handleCreateBot = async () => {
-    setLoading(true)
-    const result = await createBots(value)
+    const result = await createAccess(value)
     if (result?.data) {
-      setLoading(false)
-      await handleChangeFetchingMyBots()
+      await handleChangeFetchingAccess()
+      setValue({
+        exchange: undefined,
+        secretKey: "",
+        apiKey: "",
+      })
       setOpen(false)
       Swal.fire({
         showConfirmButton: false,
@@ -107,7 +109,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
         icon: "success",
       })
     } else {
-      setLoading(false)
       setOpen(false)
       Swal.fire({
         icon: "error",
@@ -116,11 +117,12 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     }
   }
 
-  const handleChangeFetchingMyBots = async () => {
-    getListBots(paging, setBotList)
+  const handleChangeFetchingAccess = async () => {
+    getAllApiKey(paging, setAccess)
   }
 
   const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
+  const StyleContent = { width: isMobileOnly ? "100%" : "100%" }
 
   return (
     <BootstrapDialog
@@ -130,13 +132,33 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        New Indicator
+        Select Bot
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} sm={4} lg={2}>
-              <BoxHeader style={label}>Name</BoxHeader>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>Exchange:</BoxHeader>
+            </Grid>
+            <Grid item xs={12} sm={8} lg={8}>
+              <BoxContent style={StyleContent}>
+                <SelectBase
+                  className="basic-single"
+                  classNamePrefix="select"
+                  value={exchanges.find((ex) => ex.value === value.exchange)}
+                  isSearchable
+                  menuPortalTarget={document.body}
+                  styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+                  name="exchange"
+                  onChange={handleChangeSelect}
+                  options={exchanges}
+                />
+              </BoxContent>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>Api Key:</BoxHeader>
             </Grid>
             <Grid item xs={12} sm={8} lg={8}>
               <BoxContent>
@@ -145,49 +167,29 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   size="small"
                   type="text"
                   variant="outlined"
-                  name="name"
-                  value={value.name}
+                  name="apiKey"
+                  value={value.apiKey}
                   onChange={handleChange}
                 />
               </BoxContent>
             </Grid>
           </Grid>
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} sm={4} lg={2}>
-              <BoxHeader style={label}>Detail</BoxHeader>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} lg={3}>
+              <BoxHeader style={label}>Secret Key:</BoxHeader>
             </Grid>
             <Grid item xs={12} sm={8} lg={8}>
               <BoxContent>
                 <TextFieldName
                   fullWidth
-                  multiline
+                  size="small"
+                  type="password"
                   variant="outlined"
-                  minRows={3}
-                  maxRows={3}
-                  type="text"
-                  name="description"
-                  value={value.description}
+                  name="secretKey"
+                  value={value.secretKey}
                   onChange={handleChange}
                 />
               </BoxContent>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} sm={4} lg={2}>
-              <BoxHeader style={label}>Exchange</BoxHeader>
-            </Grid>
-            <Grid item xs={12} sm={8} lg={8}>
-              <SelectBase
-                className="basic-single"
-                classNamePrefix="select"
-                value={exchanges.find((ex) => ex.value === value.exchange)}
-                isSearchable
-                menuPortalTarget={document.body}
-                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                name="exchange"
-                onChange={handleChangeSelect}
-                options={exchanges}
-              />
             </Grid>
           </Grid>
         </Component>
@@ -199,7 +201,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={value.name === "" || value.description === "" || loading}
+            disabled={
+              value.apiKey === "" || value.secretKey === "" || !value.exchange
+            }
             onClick={handleCreateBot}
           >
             Create
@@ -210,7 +214,6 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             sx={{ background: "#aaa", width: "100%", marginLeft: "0.5rem" }}
             autoFocus
             onClick={handleClose}
-            disabled={loading}
           >
             Cancel
           </Button>

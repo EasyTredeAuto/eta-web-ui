@@ -13,7 +13,7 @@ import { FaRobot
   // FaFirstOrder,
   // FaRegChartBar
 } from "react-icons/fa"
-import { RiAdminFill, RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
+import { RiAdminFill, RiDashboardFill, RiFileHistoryLine, RiLockPasswordFill } from "react-icons/ri"
 import { AiFillSetting, AiFillApi } from "react-icons/ai"
 import { GiRobotAntennas } from "react-icons/gi"
 import { useNavigate } from "react-router-dom"
@@ -85,6 +85,7 @@ const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
 const iconSetting = <AiFillSetting />
 const iconApi = <AiFillApi />
+const iconSecret = <RiLockPasswordFill />
 //const iconChart = <FaRegChartBar />
 
 const menuAdminList = [
@@ -95,6 +96,7 @@ const menuAdminList = [
   { path: "/user/bot", name: "Bot", icon: iconRobot },
   //{ path: "/user/orders", name: "Orders", icon: iconOrders },
   { path: "/user/history", name: "History", icon: iconHistory },
+  { path: "/user/access-token", name: "Access Token", icon: iconSecret },
 ]
 
 const menuList = [
@@ -103,6 +105,7 @@ const menuList = [
   { path: "/user/bot", name: "Bot", icon: iconRobot },
   //{ path: "/user/orders", name: "Orders", icon: iconOrders },
   { path: "/user/history", name: "History", icon: iconHistory },
+  { path: "/user/access-token", name: "Access Token", icon: iconSecret },
 ]
 
 const Sidebar = React.memo(() => {
