@@ -21,7 +21,7 @@ import {
   accessPagingState,
   accessDataState,
 } from "../../../Recoil/atoms"
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import Swal from "sweetalert2"
 import { isMobileOnly } from "mobile-device-detect"
 import {
@@ -90,7 +90,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   }
 
   const paging = useRecoilValue(accessPagingState)
-  const setAccess = useSetRecoilState(accessDataState)
+  const [accessList, setAccess] = useRecoilState(accessDataState)
 
   const handleCreateBot = async () => {
     const result = await createAccess(value)
@@ -151,7 +151,10 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                   styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
                   name="exchange"
                   onChange={handleChangeSelect}
-                  options={exchanges}
+                  options={exchanges.filter(
+                    (x) =>
+                      !accessList.data.map((s) => s.exchange).includes(x.value)
+                  )}
                 />
               </BoxContent>
             </Grid>

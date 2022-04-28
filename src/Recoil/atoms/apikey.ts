@@ -31,6 +31,10 @@ export const exchangeState = atom({
       label: "Binance",
       value: "binance",
     },
+    {
+      label: "Coinbase",
+      value: "coinbase",
+    },
   ] as exchangeOptionDto[],
 })
 
