@@ -16,6 +16,7 @@ import { useRecoilState, useSetRecoilState } from "recoil"
 import { openSidebar, binanceAssetState } from "../../Recoil/atoms"
 import { isMobileOnly } from "mobile-device-detect"
 import { getBinanceAsset } from "../../Recoil/actions/Used-bot.action"
+import DialogConfigLine from "../Dialog/LineConfig"
 
 const drawerWidth = isMobileOnly ? 0 : 240
 
@@ -47,6 +48,8 @@ const Navbar = React.memo(() => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
+  const [dialogLine, setShowDialogLine] = React.useState(false)
+
   const navigate = useNavigate()
 
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
@@ -57,6 +60,11 @@ const Navbar = React.memo(() => {
   }
 
   const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
+  
+  const handleShowDialogLine = () => {
+    setShowDialogLine(true)
     setAnchorElUser(null)
   }
 
@@ -143,14 +151,18 @@ const Navbar = React.memo(() => {
             <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
+            <MenuItem onClick={handleShowDialogLine}>
+              <Typography textAlign="center">Line Config</Typography>
+            </MenuItem>
             <MenuItem onClick={handleLogout}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
           </Menu>
         </Box>
       </Toolbar>
+      <DialogConfigLine open={dialogLine} setOpen={setShowDialogLine} />
     </AppBar>
   )
 })
 
-export default Navbar 
+export default Navbar

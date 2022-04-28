@@ -25,6 +25,7 @@ import {
 } from "./usedBot"
 import { apikeyState, exchangeState, accessPagingState, accessDataState, accessValueState, accessValueUpdateState } from "./apikey"
 import { userPagingState, userListDataState } from "./users"
+import { lineProfileState } from "./line"
 
 export {
   // auth
@@ -74,4 +75,7 @@ export {
   // user
   userPagingState,
   userListDataState,
+
+  // line
+  lineProfileState,
 }
