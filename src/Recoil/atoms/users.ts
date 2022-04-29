@@ -19,7 +19,7 @@ export interface userListValueDto {
   id: number
   email: string
   roles: string
-  active: boolean
+  status: string
   apiActive: boolean
   createdAt: Date
   updatedAt: Date

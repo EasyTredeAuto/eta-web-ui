@@ -4,6 +4,10 @@ export interface Coins {
   label: string
   value: string
 }
+export interface BinanceAsset {
+  label: string
+  value: string
+}
 export interface Assets {
   find: any
   data: [string]
@@ -13,6 +17,12 @@ export const coinsState = atom({
   key: "coinsState",
   default: {
     data: [] as unknown as Coins[],
+  },
+})
+export const binanceAssetState = atom({
+  key: "binanceAssetState",
+  default: {
+    data: [] as BinanceAsset[],
   },
 })
 

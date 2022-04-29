@@ -34,15 +34,25 @@ export const register = async (user: LoginDto) => {
     .then((result) => result.data)
     .catch((err) => err)
 
-  if (result.data) {
-    const accessToken = result.data.accessToken
-    const { id, email, roles } = result.data.user
-    sessionStorage.setItem("accessToken", accessToken)
-    sessionStorage.setItem("email", email)
-    sessionStorage.setItem("id", id)
-    sessionStorage.setItem("roles", roles)
-    return result.data.user
+  if (result?.data) {
+    // const accessToken = result.data.accessToken
+    // const { id, email, roles } = result.data.user
+    // sessionStorage.setItem("accessToken", accessToken)
+    // sessionStorage.setItem("email", email)
+    // sessionStorage.setItem("id", id)
+    // sessionStorage.setItem("roles", roles)
+    // return result.data.user
+    return result
   } else return result
+}
+
+export const approveEmail = (token: string) => {
+  const url = `${baseUrl}/auth/confirm/${token}`
+
+  return axios
+    .get(url)
+    .then((result: any) => result.data)
+    .catch((err: any) => console.log(err))
 }
 
 export const get = async (path: string) => {

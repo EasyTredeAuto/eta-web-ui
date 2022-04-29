@@ -31,5 +31,74 @@ export const exchangeState = atom({
       label: "Binance",
       value: "binance",
     },
+    {
+      label: "Coinbase",
+      value: "coinbase",
+    },
   ] as exchangeOptionDto[],
+})
+
+export interface PagingDto {
+  page: number
+  size: number
+  search: string
+}
+
+export const accessPagingState = atom({
+  key: "accessPagingState",
+  default: {
+    page: 0,
+    size: 10,
+    search: "",
+  } as PagingDto,
+})
+
+export interface accessDto {
+  id: number
+  apiKey: string
+  secretKey: string
+  exchange: string
+  active: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+export const accessDataState = atom({
+  key: "accessDataState",
+  default: {
+    count: 0,
+    data: [] as accessDto[],
+  },
+})
+
+export interface accessValueDto {
+  apiKey: string
+  secretKey: string
+  exchange: string | undefined
+}
+
+export const accessValueState = atom({
+  key: "accessValueState",
+  default: {
+    apiKey: "",
+    secretKey: "",
+    exchange: undefined,
+  } as accessValueDto,
+})
+
+export interface accessValueUpdateDto {
+  id: number | undefined
+  apiKey: string
+  secretKey: string
+  exchange: string | undefined
+}
+
+export const accessValueUpdateState = atom({
+  key: "accessValueUpdateState",
+  default: {
+    id: undefined,
+    apiKey: "",
+    secretKey: "",
+    exchange: undefined,
+  } as accessValueUpdateDto,
 })

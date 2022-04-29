@@ -48,10 +48,10 @@ const HistoryTable = memo(() => {
     <BoxContent>
       <TableContainer
         sx={{
-          minHeight: isMobileOnly ? "45vh" : 360,
+          minHeight: isMobileOnly ? "45vh" : "calc(100vh - 340px)",
           maxHeight: isMobileOnly
             ? "calc(100vh - 350px)"
-            : "calc(100vh - 240px)",
+            : "calc(100vh - 340px)",
         }}
       >
         <Table size="small" aria-label="sticky table" stickyHeader>

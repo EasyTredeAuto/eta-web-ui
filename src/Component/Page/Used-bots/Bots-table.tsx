@@ -45,13 +45,20 @@ const ListBotsTable = React.memo(() => {
   const setBotListOption = useSetRecoilState(botDataOptionState)
   const setValue = useSetRecoilState(botValueUserUpdateState)
   const setValueView = useSetRecoilState(botUserViewState)
-  const handleUpdate = (Api: any) => {
+  const handleUpdate = (Api: botsUserDto) => {
     const data = {
       id: Api.id,
       type: Api.type,
-      amount: Api.amount,
+      amount: parseFloat(Api.amount),
       amountType: Api.amountType,
-      botId: Api.botIds,
+      indicatorIds: Api.indicatorIds,
+      symbol: Api.symbol,
+      asset: Api.symbol.split("USDT").join(""),
+      base: "USDT",
+      active: Api.active,
+      allSymbol: false,
+      timeFleam: Api.timeFleam,
+      range: Api.range,
     } as botValueUserUpdateDto
     setValue(data)
     setOpen(true)
@@ -60,7 +67,7 @@ const ListBotsTable = React.memo(() => {
   const handleView = (Api: any) => {
     const data = {
       name: Api.name,
-      detail: Api.detail,
+      description: Api.description,
     } as botsUserViewDiaDto
     setValueView(data)
     setOpenDiaView(true)
@@ -81,27 +88,15 @@ const ListBotsTable = React.memo(() => {
   }
   const handleActiveBot = async (row: any) => {
     setLoading(true)
-    const result = await updateActive(row.id, !row.active)
-    if (result.data) {
-      const res = result.data
-      let newdata = []
-      for (const list of botList.data) {
-        if (list.id === res.id) {
-          newdata.push({
-            ...list,
-            active: list.active ? false : true,
-          } as botsUserDto)
-        } else newdata.push(list as botsUserDto)
-      }
-      setBotList({ ...botList, data: newdata })
-    }
+    await updateActive(row.id, !row.active)
+    handleChangeFetchingOrders()
     setLoading(false)
   }
 
-  const handleChangeDelete = async (row: botsUserDto, name: string) => {
+  const handleChangeDelete = async (row: botsUserDto) => {
     Swal.fire({
       icon: "info",
-      title: `Are you sure to delete this ${name}?`,
+      title: `Are you sure to delete this ${row.symbol} on ${row.name} ?`,
       confirmButtonText: "Delete",
       confirmButtonColor: "red",
       preConfirm: () => deleteBots(row, handleChangeFetchingOrders),
@@ -124,23 +119,22 @@ const ListBotsTable = React.memo(() => {
   }, [setBotListOption])
 
   const label = { inputProps: { "aria-label": "Switch demo" } }
+  const xsStyle = {
+    minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",
+    maxHeight: isMobileOnly ? "calc(100vh - 150px)" : "calc(100vh - 340px)",
+  }
 
   return (
     <>
-      <TableContainer
-        sx={{
-          minHeight: isMobileOnly ? "60vh" : 460,
-          maxHeight: isMobileOnly
-            ? "calc(100vh - 330px)"
-            : "calc(100vh - 250px)",
-        }}
-      >
+      <TableContainer sx={xsStyle}>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Indicator</TableCell>
               <TableCell align="center">Symbol</TableCell>
               <TableCell align="center">Amount / Unit</TableCell>
+              <TableCell align="center">TimeFleam</TableCell>
+              <TableCell align="center">Range</TableCell>
               <TableCell align="center">Round</TableCell>
               <TableCell align="center">Create Date</TableCell>
               <TableCell align="center">Active</TableCell>
@@ -150,17 +144,22 @@ const ListBotsTable = React.memo(() => {
           <TableBody>
             {botList.data.map((row, i) => (
               <TableRow key={i}>
-                <TableCell align="left">
-                  <TextName onClick={() => handleView(row)}style={{ minWidth: 200 }}>
-                    {row.name}
+                <TableCell align="center">
+                  <TextName
+                    onClick={() => handleView(row)}
+                    style={{ minWidth: 200 }}
+                  >
+                    {(row.name || "").toUpperCase()}
                   </TextName>
                 </TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
                 <TableCell align="center" style={{ minWidth: 150 }}>
                   {`${parseFloat(row.amount)} ${
-                    row.amountType === "amount" ? row.currency : "%"
+                    row.amountType === "currency" ? row.base : "%"
                   }`}
                 </TableCell>
+                <TableCell align="center">{row.timeFleam}</TableCell>
+                <TableCell align="center">{row.range}</TableCell>
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
@@ -173,16 +172,14 @@ const ListBotsTable = React.memo(() => {
                     onChange={() => handleActiveBot(row)}
                   />
                 </TableCell>
-                <TableCell align="center"style={{ minWidth: 120 }}>
+                <TableCell align="center" style={{ minWidth: 120 }}>
                   <Tooltip title="Edit" placement="top">
                     <IconButton onClick={() => handleUpdate(row)}>
                       <FaEdit />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="Delete" placement="top">
-                    <IconButton
-                      onClick={() => handleChangeDelete(row, row.name)}
-                    >
+                    <IconButton onClick={() => handleChangeDelete(row)}>
                       <MdDelete />
                     </IconButton>
                   </Tooltip>

@@ -13,10 +13,10 @@ import { Menu, MenuItem } from "@mui/material"
 import { logout } from "../../Recoil/actions/Authentication.action"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { coinsState, openSidebar } from "../../Recoil/atoms"
-import { getAsset, getSymbol } from "../../Recoil/actions/Coin.action"
-import { assetState } from "../../Recoil/atoms/coins"
+import { openSidebar, binanceAssetState } from "../../Recoil/atoms"
 import { isMobileOnly } from "mobile-device-detect"
+import { getBinanceAsset } from "../../Recoil/actions/Used-bot.action"
+import DialogConfigLine from "../Dialog/LineConfig"
 
 const drawerWidth = isMobileOnly ? 0 : 240
 
@@ -48,17 +48,23 @@ const Navbar = React.memo(() => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
+  const [dialogLine, setShowDialogLine] = React.useState(false)
+
   const navigate = useNavigate()
 
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
-  const setAsset = useSetRecoilState(assetState)
-  const setCoins = useSetRecoilState(coinsState)
+  const setBinanceAsset = useSetRecoilState(binanceAssetState)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
 
   const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
+  
+  const handleShowDialogLine = () => {
+    setShowDialogLine(true)
     setAnchorElUser(null)
   }
 
@@ -76,11 +82,10 @@ const Navbar = React.memo(() => {
 
   React.useEffect(() => {
     function fetchData() {
-      getAsset(setAsset)
-      getSymbol(setCoins)
+      getBinanceAsset(setBinanceAsset)
     }
     fetchData()
-  }, [setAsset, setCoins])
+  }, [setBinanceAsset])
   
   return (
     <AppBar position="fixed" open={sidebar.open}>
@@ -146,14 +151,18 @@ const Navbar = React.memo(() => {
             <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
+            <MenuItem onClick={handleShowDialogLine}>
+              <Typography textAlign="center">Line Config</Typography>
+            </MenuItem>
             <MenuItem onClick={handleLogout}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
           </Menu>
         </Box>
       </Toolbar>
+      <DialogConfigLine open={dialogLine} setOpen={setShowDialogLine} />
     </AppBar>
   )
 })
 
-export default Navbar 
+export default Navbar

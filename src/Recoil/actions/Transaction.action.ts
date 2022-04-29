@@ -41,15 +41,14 @@ export const getTransactionDashboard = async (
     .get(`/transaction/0/10`)
     .then((result) => result)
     .catch((err) => console.log(err))
-
   if (result?.data) {
     let data = []
     for (const row of result.data) {
       data.push({
         ...row,
-        quantity: parseFloat(row.quantity),
+        quantity: parseFloat(row.allocation) * parseFloat(row.price),
         price: parseFloat(row.price),
-        amount: parseFloat(row.amount),
+        amount: parseFloat(row.allocation),
       })
     }
     setTransaction({ count: result.count, data })
@@ -78,7 +77,7 @@ export const getAllTransactions = async (
   if (paging.exchange) query = query + `&exchange=${paging.exchange}`
   const result = await ajax
     .get(
-      `/transaction/${paging.page}/${paging.size}?from=${paging.from}&to=${paging.to}` +
+      `/transaction/query/${paging.page}/${paging.size}?from=${paging.from}&to=${paging.to}` +
         query
     )
     .then((result) => result)

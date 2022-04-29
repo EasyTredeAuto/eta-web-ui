@@ -15,15 +15,16 @@ import Sidebar from "./Component/Layout/Sidebar"
 import ManageBot from "./Component/Page/Manage-bots"
 import ManageUser from "./Component/Page/Users-Management"
 import UsedBot from "./Component/Page/Used-bots"
-import SettingApi from "./Component/Page/settings/apis"
+// import SettingApi from "./Component/Page/settings/apis"
 
 import Dashboard from "./Component/Page/Dashboard/Dashboard"
 import History from "./Component/Page/View-transaction"
-import ManageOrder from "./Component/Page/Manage-api-orders"
+//import ManageOrder from "./Component/Page/Manage-api-orders"
 
 import AccessDenied from "./Component/Page/AccessDenied"
 import NotApiKey from "./Component/Page/NotApiKey"
 
+//import Charts from "./Component/Page/Charts"
 // recoil
 // import { useRecoilValue, useSetRecoilState } from "recoil"
 
@@ -36,6 +37,7 @@ import { isCheckUserApi } from "./Recoil/actions/Api-key.action"
 
 // check device
 import { isMobileOnly } from "mobile-device-detect"
+import AccessToken from "./Component/Page/Access-Token";
 
 const DrawerHeader = styled("div")(({ theme }:any) => ({
   display: "flex",
@@ -47,6 +49,7 @@ const DrawerHeader = styled("div")(({ theme }:any) => ({
 }))
 
 function App() {
+  
   const accessToken: string | null = sessionStorage.getItem("accessToken")
   const [isApi, setIsApi] = useState(false)
 
@@ -65,6 +68,7 @@ function App() {
       {!accessToken ? (
         <Routes>
           <Route path="/login" element={<PublicRoute component={Login} />} />
+          <Route path="/login/:token" element={<PublicRoute component={Login} />} />
           <Route path="/register" element={<PublicRoute component={Register} />} />
           <Route path="*" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />} />
         </Routes>
@@ -76,13 +80,15 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1, p: isMobileOnly ? 2 : 3, pt:3, width: isMobileOnly ? "100%" : "auto" }}>
             <DrawerHeader />
             <Routes>
-              <Route path="/manage/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
-              <Route path="/manage/bot" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
-              <Route path="/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
-              <Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/>
-              <Route path="/used/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? UsedBot : NotApiKey} />}/>
-              <Route path="/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? History : NotApiKey} />}/>
-              <Route path="/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/>
+              <Route path="/admin/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
+              <Route path="/admin/indicator" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
+              <Route path="/user/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
+              {/*<Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/>*/}
+              {/*<Route path="/user/chart" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Charts} />}/>*/}
+              <Route path="/user/bot" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? UsedBot : NotApiKey} />}/>
+              <Route path="/user/history" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? History : NotApiKey} />}/>
+              <Route path="/user/access-token" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={AccessToken} />}/>
+              {/* <Route path="/user/setting-api" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={SettingApi} />}/> */}
               <Route path="/login" element={<PublicRoute component={Login} />}/>
               <Route path="/register" element={<PublicRoute component={Login} />}/>
               <Route path="*" element={<AccessDenied />}/>

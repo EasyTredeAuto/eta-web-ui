@@ -1,42 +1,34 @@
 import { atom } from "recoil"
 
 export interface botValueDto {
-  symbol: string | undefined
   name: string
-  detail: string
-  asset: string | undefined
-  currency: string | undefined
+  description: string
+  exchange: string
 }
 
 export const botValueState = atom({
   key: "botValueState",
   default: {
-    symbol: undefined,
     name: "",
-    asset: undefined,
-    currency: undefined,
-    detail: "",
+    description: "",
+    exchange: "binance"
   } as botValueDto,
 })
 
 export interface botValueUpdateDto {
   id: number | undefined
-  symbol: string | undefined
   name: string
-  detail: string
-  asset: string | undefined
-  currency: string | undefined
+  description: string
+  exchange: string
 }
 
 export const botValueUpdateState = atom({
   key: "botValueUpdateState",
   default: {
     id: undefined,
-    symbol: undefined,
     name: "",
-    detail: "",
-    asset: undefined,
-    currency: undefined,
+    description: "",
+    exchange: "",
   } as botValueUpdateDto,
 })
 
@@ -57,13 +49,9 @@ export const botPagingState = atom({
 
 export interface botsDto {
   id: number
-  symbol: string
-  asset: string
-  currency: string
   name: string
-  detail: string
-  urlBuy: string
-  urlSell: string
+  description: string
+  exchange: string
   round: number
   active: boolean
   createdAt: Date

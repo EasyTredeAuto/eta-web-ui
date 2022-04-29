@@ -9,6 +9,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: calc(100vh - 120px);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `
 

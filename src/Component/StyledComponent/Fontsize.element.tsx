@@ -21,5 +21,6 @@ export const TextName = styled.p`
   &:hover {
     text-decoration: underline;
   }
+  margin-bottom: 0;
   cursor: pointer;
 `

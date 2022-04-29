@@ -14,7 +14,7 @@ import {
   botValueUpdateState,
 } from "../../../Recoil/atoms"
 import { botsDto, botValueUpdateDto } from "../../../Recoil/atoms/bots"
-import { MdContentCopy, MdDelete } from "react-icons/md"
+import { MdDelete } from "react-icons/md"
 import ViewBot from "./Detail-bot.dialog"
 import UpdateBot from "./Update-bot.dialog"
 import { IconButton, Tooltip } from "@mui/material"
@@ -23,7 +23,7 @@ import {
   deleteBots,
   getListBots,
   updateActive,
-} from "../../../Recoil/actions/Manage-bot.action"
+} from "../../../Recoil/actions/Indicator.action"
 import Swal from "sweetalert2"
 import moment from "moment"
 import { TextName } from "../../StyledComponent/Fontsize.element"
@@ -36,26 +36,21 @@ const ListBotsTable = React.memo(() => {
   const [paging, setPaging] = useRecoilState(botPagingState)
   const [botList, setBotList] = useRecoilState(botDataState)
   const setValue = useSetRecoilState(botValueUpdateState)
-  const handleUpdate = (Api: any) => {
+  const handleUpdate = (Api: botsDto) => {
     const data = {
       id: Api.id,
       name: Api.name,
-      detail: Api.detail,
-      symbol: Api.symbol,
-      asset: Api.asset,
-      currency: Api.currency,
+      description: Api.description,
+      exchange: Api.exchange,
     } as botValueUpdateDto
     setValue(data)
     setOpen(true)
   }
-  const handleView = (Api: any) => {
+  const handleView = (Api: botsDto) => {
     const data = {
       id: Api.id,
       name: Api.name,
-      detail: Api.detail,
-      symbol: Api.symbol,
-      asset: Api.asset,
-      currency: Api.currency,
+      description: Api.description,
     } as botValueUpdateDto
     setValue(data)
     setOpenDiaView(true)
@@ -76,20 +71,8 @@ const ListBotsTable = React.memo(() => {
   }
   const handleActiveBot = async (row: any) => {
     setLoading(true)
-    const result = await updateActive(row.id, !row.active)
-    if (result.data) {
-      const res = result.data
-      let newdata = []
-      for (const list of botList.data) {
-        if (list.id === res.id) {
-          newdata.push({
-            ...list,
-            active: list.active ? false : true,
-          } as botsDto)
-        } else newdata.push(list as botsDto)
-      }
-      setBotList({ ...botList, data: newdata })
-    }
+    await updateActive(row.id, !row.active)
+    handleChangeFetchingOrders()
     setLoading(false)
   }
   const handleChangeDelete = async (id: number, name: string) => {
@@ -110,22 +93,18 @@ const ListBotsTable = React.memo(() => {
     fetchData()
   }, [paging, setBotList])
   const label = { inputProps: { "aria-label": "Switch demo" } }
-
+  const sxStyle = {
+    minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",
+    maxHeight: isMobileOnly ? "calc(100vh - 350px)" : "calc(100vh - 340px)",
+  }
   return (
     <>
-      <TableContainer
-        sx={{
-          minHeight: isMobileOnly ? "60vh" : 460,
-          maxHeight: isMobileOnly
-            ? "calc(100vh - 330px)"
-            : "calc(100vh - 250px)",
-        }}
-      >
+      <TableContainer sx={sxStyle}>
         <Table size="small" aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Symbol</TableCell>
+              <TableCell align="center">Exchange</TableCell>
               <TableCell align="center">Round</TableCell>
               <TableCell align="center">Create Date</TableCell>
               <TableCell align="center">Active</TableCell>
@@ -135,13 +114,17 @@ const ListBotsTable = React.memo(() => {
           <TableBody>
             {botList.data.map((row, i) => (
               <TableRow key={i}>
-                <TableCell align="left">
-                  <TextName onClick={() => handleView(row)} style={{ minWidth: 200 }}>
-                    {row.name}
+                <TableCell align="center">
+                  <TextName
+                    onClick={() => handleView(row)}
+                    style={{ minWidth: 200 }}
+                  >
+                    {row.name.toUpperCase()}
                   </TextName>
                 </TableCell>
                 <TableCell align="center">
-                  {row.symbol.toLocaleUpperCase()}
+                  {(row.exchange || "").charAt(0).toUpperCase() +
+                    (row.exchange || "").slice(1)}
                 </TableCell>
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
@@ -156,24 +139,6 @@ const ListBotsTable = React.memo(() => {
                   />
                 </TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
-                  <Tooltip title="Copy purchase url" placement="top">
-                    <IconButton
-                      onClick={() => {
-                        navigator.clipboard.writeText(row.urlBuy)
-                      }}
-                    >
-                      <MdContentCopy />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Copy sales url" placement="top">
-                    <IconButton
-                      onClick={() => {
-                        navigator.clipboard.writeText(row.urlSell)
-                      }}
-                    >
-                      <MdContentCopy />
-                    </IconButton>
-                  </Tooltip>
                   <Tooltip title="Edit" placement="top">
                     <IconButton onClick={() => handleUpdate(row)}>
                       <FaEdit />

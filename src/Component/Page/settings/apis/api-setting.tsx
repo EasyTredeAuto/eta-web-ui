@@ -156,6 +156,7 @@ const ApiSetting = React.memo(() => {
       <InputKeyContainer>
         <Label>Api key</Label>
         <TextFieldName
+          size="small"
           fullWidth
           type="text"
           placeholder="Api key"
@@ -168,6 +169,7 @@ const ApiSetting = React.memo(() => {
       <InputKeyContainer>
         <Label>Secret key</Label>
         <TextFieldName
+          size="small"
           fullWidth
           type="password"
           placeholder="Secret key"

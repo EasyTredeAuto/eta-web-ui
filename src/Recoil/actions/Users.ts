@@ -14,7 +14,6 @@ export const getUserList = async (
     .get(`/user/${paging.page}/${paging.size}?search=${paging.search}`)
     .then((result) => result)
     .catch((err) => console.log(err))
-
   if (result?.data) {
     setUserList({ count: result.count, data: result.data })
   }

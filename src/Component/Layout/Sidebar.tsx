@@ -9,16 +9,19 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import { FaFirstOrder, FaRobot } from "react-icons/fa"
-import { RiAdminFill, RiDashboardFill, RiFileHistoryLine } from "react-icons/ri"
-import { AiFillSetting, AiFillApi } from "react-icons/ai"
+import { FaRobot
+  // FaFirstOrder,
+  // FaRegChartBar
+} from "react-icons/fa"
+import { RiAdminFill, RiDashboardFill, RiFileHistoryLine, RiLockPasswordFill } from "react-icons/ri"
+// import { AiFillSetting, AiFillApi } from "react-icons/ai"
 import { GiRobotAntennas } from "react-icons/gi"
 import { useNavigate } from "react-router-dom"
 import { openSidebar } from "../../Recoil/atoms"
 import { useRecoilState } from "recoil"
 import { AppRoles } from "../../Utils/roles"
-import { Collapse } from "@mui/material"
-import { ExpandLess, ExpandMore } from "@mui/icons-material"
+// import { Collapse } from "@mui/material"
+// import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { isMobileOnly } from "mobile-device-detect"
 
 const role = sessionStorage.getItem("roles") as AppRoles | null
@@ -77,35 +80,39 @@ const Drawer = styled(MuiDrawer, {
 const iconDashboard = <RiDashboardFill />
 const iconRobot = <FaRobot />
 const iconGrRobot = <GiRobotAntennas />
-const iconOrders = <FaFirstOrder />
+//const iconOrders = <FaFirstOrder />
 const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
-const iconSetting = <AiFillSetting />
-const iconApi = <AiFillApi />
+// const iconSetting = <AiFillSetting />
+// const iconApi = <AiFillApi />
+const iconSecret = <RiLockPasswordFill />
+//const iconChart = <FaRegChartBar />
 
 const menuAdminList = [
-  { path: "/dashboard", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/user", name: "Users", icon: iconAdmin },
-  { path: "/manage/orders", name: "Url orders", icon: iconOrders },
-  { path: "/manage/bot", name: "Manage bot", icon: iconGrRobot },
-  { path: "/used/bot", name: "System bot", icon: iconRobot },
-  { path: "/history", name: "History", icon: iconHistory },
-  // { path: "/setting", name: "Setting", icon: iconSetting },
+  { path: "/user/dashboard", name: "Dashboard", icon: iconDashboard },
+  //{ path: "/user/chart", name: "Chart", icon: iconChart },
+  { path: "/admin/user", name: "Users", icon: iconAdmin },
+  { path: "/admin/indicator", name: "Indicators", icon: iconGrRobot },
+  { path: "/user/bot", name: "Bot", icon: iconRobot },
+  //{ path: "/user/orders", name: "Orders", icon: iconOrders },
+  { path: "/user/history", name: "History", icon: iconHistory },
+  { path: "/user/access-token", name: "Access Token", icon: iconSecret },
 ]
 
 const menuList = [
-  { path: "/", name: "Dashboard", icon: iconDashboard },
-  { path: "/manage/orders", name: "Manage orders", icon: iconOrders },
-  { path: "/used/bot", name: "System bot", icon: iconRobot },
-  { path: "/history", name: "History", icon: iconHistory },
-  // { path: "/setting", name: "Setting", icon: iconSetting },
+  { path: "/user/dashboard", name: "Dashboard", icon: iconDashboard },
+  //{ path: "/user/chart", name: "Chart", icon: iconChart },
+  { path: "/user/bot", name: "Bot", icon: iconRobot },
+  //{ path: "/user/orders", name: "Orders", icon: iconOrders },
+  { path: "/user/history", name: "History", icon: iconHistory },
+  { path: "/user/access-token", name: "Access Token", icon: iconSecret },
 ]
 
 const Sidebar = React.memo(() => {
   console.log(4)
 
   const theme = useTheme()
-  const [collapseSetting, setCollapseSetting] = React.useState(false)
+  // const [collapseSetting, setCollapseSetting] = React.useState(false)
 
   const navigate = useNavigate()
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
@@ -160,7 +167,7 @@ const Sidebar = React.memo(() => {
               </ListItem>
             ))}
 
-        <ListItem button onClick={() => setCollapseSetting(!collapseSetting)}>
+        {/* <ListItem button onClick={() => setCollapseSetting(!collapseSetting)}>
           <ListItemIcon sx={{ fontSize: 26 }}>{iconSetting}</ListItemIcon>
           <ListItemText primary={"Setting"} />
           {collapseSetting ? <ExpandLess /> : <ExpandMore />}
@@ -169,15 +176,15 @@ const Sidebar = React.memo(() => {
         <Collapse in={collapseSetting} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem
-              sx={{ pl: 4 }}
+              sx={{ pl: sidebar.open ? 4 : 2 }}
               button
-              onClick={() => handleLinkPage("/setting-api")}
+              onClick={() => handleLinkPage("/user/setting-api")}
             >
               <ListItemIcon sx={{ fontSize: 26 }}>{iconApi}</ListItemIcon>
               <ListItemText primary={"Exchange Api"} />
             </ListItem>
           </List>
-        </Collapse>
+        </Collapse> */}
       </List>
     </Drawer>
   )

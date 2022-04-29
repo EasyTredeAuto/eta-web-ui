@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material"
 import moment from "moment"
-import React, { memo, useState, useEffect } from "react"
+import { memo } from "react"
 import Select from "react-select"
 import { useRecoilState, useRecoilValue } from "recoil"
 import {
-  coinsState,
+  binanceAssetState,
   exchangeState,
   transactionPagingState,
 } from "../../../Recoil/atoms"
@@ -25,22 +25,18 @@ const typeOption = [
   { label: "Limit", value: "limit" },
   { label: "Market", value: "market" },
 ]
-interface optionDto {
-  label: string
-  value: string
-}
+
 const History = memo(() => {
   const [paging, setPaging] = useRecoilState(transactionPagingState)
   const exchangesOption = useRecoilValue(exchangeState)
-  const coins = useRecoilValue(coinsState)
-  const [options, setOptions] = useState([] as optionDto[])
+  const symbols = useRecoilValue(binanceAssetState)
 
   const handleChangeExchange = (e: any) => {
     if (e) setPaging({ ...paging, exchange: e.value })
     else setPaging({ ...paging, exchange: null })
   }
   const handleChangeSymbol = (e: any) => {
-    if (e) setPaging({ ...paging, symbol: e.value })
+    if (e) setPaging({ ...paging, symbol: e.value.split("/").join("") })
     else setPaging({ ...paging, symbol: null })
   }
   const handleChangeSide = (e: any) => {
@@ -55,10 +51,6 @@ const History = memo(() => {
     setPaging({ ...paging, [e.target.name]: e.target.value })
   }
 
-  useEffect(() => {
-    setOptions(coins.data)
-  }, [coins.data])
-
   return (
     <Component style={GridStyle} col={"100%"}>
       <Grid container spacing={2}>
@@ -69,6 +61,7 @@ const History = memo(() => {
             onChange={handleChangeDate}
             type="datetime-local"
             name="from"
+            size="small"
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -78,6 +71,7 @@ const History = memo(() => {
             onChange={handleChangeDate}
             type="datetime-local"
             name="to"
+            size="small"
           />
         </Grid>
         <Grid item xs={6} sm={4}>
@@ -96,8 +90,10 @@ const History = memo(() => {
         </Grid>
         <Grid item xs={6} sm={4}>
           <Select
-            options={options}
-            value={options.find((x) => x.value === paging.symbol)}
+            options={symbols.data}
+            value={symbols.data.find(
+              (x) => x.value.split("/").join("") === paging.symbol
+            )}
             onChange={handleChangeSymbol}
             isClearable
             isSearchable
