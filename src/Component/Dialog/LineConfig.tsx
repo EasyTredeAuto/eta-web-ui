@@ -87,10 +87,6 @@ const DialogConfigLine = React.memo(({ open, setOpen }: Props) => {
     )
   }
 
-  React.useEffect(() => {
-    initLine()
-  }, [])
-
   return (
     <BootstrapDialog
       onClose={handleClose}
