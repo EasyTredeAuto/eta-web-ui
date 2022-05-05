@@ -25,7 +25,6 @@ import { FaEdit } from "react-icons/fa"
 import { isMobileOnly } from "mobile-device-detect"
 
 const Overview = React.memo(() => {
-  console.log(10)
 
   const [open, setOpen] = React.useState(false)
   const [paging, setPaging] = useRecoilState(orderPagingState)

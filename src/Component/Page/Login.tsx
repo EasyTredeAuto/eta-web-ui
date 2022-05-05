@@ -57,7 +57,7 @@ const Login: React.FunctionComponent = memo(() => {
         .catch((error) => error)
 
       if (result.id) {
-        navigate("/")
+        navigate("/dashboard")
         if (remember) {
           localStorage.setItem("email", user.email)
           localStorage.setItem("password", user.password)
@@ -80,7 +80,6 @@ const Login: React.FunctionComponent = memo(() => {
     function fetchData() {
       const email = localStorage.getItem("email")
       const password = localStorage.getItem("password")
-      console.log(email, password)
       setUser({ email: email ? email : "", password: password ? password : "" })
     }
     fetchData()

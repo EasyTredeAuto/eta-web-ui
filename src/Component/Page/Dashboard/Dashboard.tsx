@@ -10,7 +10,6 @@ import TransactionLatest from "./Transaction-vidget"
 import { Grid } from "@mui/material"
 
 const Dashboard = React.memo(() => {
-  console.log(5)
 
   const data = 100000
 

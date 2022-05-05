@@ -53,7 +53,6 @@ interface Props {
 }
 
 const DialogConfigLine = React.memo(({ open, setOpen }: Props) => {
-  console.log(1)
   const handleClose = () => {
     setOpen(false)
   }

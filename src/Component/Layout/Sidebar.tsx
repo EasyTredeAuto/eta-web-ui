@@ -109,8 +109,6 @@ const menuList = [
 ]
 
 const Sidebar = React.memo(() => {
-  console.log(4)
-
   const theme = useTheme()
   // const [collapseSetting, setCollapseSetting] = React.useState(false)
 

@@ -43,8 +43,6 @@ const AppBar = styled(MuiAppBar, {
 }))
 
 const Navbar = React.memo(() => {
-  console.log(3)
-
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )

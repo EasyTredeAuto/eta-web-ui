@@ -18,7 +18,6 @@ import { Bade } from "../../StyledComponent/Dashboard.Element"
 import { isMobileOnly } from "mobile-device-detect"
 
 const HistoryTable = memo(() => {
-  console.log(7)
 
   const [paging, setPaging] = useRecoilState(transactionPagingState)
   const [transactions, setTransactions] = useRecoilState(transactionsState)

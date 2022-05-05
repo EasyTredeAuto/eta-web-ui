@@ -59,7 +59,6 @@ const StyledInputBase = styled(InputBase)(({ theme }: any) => ({
 }))
 
 const BotsComponent = memo(() => {
-  console.log(deviceDetect(), isMobileOnly)
   const [paging, setPaging] = useRecoilState(userPagingState)
   const [debouncedTerm, setDebouncedTerm] = useState(paging.search)
 

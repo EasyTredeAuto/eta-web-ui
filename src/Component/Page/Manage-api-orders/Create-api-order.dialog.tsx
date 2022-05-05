@@ -80,7 +80,6 @@ interface Props {
 }
 
 const CreateOrder = React.memo(({ open, setOpen }: Props) => {
-  console.log(1)
   const handleClose = () => {
     setOpen(false)
   }
