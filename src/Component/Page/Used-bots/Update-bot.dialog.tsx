@@ -75,7 +75,6 @@ interface Props {
 }
 
 const CreateOrder = React.memo(({ open, setOpen }: Props) => {
-  console.log(1)
   const handleClose = () => {
     setOpen(false)
   }
@@ -168,8 +167,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     { value: "market", label: "Market" },
   ]
   const optionTime = [
-    { value: "15m", label: "15m" },
-    { value: "4h", label: "4h" },
+    // { value: "15m", label: "15m" },
+    // { value: "4h", label: "4h" },
     { value: "1d", label: "1d" },
   ]
   const optionRang = [
@@ -243,7 +242,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
               </BoxContent>
             </Grid>
           </Grid>
-          <Grid container spacing={2}>
+          {/* <Grid container spacing={2}>
             <Grid item xs={12} sm={4} lg={3}>
               <BoxHeader style={label}>TimeFleam:</BoxHeader>
             </Grid>
@@ -257,7 +256,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 />
               </BoxContent>
             </Grid>
-          </Grid>
+          </Grid> */}
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4} lg={3}>
               <BoxHeader style={label}>Range:</BoxHeader>

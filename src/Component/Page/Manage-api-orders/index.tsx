@@ -60,14 +60,12 @@ const StyledInputBase = styled(InputBase)(({ theme }: any) => ({
 }))
 
 const OrdersComponent = memo(() => {
-  console.log(9)
 
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
-  console.log(1)
   return (
     <Component col={"100%"}>
       <Component col={isMobileOnly ? "1fr" :"15% 85%"}>

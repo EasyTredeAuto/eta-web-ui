@@ -79,8 +79,6 @@ interface Props {
 }
 
 const UpdateOrder = React.memo(({ open, setOpen }: Props) => {
-  console.log(2)
-
   const handleClose = () => {
     setOpen(false)
   }
