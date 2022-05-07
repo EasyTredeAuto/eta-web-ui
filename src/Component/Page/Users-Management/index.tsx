@@ -11,7 +11,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import InputBase from "@mui/material/InputBase"
 import { useRecoilState } from "recoil"
 import { userPagingState } from "../../../Recoil/atoms"
-import { deviceDetect, isMobileOnly } from "mobile-device-detect"
+import { isMobileOnly } from "mobile-device-detect"
 
 const Search = styled("div")(({ theme }: any) => ({
   position: "relative",

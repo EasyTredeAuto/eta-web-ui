@@ -1,14 +1,14 @@
 import * as React from "react"
-import Button from "@mui/material/Button"
+// import Button from "@mui/material/Button"
 import { styled } from "@mui/material/styles"
 import Dialog from "@mui/material/Dialog"
 import DialogTitle from "@mui/material/DialogTitle"
 import DialogContent from "@mui/material/DialogContent"
 import IconButton from "@mui/material/IconButton"
-import liff from "@line/liff"
-import { lineProfileState } from "../../Recoil/atoms"
-import { useRecoilState } from "recoil"
-import { LineProfileDto } from "../../Recoil/atoms/line"
+// import liff from "@line/liff"
+// import { lineProfileState } from "../../Recoil/atoms"
+// import { useRecoilState } from "recoil"
+// import { LineProfileDto } from "../../Recoil/atoms/line"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -57,34 +57,34 @@ const DialogConfigLine = React.memo(({ open, setOpen }: Props) => {
     setOpen(false)
   }
 
-  const [lineProfile, setLineProfile] = useRecoilState(lineProfileState)
+  // const [lineProfile, setLineProfile] = useRecoilState(lineProfileState)
 
-  const initLine = () => {
-    liff.init(
-      {
-        liffId: "1657092598-LOaABblz",
-      },
-      () => {
-        if (liff.isLoggedIn()) {
-          const idToken = liff.getIDToken()
-          liff.getProfile().then((profile) => {
-            const { displayName, pictureUrl, statusMessage, userId } =
-              profile as LineProfileDto
-            setLineProfile({
-              displayName,
-              pictureUrl,
-              statusMessage,
-              userId,
-              idToken,
-            })
-          })
-        } else {
-          liff.login()
-        }
-      },
-      (err) => console.log(err)
-    )
-  }
+  // const initLine = () => {
+  //   liff.init(
+  //     {
+  //       liffId: "1657092598-LOaABblz",
+  //     },
+  //     () => {
+  //       if (liff.isLoggedIn()) {
+  //         const idToken = liff.getIDToken()
+  //         liff.getProfile().then((profile) => {
+  //           const { displayName, pictureUrl, statusMessage, userId } =
+  //             profile as LineProfileDto
+  //           setLineProfile({
+  //             displayName,
+  //             pictureUrl,
+  //             statusMessage,
+  //             userId,
+  //             idToken,
+  //           })
+  //         })
+  //       } else {
+  //         liff.login()
+  //       }
+  //     },
+  //     (err) => console.log(err)
+  //   )
+  // }
 
   return (
     <BootstrapDialog
@@ -96,9 +96,7 @@ const DialogConfigLine = React.memo(({ open, setOpen }: Props) => {
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
         Line Profile
       </BootstrapDialogTitle>
-      <DialogContent dividers>
-          
-      </DialogContent>
+      <DialogContent dividers></DialogContent>
     </BootstrapDialog>
   )
 })

@@ -9,11 +9,17 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import { FaRobot
+import {
+  FaRobot,
   // FaFirstOrder,
   // FaRegChartBar
 } from "react-icons/fa"
-import { RiAdminFill, RiDashboardFill, RiFileHistoryLine, RiLockPasswordFill } from "react-icons/ri"
+import {
+  RiAdminFill,
+  RiDashboardFill,
+  RiFileHistoryLine,
+  RiLockPasswordFill,
+} from "react-icons/ri"
 // import { AiFillSetting, AiFillApi } from "react-icons/ai"
 import { GiRobotAntennas } from "react-icons/gi"
 import { useNavigate } from "react-router-dom"
@@ -26,7 +32,9 @@ import { isMobileOnly } from "mobile-device-detect"
 
 const role = sessionStorage.getItem("roles") as AppRoles | null
 
-const drawerWidth = isMobileOnly ? "100%" : 240
+const drawerWidth = isMobileOnly ? "100%" : 200
+
+const iconStyle = { fontSize: 26, color: "#fff " }
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -150,7 +158,7 @@ const Sidebar = React.memo(() => {
                 key={i}
                 onClick={() => handleLinkPage(text.path)}
               >
-                <ListItemIcon sx={{ fontSize: 26 }}>{text.icon}</ListItemIcon>
+                <ListItemIcon sx={iconStyle}>{text.icon}</ListItemIcon>
                 <ListItemText primary={text.name} />
               </ListItem>
             ))
@@ -160,7 +168,7 @@ const Sidebar = React.memo(() => {
                 key={i}
                 onClick={() => handleLinkPage(text.path)}
               >
-                <ListItemIcon sx={{ fontSize: 26 }}>{text.icon}</ListItemIcon>
+                <ListItemIcon sx={iconStyle}>{text.icon}</ListItemIcon>
                 <ListItemText primary={text.name} />
               </ListItem>
             ))}
