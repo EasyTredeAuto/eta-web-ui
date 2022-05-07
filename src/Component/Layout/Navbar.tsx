@@ -16,9 +16,9 @@ import { useRecoilState, useSetRecoilState } from "recoil"
 import { openSidebar, binanceAssetState } from "../../Recoil/atoms"
 import { isMobileOnly } from "mobile-device-detect"
 import { getBinanceAsset } from "../../Recoil/actions/Used-bot.action"
-import DialogConfigLine from "../Dialog/LineConfig"
+// import DialogConfigLine from "../Dialog/LineConfig"
 
-const drawerWidth = isMobileOnly ? 0 : 240
+const drawerWidth = isMobileOnly ? 0 : 200
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
@@ -46,7 +46,7 @@ const Navbar = React.memo(() => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
-  const [dialogLine, setShowDialogLine] = React.useState(false)
+  // const [dialogLine, setShowDialogLine] = React.useState(false)
 
   const navigate = useNavigate()
 
@@ -60,11 +60,11 @@ const Navbar = React.memo(() => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-  
-  const handleShowDialogLine = () => {
-    setShowDialogLine(true)
-    setAnchorElUser(null)
-  }
+
+  // const handleShowDialogLine = () => {
+  //   setShowDialogLine(true)
+  //   setAnchorElUser(null)
+  // }
 
   const handleLogout = async () => {
     await logout()
@@ -84,7 +84,7 @@ const Navbar = React.memo(() => {
     }
     fetchData()
   }, [setBinanceAsset])
-  
+
   return (
     <AppBar position="fixed" open={sidebar.open}>
       <Toolbar
@@ -149,16 +149,16 @@ const Navbar = React.memo(() => {
             <MenuItem onClick={handleCloseUserMenu}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
-            <MenuItem onClick={handleShowDialogLine}>
+            {/* <MenuItem onClick={handleShowDialogLine}>
               <Typography textAlign="center">Line Config</Typography>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem onClick={handleLogout}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
           </Menu>
         </Box>
       </Toolbar>
-      <DialogConfigLine open={dialogLine} setOpen={setShowDialogLine} />
+      {/* <DialogConfigLine open={dialogLine} setOpen={setShowDialogLine} /> */}
     </AppBar>
   )
 })

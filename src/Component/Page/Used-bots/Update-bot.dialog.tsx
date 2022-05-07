@@ -113,9 +113,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       setValue({ ...value, amountType: "currency" })
     }
   }
-  const handleChangeTimeFleam = (_e: any) => {
-    setValue({ ...value, timeFleam: _e.value })
-  }
+  // const handleChangeTimeFleam = (_e: any) => {
+  //   setValue({ ...value, timeFleam: _e.value })
+  // }
   const handleChangeRange = (_e: any) => {
     setValue({ ...value, range: _e.value })
   }
@@ -166,11 +166,11 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     { value: "limit", label: "Limit" },
     { value: "market", label: "Market" },
   ]
-  const optionTime = [
-    // { value: "15m", label: "15m" },
-    // { value: "4h", label: "4h" },
-    { value: "1d", label: "1d" },
-  ]
+  // const optionTime = [
+  //   // { value: "15m", label: "15m" },
+  //   // { value: "4h", label: "4h" },
+  //   { value: "1d", label: "1d" },
+  // ]
   const optionRang = [
     { value: "sideway", label: "Sideway" },
     { value: "trend", label: "Trend" },
