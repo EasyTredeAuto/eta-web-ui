@@ -102,9 +102,9 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleChangeType = (_e: any) => {
     setValue({ ...value, type: _e.value })
   }
-  // const handleChangeTimeFleam = (_e: any) => {
-  //   setValue({ ...value, timeFleam: _e.value })
-  // }
+  const handleChangeTimeFleam = (_e: any) => {
+    setValue({ ...value, timeFleam: _e.value })
+  }
   const handleChangeRange = (_e: any) => {
     setValue({ ...value, range: _e.value })
   }
@@ -177,11 +177,13 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     { value: "limit", label: "Limit" },
     { value: "market", label: "Market" },
   ]
-  // const optionTime = [
-  //   // { value: "15m", label: "15m" },
-  //   // { value: "4h", label: "4h" },
-  //   { value: "1d", label: "1d" },
-  // ]
+
+  const optionTime = [
+    { value: "1h", label: "1h" },
+    { value: "1d", label: "1d" },
+    { value: "1w", label: "1w" },
+  ]
+
   const optionRang = [
     { value: "sideway", label: "Sideway" },
     { value: "trend", label: "Trend" },
@@ -192,6 +194,12 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   }
   const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
   const StyleContent = { width: isMobileOnly ? "100%" : "90%" }
+
+  const reBalances =
+    options.find(
+      (x: { label: string; value: number | undefined }) =>
+        x.value === value.indicatorIds
+    )?.label === "rebalance"
 
   return (
     <BootstrapDialog
@@ -240,80 +248,88 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
               </BoxContent>
             </Grid>
           </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4} lg={3}>
-              <BoxHeader style={label}>Type:</BoxHeader>
-            </Grid>
-            <Grid item xs={12} sm={8} lg={9}>
-              <BoxContent style={StyleContent}>
-                <SelectBase
-                  options={optionType}
-                  value={optionType.find((v) => v.value === value.type)}
-                  onChange={handleChangeType}
-                  menuPosition={"fixed"}
-                  placeholder="Limit/Market"
-                />
-              </BoxContent>
-            </Grid>
-          </Grid>
-          {/* <Grid container spacing={2}>
-            <Grid item xs={12} sm={4} lg={3}>
-              <BoxHeader style={label}>TimeFleam:</BoxHeader>
-            </Grid>
-            <Grid item xs={12} sm={8} lg={9}>
-              <BoxContent style={StyleContent}>
-                <SelectBase
-                  options={optionTime}
-                  value={optionTime.find((v) => v.value === value.timeFleam)}
-                  onChange={handleChangeTimeFleam}
-                  menuPosition={"fixed"}
-                />
-              </BoxContent>
-            </Grid>
-          </Grid> */}
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4} lg={3}>
-              <BoxHeader style={label}>Range:</BoxHeader>
-            </Grid>
-            <Grid item xs={12} sm={8} lg={9}>
-              <BoxContent style={StyleContent}>
-                <SelectBase
-                  options={optionRang}
-                  value={optionRang.find((v) => v.value === value.range)}
-                  onChange={handleChangeRange}
-                  menuPosition={"fixed"}
-                />
-              </BoxContent>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4} lg={3}>
-              <BoxHeader style={label}>Amount:</BoxHeader>
-            </Grid>
-            <Grid item xs={9} sm={4} lg={6}>
-              <NumberFormatCustom
-                placeholder={
-                  value.amountType !== "percent" ? "Minimum 15 token" : ""
-                }
-                name="amount"
-                value={value.amount}
-                thousandSeparator
-                isNumericString
-                onChange={handleChangeAmount}
-              />
-            </Grid>
-            <Grid item xs={3} sm={4} lg={2}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    defaultChecked={value.amountType === "percent"}
-                    onChange={handleChangeAmountType}
+          {!reBalances && (
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4} lg={3}>
+                <BoxHeader style={label}>Type:</BoxHeader>
+              </Grid>
+              <Grid item xs={12} sm={8} lg={9}>
+                <BoxContent style={StyleContent}>
+                  <SelectBase
+                    options={optionType}
+                    value={optionType.find((v) => v.value === value.type)}
+                    onChange={handleChangeType}
+                    menuPosition={"fixed"}
+                    placeholder="Limit/Market"
                   />
-                }
-                label="%"
-              />
+                </BoxContent>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
+          {reBalances && (
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4} lg={3}>
+                <BoxHeader style={label}>TimeFleam:</BoxHeader>
+              </Grid>
+              <Grid item xs={12} sm={8} lg={9}>
+                <BoxContent style={StyleContent}>
+                  <SelectBase
+                    options={optionTime}
+                    value={optionTime.find((v) => v.value === value.timeFleam)}
+                    onChange={handleChangeTimeFleam}
+                    menuPosition={"fixed"}
+                  />
+                </BoxContent>
+              </Grid>
+            </Grid>
+          )}
+          {!reBalances && (
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4} lg={3}>
+                <BoxHeader style={label}>Range:</BoxHeader>
+              </Grid>
+              <Grid item xs={12} sm={8} lg={9}>
+                <BoxContent style={StyleContent}>
+                  <SelectBase
+                    options={optionRang}
+                    value={optionRang.find((v) => v.value === value.range)}
+                    onChange={handleChangeRange}
+                    menuPosition={"fixed"}
+                  />
+                </BoxContent>
+              </Grid>
+            </Grid>
+          )}
+          {!reBalances && (
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4} lg={3}>
+                <BoxHeader style={label}>Amount:</BoxHeader>
+              </Grid>
+              <Grid item xs={9} sm={4} lg={6}>
+                <NumberFormatCustom
+                  placeholder={
+                    value.amountType !== "percent" ? "Minimum 15 token" : ""
+                  }
+                  name="amount"
+                  value={value.amount}
+                  thousandSeparator
+                  isNumericString
+                  onChange={handleChangeAmount}
+                />
+              </Grid>
+              <Grid item xs={3} sm={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      defaultChecked={value.amountType === "percent"}
+                      onChange={handleChangeAmountType}
+                    />
+                  }
+                  label="%"
+                />
+              </Grid>
+            </Grid>
+          )}
         </Component>
       </DialogContent>
       <DialogActions>
@@ -323,7 +339,11 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={!value.amount || !value.indicatorIds || !value.type}
+            disabled={
+              !value.indicatorIds ||
+              !value.symbol ||
+              (!reBalances && (!value.amount || !value.type))
+            }
             onClick={handleCreateBot}
           >
             Create
