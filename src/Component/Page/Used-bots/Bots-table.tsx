@@ -154,12 +154,16 @@ const ListBotsTable = React.memo(() => {
                 </TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
                 <TableCell align="center" style={{ minWidth: 150 }}>
-                  {`${parseFloat(row.amount)} ${
-                    row.amountType === "currency" ? row.base : "%"
-                  }`}
+                  {row.name === "rebalance"
+                    ? "50 %"
+                    : `${parseFloat(row.amount)}
+                        ${row.amountType === "currency" ? row.base : "%"}
+                   `}
                 </TableCell>
                 <TableCell align="center">{row.timeFleam}</TableCell>
-                <TableCell align="center">{row.range}</TableCell>
+                <TableCell align="center">
+                  {row.name === "rebalance" ? "-" : row.range}
+                </TableCell>
                 <TableCell align="center">{row.round}</TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
                   {moment(row.createdAt).format("DD MMM YYYY HH:mm")}
