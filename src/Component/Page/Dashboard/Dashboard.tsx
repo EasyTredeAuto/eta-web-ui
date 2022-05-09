@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import {
   BoxContent,
   BoxHeader,
@@ -8,21 +8,35 @@ import { Title } from "../../StyledComponent/Fontsize.element"
 import { GiPayMoney, GiMoneyStack, GiTakeMyMoney } from "react-icons/gi"
 import TransactionLatest from "./Transaction-vidget"
 import { Grid } from "@mui/material"
+import { useRecoilState } from "recoil"
+import { dashboardCostState, dashboardWidgetState } from "../../../Recoil/atoms"
+import {
+  getDashboardCost,
+  getExchangeWidgets,
+} from "../../../Recoil/actions/dashboard.action"
+import ExchangeWidgets from "./ExchangeWidgets"
 
 const Dashboard = React.memo(() => {
-
-  const data = 100000
+  const [data, setData] = useRecoilState(dashboardCostState)
+  const [widgets, setWidget] = useRecoilState(dashboardWidgetState)
+  useEffect(() => {
+    const fetchData = () => {
+      getDashboardCost(setData)
+      getExchangeWidgets(setWidget)
+    }
+    fetchData()
+  }, [setData, setWidget])
 
   return (
     <Component col={"100%"}>
-      <Grid container justifyContent="center" spacing={2}>
+      <Grid container justifyContent="flex-start" spacing={2}>
         <Grid item xs={12} sm={6} lg={4}>
           <BoxContent>
             <BoxHeader>
               <Title>
                 <GiPayMoney /> Cost All
               </Title>
-              <Title>{data.toLocaleString()} ฿</Title>
+              <Title>{data.cost.toLocaleString()} ฿</Title>
             </BoxHeader>
           </BoxContent>
         </Grid>
@@ -32,7 +46,7 @@ const Dashboard = React.memo(() => {
               <Title>
                 <GiTakeMyMoney /> Profit All
               </Title>
-              <Title>{data.toLocaleString()} ฿</Title>
+              <Title>{data.takeProfit.toLocaleString()} ฿</Title>
             </BoxHeader>
           </BoxContent>
         </Grid>
@@ -42,10 +56,20 @@ const Dashboard = React.memo(() => {
               <Title>
                 <GiMoneyStack /> Balance All
               </Title>
-              <Title>{data.toLocaleString()} ฿</Title>
+              <Title>{data.balance.toLocaleString()} ฿</Title>
             </BoxHeader>
           </BoxContent>
         </Grid>
+        {widgets.map((x) => (
+          <Grid item xs={12} md={6}>
+            <BoxContent style={{ alignItems: "left" }}>
+              <Title>
+                {x.exchange.charAt(0).toUpperCase() + x.exchange.slice(1)}
+              </Title>
+              <ExchangeWidgets widget={x} />
+            </BoxContent>
+          </Grid>
+        ))}
         <Grid item xs={12}>
           <BoxContent>
             <Title>Transaction Latest</Title>

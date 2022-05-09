@@ -18,7 +18,6 @@ import { Bade } from "../../StyledComponent/Dashboard.Element"
 import { isMobileOnly } from "mobile-device-detect"
 
 const HistoryTable = memo(() => {
-
   const [paging, setPaging] = useRecoilState(transactionPagingState)
   const [transactions, setTransactions] = useRecoilState(transactionsState)
 
@@ -60,9 +59,9 @@ const HistoryTable = memo(() => {
               <TableCell align="center">Symbol</TableCell>
               <TableCell align="center">Side</TableCell>
               <TableCell align="center">Type</TableCell>
-              <TableCell align="right">Quantity</TableCell>
-              <TableCell align="right">Price</TableCell>
               <TableCell align="right">Amount</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Quantity</TableCell>
               <TableCell align="center">Date</TableCell>
             </TableRow>
           </TableHead>
@@ -70,7 +69,7 @@ const HistoryTable = memo(() => {
             {transactions.data.map((row, index) => (
               <TableRow key={index}>
                 <TableCell align="left" style={{ minWidth: 200 }}>
-                  {row.name}
+                  {(row.name||'').toUpperCase()}
                 </TableCell>
                 <TableCell align="center">{row.symbol}</TableCell>
                 <TableCell align="center" sx={{ width: 50 }}>
@@ -86,15 +85,13 @@ const HistoryTable = memo(() => {
                   {row.type.charAt(0).toUpperCase() + row.type.slice(1)}
                 </TableCell>
                 <TableCell align="right">
-                  {row.quantity
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {row.amount.toLocaleString()}
                 </TableCell>
                 <TableCell align="right">
-                  {row.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {row.price.toLocaleString()}
                 </TableCell>
                 <TableCell align="right">
-                  {row.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {row.quantity.toLocaleString()}
                 </TableCell>
                 <TableCell align="center" style={{ minWidth: 200 }}>
                   {moment(row.createdAt).format("DD-MMM-YYYY HH:mm:ss")}

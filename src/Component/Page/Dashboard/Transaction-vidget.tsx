@@ -12,7 +12,6 @@ import { transactionsState } from "../../../Recoil/atoms"
 import moment from "moment"
 
 const TransactionLatest = React.memo(() => {
-
   const [transaction, setTransaction] = useRecoilState(transactionsState)
 
   React.useEffect(() => {
@@ -80,15 +79,13 @@ const TransactionLatest = React.memo(() => {
                   {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
                 </TableCell>
                 <TableCell align="right">
-                  {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {item.price.toLocaleString()}
                 </TableCell>
                 <TableCell align="right">
-                  {item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {item.amount.toLocaleString()}
                 </TableCell>
                 <TableCell align="right">
-                  {item.quantity
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {item.quantity.toLocaleString()}
                 </TableCell>
                 <TableCell align="center">
                   {moment(item.createdAt).format("DD-MMM-YYYY HH:mm:ss")}
