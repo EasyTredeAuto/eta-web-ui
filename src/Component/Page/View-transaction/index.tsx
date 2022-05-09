@@ -50,7 +50,7 @@ const History = memo(() => {
   const handleChangeDate = (e: any) => {
     setPaging({ ...paging, [e.target.name]: e.target.value })
   }
-
+console.log(paging)
   return (
     <Component style={GridStyle} col={"100%"}>
       <Grid container spacing={2}>
