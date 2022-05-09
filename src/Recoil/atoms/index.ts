@@ -26,6 +26,7 @@ import {
 import { apikeyState, exchangeState, accessPagingState, accessDataState, accessValueState, accessValueUpdateState } from "./apikey"
 import { userPagingState, userListDataState } from "./users"
 import { lineProfileState } from "./line"
+import { dashboardCostState, dashboardWidgetState } from "./dashboard"
 
 export {
   // auth
@@ -78,4 +79,8 @@ export {
 
   // line
   lineProfileState,
+
+  // dashboard
+  dashboardCostState,
+  dashboardWidgetState
 }
