@@ -10,7 +10,11 @@ import TransactionLatest from "./Transaction-vidget"
 import { Grid } from "@mui/material"
 import { useRecoilState } from "recoil"
 import { dashboardCostState, dashboardWidgetState } from "../../../Recoil/atoms"
-import { getDashboardCost, getExchangeWidgets } from "../../../Recoil/actions/dashboard.action"
+import {
+  getDashboardCost,
+  getExchangeWidgets,
+} from "../../../Recoil/actions/dashboard.action"
+import ExchangeWidgets from "./ExchangeWidgets"
 
 const Dashboard = React.memo(() => {
   const [data, setData] = useRecoilState(dashboardCostState)
@@ -22,10 +26,10 @@ const Dashboard = React.memo(() => {
     }
     fetchData()
   }, [setData, setWidget])
-  
+
   return (
     <Component col={"100%"}>
-      <Grid container justifyContent="center" spacing={2}>
+      <Grid container justifyContent="flex-start" spacing={2}>
         <Grid item xs={12} sm={6} lg={4}>
           <BoxContent>
             <BoxHeader>
@@ -56,6 +60,16 @@ const Dashboard = React.memo(() => {
             </BoxHeader>
           </BoxContent>
         </Grid>
+        {widgets.map((x) => (
+          <Grid item xs={12} md={6}>
+            <BoxContent style={{ alignItems: "left" }}>
+              <Title>
+                {x.exchange.charAt(0).toUpperCase() + x.exchange.slice(1)}
+              </Title>
+              <ExchangeWidgets widget={x} />
+            </BoxContent>
+          </Grid>
+        ))}
         <Grid item xs={12}>
           <BoxContent>
             <Title>Transaction Latest</Title>
