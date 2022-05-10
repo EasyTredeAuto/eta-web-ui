@@ -48,8 +48,8 @@ export const getAllTransactions = async (
   if (paging.type) query = query + `&type=${paging.type}`
   if (paging.exchange) query = query + `&exchange=${paging.exchange}`
 
-  const from = moment().startOf("day").format()
-  const to = moment().endOf("day").format()
+  const from = moment(paging.from).startOf("day").format()
+  const to = moment(paging.to).endOf("day").format()
 
   const result = await ajax
     .get(

@@ -117,7 +117,7 @@ const ListBotsTable = React.memo(() => {
                 <TableCell align="center">
                   <TextName
                     onClick={() => handleView(row)}
-                    style={{ minWidth: 200 }}
+                    style={{ minWidth: 100 }}
                   >
                     {row.name.toUpperCase()}
                   </TextName>
