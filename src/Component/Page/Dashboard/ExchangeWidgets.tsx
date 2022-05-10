@@ -29,7 +29,7 @@ const ExchangeWidgets = React.memo(({ widget }: props) => {
     <Grid container justifyContent="space-around" spacing={2}>
       <Grid item xs={5}>
         <BoxHeader>
-          <Title>Free Symbol</Title>
+          <Title>Valuable coins</Title>
           <Title>{widget.count} token</Title>
         </BoxHeader>
       </Grid>
