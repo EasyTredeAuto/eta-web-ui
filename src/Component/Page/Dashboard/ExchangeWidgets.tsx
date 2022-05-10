@@ -47,13 +47,13 @@ const ExchangeWidgets = React.memo(({ widget }: props) => {
               <TableCell align="center" sx={fontWeight}>
                 Asset
               </TableCell>
-              <TableCell align="center" sx={fontWeight}>
+              <TableCell align="right" sx={fontWeight}>
                 Allocation
               </TableCell>
-              <TableCell align="center" sx={fontWeight}>
+              <TableCell align="right" sx={fontWeight}>
                 Price
               </TableCell>
-              <TableCell align="center" sx={fontWeight}>
+              <TableCell align="right" sx={fontWeight}>
                 Value
               </TableCell>
             </TableRow>
@@ -64,13 +64,15 @@ const ExchangeWidgets = React.memo(({ widget }: props) => {
               .map((item, i) => (
                 <TableRow key={i} sx={border}>
                   <TableCell align="center">{item.name}</TableCell>
-                  <TableCell align="center">
-                    {item.allocation.toLocaleString()}
+                  <TableCell align="right">
+                    {item?.allocation
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="right">
                     {item?.price ? item.price.toLocaleString() : "-"}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="right">
                     {item?.value ? item.value.toLocaleString() : "-"}
                   </TableCell>
                 </TableRow>
