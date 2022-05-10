@@ -60,7 +60,7 @@ const ExchangeWidgets = React.memo(({ widget }: props) => {
           </TableHead>
           <TableBody>
             {widget.assets
-              .filter((_, i) => i < (page + 1) * 5 && i > page * 5)
+              .filter((_, i) => i < (page + 1) * 5 && i >= page * 5)
               .map((item, i) => (
                 <TableRow key={i} sx={border}>
                   <TableCell align="center">{item.name}</TableCell>
