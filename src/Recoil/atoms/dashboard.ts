@@ -3,7 +3,7 @@ import { atom } from "recoil"
 export interface DashboardCostDto {
   cost: number
   takeProfit: number
-  balance: number
+  netProfit: number
 }
 
 export const dashboardCostState = atom({
@@ -11,7 +11,7 @@ export const dashboardCostState = atom({
   default: {
     cost: 0,
     takeProfit: 0,
-    balance: 0,
+    netProfit: 0,
   } as DashboardCostDto,
 })
 

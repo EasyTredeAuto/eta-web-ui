@@ -56,7 +56,7 @@ const Dashboard = React.memo(() => {
               <Title>
                 <GiMoneyStack /> Total net profit
               </Title>
-              <Title>{data.balance.toLocaleString()} ฿</Title>
+              <Title>{data.netProfit.toLocaleString()} ฿</Title>
             </BoxHeader>
           </BoxContent>
         </Grid>
