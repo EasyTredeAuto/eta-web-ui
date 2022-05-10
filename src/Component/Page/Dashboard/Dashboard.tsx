@@ -60,6 +60,12 @@ const Dashboard = React.memo(() => {
             </BoxHeader>
           </BoxContent>
         </Grid>
+        <Grid item xs={12}>
+          <BoxContent>
+            <Title>Transaction Latest</Title>
+            <TransactionLatest />
+          </BoxContent>
+        </Grid>
         {widgets.map((x) => (
           <Grid item xs={12} md={6}>
             <BoxContent style={{ alignItems: "left" }}>
@@ -70,12 +76,6 @@ const Dashboard = React.memo(() => {
             </BoxContent>
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <BoxContent>
-            <Title>Transaction Latest</Title>
-            <TransactionLatest />
-          </BoxContent>
-        </Grid>
       </Grid>
     </Component>
   )
