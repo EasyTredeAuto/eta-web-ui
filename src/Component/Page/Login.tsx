@@ -80,6 +80,7 @@ const Login: React.FunctionComponent = memo(() => {
     function fetchData() {
       const email = localStorage.getItem("email")
       const password = localStorage.getItem("password")
+      if (email && password) setRemember(true)
       setUser({ email: email ? email : "", password: password ? password : "" })
     }
     fetchData()

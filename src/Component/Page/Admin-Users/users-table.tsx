@@ -43,6 +43,7 @@ const ListBotsTable = React.memo(() => {
             <TableRow>
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">Roles</TableCell>
+              <TableCell align="center">Status</TableCell>
               <TableCell align="center">User Active</TableCell>
               <TableCell align="center">Api Active</TableCell>
               <TableCell align="center">Create Date</TableCell>
@@ -53,6 +54,7 @@ const ListBotsTable = React.memo(() => {
               <TableRow key={i}>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="center">{row.roles}</TableCell>
+                <TableCell align="center">{row.status}</TableCell>
                 <TableCell align="center" style={{ minWidth: 120 }}>
                   <Switch
                     {...label}

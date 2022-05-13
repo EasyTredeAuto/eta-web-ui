@@ -1,46 +1,34 @@
-import * as ajax from "../../Utils/ajax"
-import { accessDto, accessValueDto, accessValueUpdateDto, apikeyDto, PagingDto } from "../atoms/apikey"
 import { SetterOrUpdater } from "recoil"
+import * as ajax from "../../Utils/ajax"
+import {
+  accessBotDto,
+  PagingDto,
+  scheduleListValueDto,
+} from "../atoms/admin-secret-bot"
+import { accessValueDto, accessValueUpdateDto } from "../atoms/apikey"
 
-export const getApiKey = async (
-  settingApi: {
-    (valOrUpdater: apikeyDto | ((currVal: apikeyDto) => apikeyDto)): void
-    (arg0: any): void
-  },
-  exchange: string
+export const getAllSchedule = async (
+  setUserBot: SetterOrUpdater<scheduleListValueDto[]>
 ) => {
   const result = await ajax
-    .get(`/secret-api/exchange/${exchange}`)
+    .get(`/secret-api/bot`)
     .then((result) => result)
     .catch((err) => console.log(err))
+
   if (result.data) {
-    settingApi({ exchange, ...result.data })
-  } else settingApi({ exchange, id: undefined, apiKey: "", secretKey: "" })
+    setUserBot(result.data)
+  }
 }
-
-export const CreateOrUpdateApiKey = async (api: any) => {
-  return await ajax
-    .post(`/secret-api`, api)
-    .then((result) => result)
-    .catch((err) => console.log(err))
-}
-
-export const isCheckUserApi = async () => {
-  const result = await ajax
-    .get(`/secret-api/check`)
-    .then((result) => result)
-    .catch((err) => err)
-  return result
-}
-
-//---------------------------->
 
 export const getAllApiKey = async (
   pegging: PagingDto,
-  setData: SetterOrUpdater<{ count: number; data: accessDto[] }>
+  setData: SetterOrUpdater<{ count: number; data: accessBotDto[] }>
 ) => {
+  console.log(pegging)
   const result = await ajax
-    .get(`/secret-api/${pegging.page}/${pegging.size}`)
+    .get(
+      `/secret-api/${pegging.page}/${pegging.size}/${pegging.userIds}?search=${pegging.search}`
+    )
     .then((result) => result)
     .catch((err) => console.log(err))
 
@@ -50,7 +38,7 @@ export const getAllApiKey = async (
 }
 
 export const deleteAccess = async (
-  row: accessDto,
+  row: accessBotDto,
   callBack: { (): Promise<void>; (): void }
 ) => {
   await ajax

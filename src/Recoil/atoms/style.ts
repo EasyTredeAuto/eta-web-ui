@@ -10,3 +10,8 @@ export const openSidebar = atom({
     open: false,
   } as OpenSidebar,
 })
+
+export const listAdminState = atom({
+  key: "listAdminState",
+  default: false as boolean,
+})

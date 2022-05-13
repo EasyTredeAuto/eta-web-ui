@@ -9,6 +9,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
+
 import {
   FaRobot,
   // FaFirstOrder,
@@ -21,9 +22,11 @@ import {
   RiLockPasswordFill,
 } from "react-icons/ri"
 // import { AiFillSetting, AiFillApi } from "react-icons/ai"
+import { MdOutlineArticle } from "react-icons/md"
 import { GiRobotAntennas } from "react-icons/gi"
+
 import { useNavigate } from "react-router-dom"
-import { openSidebar } from "../../Recoil/atoms"
+import { listAdminState, openSidebar } from "../../Recoil/atoms"
 import { useRecoilState } from "recoil"
 import { AppRoles } from "../../Utils/roles"
 // import { Collapse } from "@mui/material"
@@ -91,20 +94,17 @@ const iconGrRobot = <GiRobotAntennas />
 //const iconOrders = <FaFirstOrder />
 const iconHistory = <RiFileHistoryLine />
 const iconAdmin = <RiAdminFill />
+const iconArticle = <MdOutlineArticle />
 // const iconSetting = <AiFillSetting />
 // const iconApi = <AiFillApi />
 const iconSecret = <RiLockPasswordFill />
 //const iconChart = <FaRegChartBar />
 
 const menuAdminList = [
-  { path: "/user/dashboard", name: "Dashboard", icon: iconDashboard },
-  //{ path: "/user/chart", name: "Chart", icon: iconChart },
   { path: "/admin/user", name: "Users", icon: iconAdmin },
   { path: "/admin/indicator", name: "Indicators", icon: iconGrRobot },
-  { path: "/user/bot", name: "Bot", icon: iconRobot },
-  //{ path: "/user/orders", name: "Orders", icon: iconOrders },
-  { path: "/user/history", name: "History", icon: iconHistory },
-  { path: "/user/access-token", name: "Access Token", icon: iconSecret },
+  { path: "/admin/schedule/access-token", name: "Bot secret", icon: iconRobot },
+  { path: "/admin/article", name: "Article", icon: iconArticle },
 ]
 
 const menuList = [
@@ -122,6 +122,15 @@ const Sidebar = React.memo(() => {
 
   const navigate = useNavigate()
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
+  const [listAdmin, setListAdmin] = useRecoilState(listAdminState)
+
+  React.useEffect(() => {
+    if (role === "ADMIN") {
+      setListAdmin(true)
+    } else {
+      setListAdmin(false)
+    }
+  }, [setListAdmin])
 
   const handleDrawerClose = () => {
     setOpenSidebar({ open: !sidebar.open })
@@ -152,7 +161,7 @@ const Sidebar = React.memo(() => {
       </DrawerHeader>
       <Divider />
       <List>
-        {role === "ADMIN"
+        {listAdmin
           ? menuAdminList.map((text, i) => (
               <ListItem
                 button
