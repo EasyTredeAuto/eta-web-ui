@@ -36,7 +36,7 @@ const Dashboard = React.memo(() => {
               <Title>
                 <GiPayMoney /> Invest all
               </Title>
-              <Title>{data.cost.toLocaleString()} ฿</Title>
+              <Title>{data.cost.toLocaleString()} $</Title>
             </BoxHeader>
           </BoxContent>
         </Grid>
@@ -46,7 +46,7 @@ const Dashboard = React.memo(() => {
               <Title>
                 <GiTakeMyMoney /> All sold
               </Title>
-              <Title>{data.takeProfit.toLocaleString()} ฿</Title>
+              <Title>{data.takeProfit.toLocaleString()} $</Title>
             </BoxHeader>
           </BoxContent>
         </Grid>
@@ -56,7 +56,7 @@ const Dashboard = React.memo(() => {
               <Title>
                 <GiMoneyStack /> Total net profit
               </Title>
-              <Title>{data.netProfit.toLocaleString()} ฿</Title>
+              <Title>{data.netProfit.toLocaleString()} $</Title>
             </BoxHeader>
           </BoxContent>
         </Grid>
