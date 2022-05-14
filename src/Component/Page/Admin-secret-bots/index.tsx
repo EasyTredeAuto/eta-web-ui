@@ -81,7 +81,6 @@ const AccessToken = memo(() => {
               options={option}
               value={option.find((x) => x.value === value.userIds)}
               onChange={handleChangeSchedule}
-              isClearable
               isSearchable
               placeholder="Schedule Name"
               styles={{
