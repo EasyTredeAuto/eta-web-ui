@@ -1,5 +1,5 @@
 import * as ajax from "../../Utils/ajax"
-import { accessDto, accessValueDto, accessValueUpdateDto, apikeyDto, PagingDto } from "../atoms/apikey"
+import { accessDto, accessValueDto, accessValueUpdateDto, apikeyDto, PagingDto } from "../atoms/user-access"
 import { SetterOrUpdater } from "recoil"
 
 export const getApiKey = async (

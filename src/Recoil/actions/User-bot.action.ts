@@ -1,12 +1,12 @@
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
-import { BinanceAsset } from "../atoms/coins"
+import { BinanceAsset } from "../atoms/user-symbol"
 import {
   botValueUserDto,
   botsUserDto,
   botValueUserUpdateDto,
   botsOptionDto,
-} from "../atoms/usedBot"
+} from "../atoms/user-bot"
 
 export const getListBots = async (
   paging: {

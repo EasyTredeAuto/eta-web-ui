@@ -103,7 +103,7 @@ const iconSecret = <RiLockPasswordFill />
 const menuAdminList = [
   { path: "/admin/user", name: "Users", icon: iconAdmin },
   { path: "/admin/indicator", name: "Indicators", icon: iconGrRobot },
-  { path: "/admin/schedule/access-token", name: "Bot secret", icon: iconRobot },
+  { path: "/admin/schedule/access-token", name: "Access Token", icon: iconSecret },
   { path: "/admin/article", name: "Article", icon: iconArticle },
 ]
 

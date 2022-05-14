@@ -19,7 +19,7 @@ import {
   listAdminState,
 } from "../../Recoil/atoms"
 import { isMobileOnly } from "mobile-device-detect"
-import { getBinanceAsset } from "../../Recoil/actions/Used-bot.action"
+import { getBinanceAsset } from "../../Recoil/actions/User-bot.action"
 import { AppRoles } from "../../Utils/roles"
 // import DialogConfigLine from "../Dialog/LineConfig"
 

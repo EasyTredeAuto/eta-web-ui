@@ -24,7 +24,7 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil"
 import Swal from "sweetalert2"
 import { isMobileOnly } from "mobile-device-detect"
-import { updateAccess } from "../../../Recoil/actions/Api-key.action"
+import { updateAccess } from "../../../Recoil/actions/User-access.action"
 import { getAllApiKey } from "../../../Recoil/actions/Admin-schedule-access"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({

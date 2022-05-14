@@ -3,7 +3,7 @@ import * as ajax from "../../Utils/ajax"
 import {
   DashboardCostDto,
   DashboardExchangeWidgetDto,
-} from "../atoms/dashboard"
+} from "../atoms/user-dashboard"
 
 export const getDashboardCost = async (
   setCost: SetterOrUpdater<DashboardCostDto>

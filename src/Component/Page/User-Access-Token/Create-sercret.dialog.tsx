@@ -27,7 +27,7 @@ import { isMobileOnly } from "mobile-device-detect"
 import {
   createAccess,
   getAllApiKey,
-} from "../../../Recoil/actions/Api-key.action"
+} from "../../../Recoil/actions/User-access.action"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {

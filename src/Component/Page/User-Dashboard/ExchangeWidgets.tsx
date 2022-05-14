@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material"
 import React from "react"
-import { DashboardExchangeWidgetDto } from "../../../Recoil/atoms/dashboard"
+import { DashboardExchangeWidgetDto } from "../../../Recoil/atoms/user-dashboard"
 import { BoxHeader } from "../../StyledComponent/Dashboard.Element"
 import { Title } from "../../StyledComponent/Fontsize.element"
 

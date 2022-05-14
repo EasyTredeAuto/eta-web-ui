@@ -8,50 +8,45 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import Switch from "@mui/material/Switch"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import {
-  botDataState,
-  botPagingState,
-  botValueUpdateState,
-} from "../../../Recoil/atoms"
-import { botsDto, botValueUpdateDto } from "../../../Recoil/atoms/bots"
+
+import { indicatorsDto, indicatorUpdateDto } from "../../../Recoil/atoms/admin-indicator"
 import { MdDelete } from "react-icons/md"
-import ViewBot from "./Detail-bot.dialog"
-import UpdateBot from "./Update-bot.dialog"
+import ViewBot from "./Detail-indicator.dialog"
+import UpdateBot from "./Update-indicator.dialog"
 import { IconButton, Tooltip } from "@mui/material"
 import { FaEdit } from "react-icons/fa"
-import {
-  deleteBots,
-  getListBots,
-  updateActive,
-} from "../../../Recoil/actions/Indicator.action"
 import Swal from "sweetalert2"
 import moment from "moment"
 import { TextName } from "../../StyledComponent/Fontsize.element"
 import { isMobileOnly } from "mobile-device-detect"
+import * as Actions from "../../../Recoil/actions/Admin-Indicator.action"
+import * as Atoms from "../../../Recoil/atoms"
 
 const ListBotsTable = React.memo(() => {
   const [open, setOpen] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [openView, setOpenDiaView] = React.useState(false)
-  const [paging, setPaging] = useRecoilState(botPagingState)
-  const [botList, setBotList] = useRecoilState(botDataState)
-  const setValue = useSetRecoilState(botValueUpdateState)
-  const handleUpdate = (Api: botsDto) => {
+  const [paging, setPaging] = useRecoilState(Atoms.indicatorsPagingState)
+  const [botList, setBotList] = useRecoilState(Atoms.indicatorsState)
+  const setValue = useSetRecoilState(Atoms.indicatorUpdateState)
+
+  const handleUpdate = (Api: indicatorsDto) => {
     const data = {
       id: Api.id,
       name: Api.name,
       description: Api.description,
       exchange: Api.exchange,
-    } as botValueUpdateDto
+    } as indicatorUpdateDto
     setValue(data)
     setOpen(true)
   }
-  const handleView = (Api: botsDto) => {
+
+  const handleView = (Api: indicatorsDto) => {
     const data = {
       id: Api.id,
       name: Api.name,
       description: Api.description,
-    } as botValueUpdateDto
+    } as indicatorUpdateDto
     setValue(data)
     setOpenDiaView(true)
   }
@@ -66,13 +61,14 @@ const ListBotsTable = React.memo(() => {
     setPaging({ ...paging, size: parseInt(event.target.value, 10), page: 0 })
   }
 
-  const handleChangeFetchingOrders = async () => {
-    getListBots(paging, setBotList)
+  const handleChangeFetchingIndicators = async () => {
+    Actions.getAllIndicators(paging, setBotList)
   }
+  
   const handleActiveBot = async (row: any) => {
     setLoading(true)
-    await updateActive(row.id, !row.active)
-    handleChangeFetchingOrders()
+    await Actions.activeIndicator(row.id, !row.active)
+    handleChangeFetchingIndicators()
     setLoading(false)
   }
   const handleChangeDelete = async (id: number, name: string) => {
@@ -81,17 +77,18 @@ const ListBotsTable = React.memo(() => {
       title: `Are you sure to delete this ${name}?`,
       confirmButtonText: "Delete",
       confirmButtonColor: "red",
-      preConfirm: () => deleteBots(id, handleChangeFetchingOrders),
+      preConfirm: () => Actions.deleteIndicators(id, handleChangeFetchingIndicators),
       showCancelButton: true,
     })
   }
 
   React.useEffect(() => {
     function fetchData() {
-      getListBots(paging, setBotList)
+      Actions.getAllIndicators(paging, setBotList)
     }
     fetchData()
   }, [paging, setBotList])
+
   const label = { inputProps: { "aria-label": "Switch demo" } }
   const sxStyle = {
     minHeight: isMobileOnly ? "calc(100vh - 310px)" : "calc(100vh - 240px)",

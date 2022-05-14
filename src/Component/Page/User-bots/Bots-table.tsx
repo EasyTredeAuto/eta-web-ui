@@ -19,7 +19,7 @@ import {
   botsUserViewDiaDto,
   botValueUserUpdateDto,
   botUserViewState,
-} from "../../../Recoil/atoms/usedBot"
+} from "../../../Recoil/atoms/user-bot"
 import { MdDelete } from "react-icons/md"
 import UpdateBot from "./Update-bot.dialog"
 import { IconButton, Tooltip } from "@mui/material"
@@ -29,7 +29,7 @@ import {
   getListBots,
   getListBotsOption,
   updateActive,
-} from "../../../Recoil/actions/Used-bot.action"
+} from "../../../Recoil/actions/User-bot.action"
 import Swal from "sweetalert2"
 import moment from "moment"
 import { TextName } from "../../StyledComponent/Fontsize.element"

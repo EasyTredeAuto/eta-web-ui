@@ -1,7 +1,7 @@
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
-import { ordersDto } from "../atoms/orders"
-import { orderUpdateValueReq, orderValueReq } from "../atoms/coins"
+import { ordersDto } from "../atoms/todo-orders"
+import { orderUpdateValueReq, orderValueReq } from "../atoms/user-symbol"
 
 export const getListOrders = async (
   paging: {

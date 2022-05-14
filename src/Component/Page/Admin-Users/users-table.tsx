@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow"
 import { useRecoilState } from "recoil"
 import { userPagingState, userListDataState } from "../../../Recoil/atoms"
 import moment from "moment"
-import { getUserList } from "../../../Recoil/actions/Users"
+import { getUserList } from "../../../Recoil/actions/Admin-Users"
 import { Switch } from "@mui/material"
 import { TableContainer } from "../../StyledComponent/CustomTable.Mui"
 

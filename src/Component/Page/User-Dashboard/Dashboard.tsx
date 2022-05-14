@@ -13,7 +13,7 @@ import { dashboardCostState, dashboardWidgetState } from "../../../Recoil/atoms"
 import {
   getDashboardCost,
   getExchangeWidgets,
-} from "../../../Recoil/actions/dashboard.action"
+} from "../../../Recoil/actions/User-dashboard.action"
 import ExchangeWidgets from "./ExchangeWidgets"
 
 const Dashboard = React.memo(() => {

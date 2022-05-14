@@ -1,7 +1,7 @@
 import moment from "moment"
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
-import { transactionDto } from "../atoms/transaction"
+import { transactionDto } from "../atoms/user-transaction"
 
 export const getTransactionDashboard = async (
   setTransaction: SetterOrUpdater<{

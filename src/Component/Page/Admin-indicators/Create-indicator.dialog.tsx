@@ -12,22 +12,14 @@ import {
   Component,
   BoxFooter,
 } from "../../StyledComponent/CreateOrder.Dialog.Element"
-import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
 import { Grid } from "@mui/material"
-import {
-  botValueUpdateState,
-  botPagingState,
-  botDataState,
-  exchangeState,
-} from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import Swal from "sweetalert2"
-import {
-  getListBots,
-  updateBots,
-} from "../../../Recoil/actions/Indicator.action"
 import { isMobileOnly } from "mobile-device-detect"
 import { SelectBase } from "../../StyledComponent/CustomReact.element"
+import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
+import * as Atoms from "../../../Recoil/atoms"
+import * as Action from "../../../Recoil/actions/Admin-Indicator.action"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -77,10 +69,11 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleClose = () => {
     setOpen(false)
   }
-  const [value, setValue] = useRecoilState(botValueUpdateState)
-  const paging = useRecoilValue(botPagingState)
-  const setBotList = useSetRecoilState(botDataState)
-  const exchanges = useRecoilValue(exchangeState)
+
+  const [value, setValue] = useRecoilState(Atoms.indicatorState)
+  const paging = useRecoilValue(Atoms.indicatorsPagingState)
+  const setBotList = useSetRecoilState(Atoms.indicatorsState)
+  const exchanges = useRecoilValue(Atoms.exchangeState)
   const [loading, setLoading] = React.useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,12 +84,12 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleChangeSelect = async (e: any) => {
     setValue({ ...value, exchange: e.value })
   }
-  const handleUpdateBot = async () => {
+  const handleCreateBot = async () => {
     setLoading(true)
-    const result = await updateBots(value)
-    if (result.data) {
-      await handleChangeFetchingMyBots()
+    const result = await Action.createIndicator(value)
+    if (result?.data) {
       setLoading(false)
+      await handleChangeFetchingIndicators()
       setOpen(false)
       Swal.fire({
         showConfirmButton: false,
@@ -114,12 +107,11 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     }
   }
 
-  const handleChangeFetchingMyBots = async () => {
-    getListBots(paging, setBotList)
+  const handleChangeFetchingIndicators = async () => {
+    Action.getAllIndicators(paging, setBotList)
   }
 
   const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
-  // const StyleContent = { width: isMobileOnly ? "100%" : "90%" }
 
   return (
     <BootstrapDialog
@@ -129,7 +121,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
       fullWidth
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Edit Indicator
+        New Indicator
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Component col={"100%"}>
@@ -140,9 +132,10 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             <Grid item xs={12} sm={8} lg={8}>
               <BoxContent>
                 <TextFieldName
-                  size="small"
                   fullWidth
+                  size="small"
                   type="text"
+                  variant="outlined"
                   name="name"
                   value={value.name}
                   onChange={handleChange}
@@ -159,6 +152,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
                 <TextFieldName
                   fullWidth
                   multiline
+                  variant="outlined"
                   minRows={3}
                   maxRows={3}
                   type="text"
@@ -196,15 +190,10 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
             color="primary"
             sx={{ width: "100%" }}
             autoFocus
-            disabled={
-              !value.id ||
-              value.name === "" ||
-              value.description === "" ||
-              loading
-            }
-            onClick={handleUpdateBot}
+            disabled={value.name === "" || value.description === "" || loading}
+            onClick={handleCreateBot}
           >
-            Save
+            Create
           </Button>
           <Button
             variant="contained"

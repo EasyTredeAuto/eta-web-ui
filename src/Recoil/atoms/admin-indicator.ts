@@ -1,45 +1,45 @@
 import { atom } from "recoil"
 
-export interface botValueDto {
+//! create indicator
+export interface indicatorDto {
   name: string
   description: string
   exchange: string
 }
-
-export const botValueState = atom({
-  key: "botValueState",
+export const indicatorState = atom({
+  key: "indicatorState",
   default: {
     name: "",
     description: "",
-    exchange: "binance"
-  } as botValueDto,
+    exchange: "binance",
+  } as indicatorDto,
 })
 
-export interface botValueUpdateDto {
+//! update indicator
+export interface indicatorUpdateDto {
   id: number | undefined
   name: string
   description: string
   exchange: string
 }
-
-export const botValueUpdateState = atom({
-  key: "botValueUpdateState",
+export const indicatorUpdateState = atom({
+  key: "indicatorUpdateState",
   default: {
     id: undefined,
     name: "",
     description: "",
     exchange: "",
-  } as botValueUpdateDto,
+  } as indicatorUpdateDto,
 })
 
+//! paging indicators
 export interface PagingDto {
   page: number
   size: number
   search: string
 }
-
-export const botPagingState = atom({
-  key: "botPagingState",
+export const indicatorsPagingState = atom({
+  key: "indicatorsPagingState",
   default: {
     page: 0,
     size: 10,
@@ -47,7 +47,8 @@ export const botPagingState = atom({
   } as PagingDto,
 })
 
-export interface botsDto {
+// indicators
+export interface indicatorsDto {
   id: number
   name: string
   description: string
@@ -57,11 +58,10 @@ export interface botsDto {
   createdAt: Date
   updatedAt: Date
 }
-
-export const botDataState = atom({
-  key: "botDataState",
+export const indicatorsState = atom({
+  key: "indicatorsState",
   default: {
     count: 0,
-    data: [] as botsDto[],
+    data: [] as indicatorsDto[],
   },
 })

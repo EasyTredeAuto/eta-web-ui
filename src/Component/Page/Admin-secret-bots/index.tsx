@@ -74,12 +74,12 @@ const AccessToken = memo(() => {
             Add Token
           </Button>
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={3}>
           <BoxSearch>
             <Select
               id="select-bot-access"
               options={option}
-              // value={option.find((x) => x.value === paging.exchange)}
+              value={option.find((x) => x.value === value.userIds)}
               onChange={handleChangeSchedule}
               isClearable
               isSearchable

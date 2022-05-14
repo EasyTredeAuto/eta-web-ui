@@ -1,6 +1,6 @@
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
-import { userListValueDto } from "../atoms/users"
+import { userListValueDto } from "../atoms/admin-users"
 
 export const getUserList = async (
   paging: {

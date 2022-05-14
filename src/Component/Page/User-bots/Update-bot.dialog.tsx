@@ -27,7 +27,7 @@ import Swal from "sweetalert2"
 import {
   getListBots,
   updateBots,
-} from "../../../Recoil/actions/Used-bot.action"
+} from "../../../Recoil/actions/User-bot.action"
 import { isMobileOnly } from "mobile-device-detect"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({

@@ -1,6 +1,6 @@
 import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
-import { Assets, Coins } from "../atoms/coins"
+import { Assets, Coins } from "../atoms/user-symbol"
 
 export const getSymbol = async (setCoins: SetterOrUpdater<{ data: Coins[] }>) => {
   const result = await ajax

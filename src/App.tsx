@@ -12,7 +12,7 @@ import Navbar from "./Component/Layout/Navbar"
 import Sidebar from "./Component/Layout/Sidebar"
 
 // main page
-import ManageBot from "./Component/Page/Admin-bots"
+import ManageBot from "./Component/Page/Admin-indicators"
 import ManageUser from "./Component/Page/Admin-Users"
 import SecretBotToken from "./Component/Page/Admin-secret-bots"
 import Article from "./Component/Page/Admin-article"
@@ -36,7 +36,7 @@ import { PrivateRoute } from "./Middleware/privateRoute"
 import { AppRoles } from "./Utils/roles"
 import { PublicRoute } from "./Middleware/publicRoute"
 import { useState, useEffect } from "react"
-import { isCheckUserApi } from "./Recoil/actions/Api-key.action"
+import { isCheckUserApi } from "./Recoil/actions/User-access.action"
 
 // check device
 import { isMobileOnly } from "mobile-device-detect"

@@ -13,7 +13,7 @@ import {
   transactionPagingState,
 } from "../../../Recoil/atoms"
 import moment from "moment"
-import { getAllTransactions } from "../../../Recoil/actions/Transaction.action"
+import { getAllTransactions } from "../../../Recoil/actions/User-transaction.action"
 import { Bade } from "../../StyledComponent/Dashboard.Element"
 import { isMobileOnly } from "mobile-device-detect"
 

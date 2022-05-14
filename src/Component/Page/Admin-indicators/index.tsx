@@ -8,11 +8,11 @@ import {
   BoxSearch,
   Component,
 } from "../../StyledComponent/OrdersComponent.Element"
-import ListBot from "./Bots-table"
+import ListBot from "./Indicators-table"
 import SearchIcon from "@mui/icons-material/Search"
 import InputBase from "@mui/material/InputBase"
-import CreateBot from "./Create-bot.dialog"
-import { botPagingState } from "../../../Recoil/atoms"
+import CreateBot from "./Create-indicator.dialog"
+import * as Atoms from "../../../Recoil/atoms"
 import { useRecoilState } from "recoil"
 import { isMobileOnly } from "mobile-device-detect"
 
@@ -68,7 +68,7 @@ const BotsComponent = memo(() => {
     setOpen(true)
   }
 
-  const [paging, setPaging] = useRecoilState(botPagingState)
+  const [paging, setPaging] = useRecoilState(Atoms.indicatorsPagingState)
   const [debouncedTerm, setDebouncedTerm] = useState(paging.search)
 
   // update 'term' value after 1 second from the last update of 'debouncedTerm'

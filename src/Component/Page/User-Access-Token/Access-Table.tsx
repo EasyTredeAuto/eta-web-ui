@@ -20,12 +20,12 @@ import { FaEdit } from "react-icons/fa"
 import Swal from "sweetalert2"
 import moment from "moment"
 import { isMobileOnly } from "mobile-device-detect"
-import { accessDto, accessValueUpdateDto } from "../../../Recoil/atoms/apikey"
+import { accessDto, accessValueUpdateDto } from "../../../Recoil/atoms/user-access"
 import {
   deleteAccess,
   getAllApiKey,
   updateActive,
-} from "../../../Recoil/actions/Api-key.action"
+} from "../../../Recoil/actions/User-access.action"
 
 const ListAccessTable = React.memo(() => {
   const [open, setOpen] = React.useState(false)

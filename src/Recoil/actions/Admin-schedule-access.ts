@@ -5,8 +5,8 @@ import {
   accessBotValueDto,
   PagingDto,
   scheduleListValueDto,
-} from "../atoms/admin-secret-bot"
-import { accessValueUpdateDto } from "../atoms/apikey"
+} from "../atoms/admin-schedule-access"
+import { accessValueUpdateDto } from "../atoms/user-access"
 
 export const getAllSchedule = async (
   setUserBot: SetterOrUpdater<scheduleListValueDto[]>

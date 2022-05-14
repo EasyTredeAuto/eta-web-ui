@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent"
 import IconButton from "@mui/material/IconButton"
 import { Typography } from "@mui/material"
 import { useRecoilValue } from "recoil"
-import { botValueUpdateState } from "../../../Recoil/atoms"
+import { indicatorUpdateState } from "../../../Recoil/atoms"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -56,7 +56,7 @@ const ViewBot = React.memo(({ open, setOpen }: Props) => {
   const handleClose = () => {
     setOpen(false)
   }
-  const value = useRecoilValue(botValueUpdateState)
+  const value = useRecoilValue(indicatorUpdateState)
 
   return (
     <BootstrapDialog
