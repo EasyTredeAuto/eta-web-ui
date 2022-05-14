@@ -13,12 +13,19 @@ import { Menu, MenuItem } from "@mui/material"
 import { logout } from "../../Recoil/actions/Authentication.action"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { openSidebar, binanceAssetState } from "../../Recoil/atoms"
+import {
+  openSidebar,
+  binanceAssetState,
+  listAdminState,
+} from "../../Recoil/atoms"
 import { isMobileOnly } from "mobile-device-detect"
-import { getBinanceAsset } from "../../Recoil/actions/Used-bot.action"
+import { getBinanceAsset } from "../../Recoil/actions/User-bot.action"
+import { AppRoles } from "../../Utils/roles"
 // import DialogConfigLine from "../Dialog/LineConfig"
 
 const drawerWidth = isMobileOnly ? 0 : 200
+
+const role = sessionStorage.getItem("roles") as AppRoles | null
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
@@ -52,9 +59,15 @@ const Navbar = React.memo(() => {
 
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
   const setBinanceAsset = useSetRecoilState(binanceAssetState)
+  const [listAdmin, setListAdmin] = useRecoilState(listAdminState)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
+  }
+
+  const handleSetUserPage = () => {
+    setListAdmin(!listAdmin)
+    listAdmin ? navigate("/user/dashboard") : navigate("/admin/user")
   }
 
   const handleCloseUserMenu = () => {
@@ -152,6 +165,13 @@ const Navbar = React.memo(() => {
             {/* <MenuItem onClick={handleShowDialogLine}>
               <Typography textAlign="center">Line Config</Typography>
             </MenuItem> */}
+            {role === "ADMIN" && (
+              <MenuItem onClick={handleSetUserPage}>
+                <Typography textAlign="center">
+                  Switch to {listAdmin ? "user" : "admin"}
+                </Typography>
+              </MenuItem>
+            )}
             <MenuItem onClick={handleLogout}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>

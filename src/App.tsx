@@ -12,13 +12,16 @@ import Navbar from "./Component/Layout/Navbar"
 import Sidebar from "./Component/Layout/Sidebar"
 
 // main page
-import ManageBot from "./Component/Page/Manage-bots"
-import ManageUser from "./Component/Page/Users-Management"
-import UsedBot from "./Component/Page/Used-bots"
+import ManageBot from "./Component/Page/Admin-indicators"
+import ManageUser from "./Component/Page/Admin-Users"
+import SecretBotToken from "./Component/Page/Admin-secret-bots"
+import Article from "./Component/Page/Admin-article"
+
+import UsedBot from "./Component/Page/User-bots"
 // import SettingApi from "./Component/Page/settings/apis"
 
-import Dashboard from "./Component/Page/Dashboard/Dashboard"
-import History from "./Component/Page/View-transaction"
+import Dashboard from "./Component/Page/User-Dashboard/Dashboard"
+import History from "./Component/Page/User-transaction"
 //import ManageOrder from "./Component/Page/Manage-api-orders"
 
 import AccessDenied from "./Component/Page/AccessDenied"
@@ -33,11 +36,11 @@ import { PrivateRoute } from "./Middleware/privateRoute"
 import { AppRoles } from "./Utils/roles"
 import { PublicRoute } from "./Middleware/publicRoute"
 import { useState, useEffect } from "react"
-import { isCheckUserApi } from "./Recoil/actions/Api-key.action"
+import { isCheckUserApi } from "./Recoil/actions/User-access.action"
 
 // check device
 import { isMobileOnly } from "mobile-device-detect"
-import AccessToken from "./Component/Page/Access-Token";
+import AccessToken from "./Component/Page/User-Access-Token";
 
 const DrawerHeader = styled("div")(({ theme }:any) => ({
   display: "flex",
@@ -82,6 +85,10 @@ function App() {
             <Routes>
               <Route path="/admin/user" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageUser} />}/>
               <Route path="/admin/indicator" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={ManageBot} />}/>
+              <Route path="/admin/schedule/access-token" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={SecretBotToken} />}/>
+              <Route path="/admin/article" element={<PrivateRoute roles={[AppRoles.ADMIN]} component={Article} />}/>
+
+
               <Route path="/user/dashboard" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Dashboard} />}/>
               {/*<Route path="/manage/orders" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={isApi ? ManageOrder : NotApiKey} />}/>*/}
               {/*<Route path="/user/chart" element={<PrivateRoute roles={[AppRoles.ADMIN, AppRoles.AUTHOR]} component={Charts} />}/>*/}

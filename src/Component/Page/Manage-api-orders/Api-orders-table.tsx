@@ -10,14 +10,14 @@ import TableRow from "@mui/material/TableRow"
 import {
   deleteOrder,
   getListOrders,
-} from "../../../Recoil/actions/Manage-orders.action"
+} from "../../../Recoil/actions/Todo-Manage-orders.action"
 import { useRecoilState, useSetRecoilState } from "recoil"
 import {
   orderValueUpdateState,
   orderPagingState,
   orderDataState,
 } from "../../../Recoil/atoms"
-import { orderUpdateValueReq } from "../../../Recoil/atoms/coins"
+import { orderUpdateValueReq } from "../../../Recoil/atoms/user-symbol"
 import { MdContentCopy, MdDelete } from "react-icons/md"
 import UpdateBot from "./Update-api-order.dialog"
 import { IconButton, Tooltip } from "@mui/material"
