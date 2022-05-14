@@ -20,7 +20,10 @@ import { FaEdit } from "react-icons/fa"
 import Swal from "sweetalert2"
 import moment from "moment"
 import { isMobileOnly } from "mobile-device-detect"
-import { accessDto, accessValueUpdateDto } from "../../../Recoil/atoms/user-access"
+import {
+  accessDto,
+  accessValueUpdateDto,
+} from "../../../Recoil/atoms/user-access"
 import {
   deleteAccess,
   updateActive,
@@ -79,7 +82,9 @@ const ListAccessTable = React.memo(() => {
 
   React.useEffect(() => {
     function fetchData() {
-      getAllApiKey(paging, setData)
+      if (paging.userIds) {
+        getAllApiKey(paging, setData)
+      }
     }
     fetchData()
   }, [paging, setData])
