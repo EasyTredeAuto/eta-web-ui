@@ -59,3 +59,20 @@ export const accessBotDataState = atom({
     data: [] as accessBotDto[],
   },
 })
+
+export interface accessBotValueDto {
+  userIds: number | null
+  apiKey: string
+  secretKey: string
+  exchange: string | undefined
+}
+
+export const accessBotValueState = atom({
+  key: "accessBotValueState",
+  default: {
+    userIds: null,
+    apiKey: "",
+    secretKey: "",
+    exchange: undefined,
+  } as accessBotValueDto,
+})

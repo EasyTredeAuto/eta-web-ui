@@ -2,10 +2,11 @@ import { SetterOrUpdater } from "recoil"
 import * as ajax from "../../Utils/ajax"
 import {
   accessBotDto,
+  accessBotValueDto,
   PagingDto,
   scheduleListValueDto,
 } from "../atoms/admin-secret-bot"
-import { accessValueDto, accessValueUpdateDto } from "../atoms/apikey"
+import { accessValueUpdateDto } from "../atoms/apikey"
 
 export const getAllSchedule = async (
   setUserBot: SetterOrUpdater<scheduleListValueDto[]>
@@ -24,7 +25,6 @@ export const getAllApiKey = async (
   pegging: PagingDto,
   setData: SetterOrUpdater<{ count: number; data: accessBotDto[] }>
 ) => {
-  console.log(pegging)
   const result = await ajax
     .get(
       `/secret-api/${pegging.page}/${pegging.size}/${pegging.userIds}?search=${pegging.search}`
@@ -56,9 +56,9 @@ export const updateActive = async (id: number, active: boolean) => {
     .catch((err) => err)
 }
 
-export const createAccess = async (value: accessValueDto) => {
+export const createAccess = async (value: accessBotValueDto) => {
   return await ajax
-    .post(`/secret-api`, value)
+    .post(`/secret-api/${value.userIds}`, value)
     .then((result) => result)
     .catch((err) => err)
 }

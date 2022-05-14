@@ -15,17 +15,11 @@ import {
 import { SelectBase } from "../../StyledComponent/CustomReact.element"
 import { TextFieldName } from "../../StyledComponent/CustomMaterial.element"
 import { Grid } from "@mui/material"
-import {
-  accessValueState,
-  exchangeState,
-  botScheduledAccessPagingState,
-  accessBotDataState,
-} from "../../../Recoil/atoms"
 import { useRecoilState, useRecoilValue } from "recoil"
 import Swal from "sweetalert2"
 import { isMobileOnly } from "mobile-device-detect"
-import { createAccess } from "../../../Recoil/actions/Api-key.action"
-import { getAllApiKey } from "../../../Recoil/actions/Admin-schedule-access"
+import * as Atoms from "../../../Recoil/atoms"
+import * as Actions from "../../../Recoil/actions/Admin-schedule-access"
 
 const BootstrapDialog: any = styled(Dialog)(({ theme }: any) => ({
   "& .MuiDialogContent-root": {
@@ -73,8 +67,8 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   const handleClose = () => {
     setOpen(false)
   }
-  const [value, setValue] = useRecoilState(accessValueState)
-  const exchanges = useRecoilValue(exchangeState)
+  const [value, setValue] = useRecoilState(Atoms.accessBotValueState)
+  const exchanges = useRecoilValue(Atoms.exchangeState)
 
   const handleChangeSelect = async (e: any) => {
     setValue({ ...value, exchange: e.value })
@@ -86,14 +80,15 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
     setValue({ ...value, [elementName]: elementValue })
   }
 
-  const paging = useRecoilValue(botScheduledAccessPagingState)
-  const [accessList, setAccess] = useRecoilState(accessBotDataState)
+  const paging = useRecoilValue(Atoms.botScheduledAccessPagingState)
+  const [accessList, setAccess] = useRecoilState(Atoms.accessBotDataState)
 
   const handleCreateBot = async () => {
-    const result = await createAccess(value)
+    const result = await Actions.createAccess(value)
     if (result?.data) {
       await handleChangeFetchingAccess()
       setValue({
+        userIds: null,
         exchange: undefined,
         secretKey: "",
         apiKey: "",
@@ -115,7 +110,7 @@ const CreateOrder = React.memo(({ open, setOpen }: Props) => {
   }
 
   const handleChangeFetchingAccess = async () => {
-    getAllApiKey(paging, setAccess)
+    Actions.getAllApiKey(paging, setAccess)
   }
 
   const label = { justifyContent: isMobileOnly ? "flex-start" : "flex-end" }
