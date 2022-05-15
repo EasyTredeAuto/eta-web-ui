@@ -66,8 +66,8 @@ const Dashboard = React.memo(() => {
             <TransactionLatest />
           </BoxContent>
         </Grid>
-        {widgets.map((x) => (
-          <Grid item xs={12} md={6}>
+        {widgets.map((x, i) => (
+          <Grid item xs={12} md={6} key={i}>
             <BoxContent style={{ alignItems: "left" }}>
               <Title>
                 {x.exchange.charAt(0).toUpperCase() + x.exchange.slice(1)}

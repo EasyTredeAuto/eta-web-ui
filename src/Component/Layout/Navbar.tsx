@@ -17,13 +17,22 @@ import {
   openSidebar,
   binanceAssetState,
   listAdminState,
+  notificationsState,
 } from "../../Recoil/atoms"
 import { isMobileOnly } from "mobile-device-detect"
 import { getBinanceAsset } from "../../Recoil/actions/User-bot.action"
 import { AppRoles } from "../../Utils/roles"
+import {
+  getAllNoti,
+  readNotification,
+} from "../../Recoil/actions/User-notification.action"
+import { BoxNotification } from "../StyledComponent/Notification.style"
+import moment from "moment"
+import { BiTime } from "react-icons/bi"
 // import DialogConfigLine from "../Dialog/LineConfig"
 
 const drawerWidth = isMobileOnly ? 0 : 200
+const ITEM_HEIGHT = 50
 
 const role = sessionStorage.getItem("roles") as AppRoles | null
 
@@ -55,9 +64,20 @@ const Navbar = React.memo(() => {
   )
   // const [dialogLine, setShowDialogLine] = React.useState(false)
 
+  // notification
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const navigate = useNavigate()
 
   const [sidebar, setOpenSidebar] = useRecoilState(openSidebar)
+  const [notifications, setNotifications] = useRecoilState(notificationsState)
   const setBinanceAsset = useSetRecoilState(binanceAssetState)
   const [listAdmin, setListAdmin] = useRecoilState(listAdminState)
 
@@ -98,6 +118,17 @@ const Navbar = React.memo(() => {
     fetchData()
   }, [setBinanceAsset])
 
+  React.useEffect(() => {
+    const timer = setInterval(() => getAllNoti(setNotifications), 60000)
+    return () => clearInterval(timer)
+  })
+
+  const handleReadNotification = (id: number) => {
+    readNotification(id).then(() => getAllNoti(setNotifications))
+  }
+
+  const notiNotReded = notifications.filter((x) => !x.reded).length
+
   return (
     <AppBar position="fixed" open={sidebar.open}>
       <Toolbar
@@ -127,11 +158,49 @@ const Navbar = React.memo(() => {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
+            id="long-button"
+            onClick={handleClick}
           >
-            <Badge badgeContent={17} color="error">
+            <Badge badgeContent={notiNotReded} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              "aria-labelledby": "long-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 6,
+              },
+            }}
+          >
+            {notifications.map((option, i) => (
+              <MenuItem
+                key={i}
+                style={{
+                  maxWidth: 300,
+                  whiteSpace: "normal",
+                  background: option.reded ? "#eee" : "#fff",
+                }}
+                onClick={() => handleReadNotification(option.id)}
+              >
+                <BoxNotification>
+                  <p>{option.title}</p>
+                  <p>{option.description}</p>
+                  <p>
+                    <BiTime />{" "}
+                    {moment(option.createdAt).format("DD-MM-YYYY HH:mm")}
+                  </p>
+                  <hr />
+                </BoxNotification>
+              </MenuItem>
+            ))}
+          </Menu>
           <IconButton
             size="large"
             edge="end"

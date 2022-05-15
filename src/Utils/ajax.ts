@@ -77,7 +77,7 @@ export const post = async (path: string, body: any) => {
   else return res
 }
 
-export const put = async (path: string, body: any) => {
+export const put = async (path: string, body?: any) => {
   const url = `${baseUrl}${path}`
   const res = await axios
     .put(url, body, { headers: headerIsAuth })
