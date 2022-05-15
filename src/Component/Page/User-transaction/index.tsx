@@ -1,11 +1,13 @@
 import { Grid } from "@mui/material"
 import moment from "moment"
-import { memo } from "react"
+import { memo, useEffect, useState } from "react"
 import Select from "react-select"
 import { useRecoilState, useRecoilValue } from "recoil"
+import { getAllIndicators } from "../../../Recoil/actions/Admin-Indicator.action"
 import {
   binanceAssetState,
   exchangeState,
+  indicatorsState,
   transactionPagingState,
 } from "../../../Recoil/atoms"
 import { TextFieldSearch } from "../../StyledComponent/CustomMaterial.element"
@@ -28,8 +30,30 @@ const typeOption = [
 
 const History = memo(() => {
   const [paging, setPaging] = useRecoilState(transactionPagingState)
+  const [indicators, setIndicator] = useRecoilState(indicatorsState)
   const exchangesOption = useRecoilValue(exchangeState)
   const symbols = useRecoilValue(binanceAssetState)
+  const [options, setOptions] = useState(
+    [] as { label: string; value: number }[]
+  )
+
+  useEffect(() => {
+    function fetchData() {
+      getAllIndicators({ page: 0, size: 100, search: "" }, setIndicator)
+    }
+    fetchData()
+  }, [setIndicator])
+
+  useEffect(() => {
+    function fetchData() {
+      let data = []
+      for (const indicator of indicators.data) {
+        data.push({ label: indicator.name, value: indicator.id })
+      }
+      setOptions(data)
+    }
+    fetchData()
+  }, [indicators])
 
   const handleChangeExchange = (e: any) => {
     if (e) setPaging({ ...paging, exchange: e.value })
@@ -46,6 +70,10 @@ const History = memo(() => {
   const handleChangeType = (e: any) => {
     if (e) setPaging({ ...paging, type: e.value })
     else setPaging({ ...paging, type: null })
+  }
+  const handleChangeIndicator = (e: any) => {
+    if (e) setPaging({ ...paging, indicatorIds: e.value })
+    else setPaging({ ...paging, indicatorIds: null })
   }
   const handleChangeDate = (e: any) => {
     setPaging({ ...paging, [e.target.name]: e.target.value })
@@ -88,7 +116,21 @@ const History = memo(() => {
             }}
           />
         </Grid>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={3}>
+          <Select
+            options={options}
+            value={options.find((x) => x.value === paging.indicatorIds)}
+            onChange={handleChangeIndicator}
+            isClearable
+            isSearchable
+            placeholder="Bot Name"
+            styles={{
+              // Fixes the overlapping problem of the component
+              menu: (provided) => ({ ...provided, zIndex: 9999 }),
+            }}
+          />
+        </Grid>
+        <Grid item xs={6} sm={3}>
           <Select
             options={symbols.data}
             value={symbols.data.find(
@@ -104,7 +146,7 @@ const History = memo(() => {
             }}
           />
         </Grid>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={3}>
           <Select
             options={sideOption}
             value={sideOption.find((x) => x.value === paging.side)}
@@ -118,7 +160,7 @@ const History = memo(() => {
             }}
           />
         </Grid>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={3}>
           <Select
             options={typeOption}
             value={typeOption.find((x) => x.value === paging.type)}

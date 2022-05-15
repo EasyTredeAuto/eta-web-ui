@@ -37,6 +37,7 @@ export const getAllTransactions = async (
     to: Date
     exchange: string | null
     symbol: string | null
+    indicatorIds: string | null
     side: string | null
     type: string | null
   },
@@ -47,6 +48,7 @@ export const getAllTransactions = async (
   if (paging.side) query = query + `&side=${paging.side}`
   if (paging.type) query = query + `&type=${paging.type}`
   if (paging.exchange) query = query + `&exchange=${paging.exchange}`
+  if (paging.indicatorIds) query = query + `&indicatorIds=${paging.indicatorIds}`
 
   const from = moment(paging.from).startOf("day").format()
   const to = moment(paging.to).endOf("day").format()

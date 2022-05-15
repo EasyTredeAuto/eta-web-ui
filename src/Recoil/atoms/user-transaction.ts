@@ -23,6 +23,7 @@ export const transactionPagingState = atom({
     to: new Date(),
     exchange: null,
     symbol: null,
+    indicatorIds: null,
     side: null,
     type: null,
   },
