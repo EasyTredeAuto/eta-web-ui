@@ -41,6 +41,7 @@ import {
   accessBotValueState,
   scheduleOptionDataState,
 } from "./admin-schedule-access"
+import { notificationsState } from "./user-notification"
 
 export {
   // auth
@@ -94,4 +95,6 @@ export {
   accessBotDataState,
   accessBotValueState,
   scheduleOptionDataState,
+  // notification
+  notificationsState,
 }
