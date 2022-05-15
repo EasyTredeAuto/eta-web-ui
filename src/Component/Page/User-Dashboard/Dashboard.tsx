@@ -6,7 +6,6 @@ import {
 } from "../../StyledComponent/Dashboard.Element"
 import { Title } from "../../StyledComponent/Fontsize.element"
 import { GiPayMoney, GiMoneyStack, GiTakeMyMoney } from "react-icons/gi"
-import TransactionLatest from "./Transaction-vidget"
 import { Grid } from "@mui/material"
 import { useRecoilState } from "recoil"
 import { dashboardCostState, dashboardWidgetState } from "../../../Recoil/atoms"
@@ -15,6 +14,7 @@ import {
   getExchangeWidgets,
 } from "../../../Recoil/actions/User-dashboard.action"
 import ExchangeWidgets from "./ExchangeWidgets"
+import TransactionLatest from "./Transaction-widget"
 
 const Dashboard = React.memo(() => {
   const [data, setData] = useRecoilState(dashboardCostState)

@@ -13,14 +13,14 @@ import Sidebar from "./Component/Layout/Sidebar"
 
 // main page
 import ManageBot from "./Component/Page/Admin-indicators"
-import ManageUser from "./Component/Page/Admin-Users"
-import SecretBotToken from "./Component/Page/Admin-secret-bots"
+import ManageUser from "./Component/Page/Admin-users"
+import SecretBotToken from "./Component/Page/Admin-secret_bots"
 import Article from "./Component/Page/Admin-article"
 
 import UsedBot from "./Component/Page/User-bots"
 // import SettingApi from "./Component/Page/settings/apis"
 
-import Dashboard from "./Component/Page/User-Dashboard/Dashboard"
+import Dashboard from "./Component/Page/User-dashboard/Dashboard"
 import History from "./Component/Page/User-transaction"
 //import ManageOrder from "./Component/Page/Manage-api-orders"
 
@@ -40,7 +40,7 @@ import { isCheckUserApi } from "./Recoil/actions/User-access.action"
 
 // check device
 import { isMobileOnly } from "mobile-device-detect"
-import AccessToken from "./Component/Page/User-Access-Token";
+import AccessToken from "./Component/Page/User-access_token";
 
 const DrawerHeader = styled("div")(({ theme }:any) => ({
   display: "flex",
