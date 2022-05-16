@@ -83,42 +83,41 @@ const Login: React.FunctionComponent = memo(() => {
     }
   }
 
-  const fetchConfigLine = () => {
-    const ConfigLiffId = {
-      liffId: process.env.REACT_APP_LINE_LIFFID as string,
+  const lineLogin = async () => {
+    const idToken = await liff.getIDToken()
+    const { displayName, userId, pictureUrl } = await liff.getProfile()
+    const body = {
+      displayName,
+      userId,
+      pictureUrl,
+      idToken,
+    } as LineProfileDto
+    const result = await ajax.lineLogin(body)
+    if (result.id) {
+      if (result.roles === "ADMIN") navigate("/admin/user")
+      else navigate("/user/dashboard")
+      window.location.reload()
+    } else {
+      Swal.fire({
+        title: "Warning",
+        icon: "warning",
+        text: result.message,
+      })
     }
-    liff.init(
-      ConfigLiffId,
-      () => {
-        if (liff.isLoggedIn()) {
-          const idToken = liff.getIDToken()
-          liff.getProfile().then(async (profile) => {
-            const { displayName, userId, pictureUrl } = profile
-            const body = {
-              displayName,
-              userId,
-              pictureUrl,
-              idToken,
-            } as LineProfileDto
-            const result = await ajax.lineLogin(body)
-            if (result.id) {
-              if (result.roles === "ADMIN") navigate("/admin/user")
-              else navigate("/user/dashboard")
-              window.location.reload()
-            } else {
-              Swal.fire({
-                title: "Warning",
-                icon: "warning",
-                text: result.message,
-              })
-            }
-          })
-        } else {
-          liff.login()
-        }
-      },
-      (err) => console.log(err)
-    )
+  }
+
+  const fetchConfigLine = async () => {
+    await liff.init({ liffId: process.env.REACT_APP_LINE_LIFFID as string })
+
+    if (liff.isInClient()) {
+      lineLogin()
+    } else {
+      if (liff.isLoggedIn()) {
+        lineLogin()
+      } else {
+        liff.login()
+      }
+    }
   }
 
   useEffect(() => {

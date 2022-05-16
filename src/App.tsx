@@ -42,6 +42,8 @@ import { isCheckUserApi } from "./Recoil/actions/User-access.action"
 import { isMobileOnly } from "mobile-device-detect"
 import AccessToken from "./Component/Page/User-access_token";
 
+import * as Auth from "./Utils/auth"
+
 const DrawerHeader = styled("div")(({ theme }:any) => ({
   display: "flex",
   alignItems: "center",
@@ -53,14 +55,16 @@ const DrawerHeader = styled("div")(({ theme }:any) => ({
 
 function App() {
   
-  const accessToken: string | null = sessionStorage.getItem("accessToken")
+  const accessToken: string | null = Auth.getToken()
   const [isApi, setIsApi] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
-      const api = await isCheckUserApi()
-      if (api.data) {
-        setIsApi(true)
+      if (accessToken) {
+        const api = await isCheckUserApi()
+        if (api.data) {
+          setIsApi(true)
+        }
       }
     }
     fetchData()
