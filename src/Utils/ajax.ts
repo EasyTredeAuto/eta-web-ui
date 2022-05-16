@@ -1,5 +1,6 @@
 import axios from "axios"
 import { LoginDto } from "../Recoil/atoms/auth"
+import { LineProfileDto } from "../Recoil/atoms/todo-line"
 
 const baseUrl = process.env.REACT_APP_BASE_URL
 const accessToken = sessionStorage.getItem("accessToken")
@@ -27,6 +28,25 @@ export const login = async (user: LoginDto) => {
     return result.data.user
   } else return result
 }
+
+export const lineLogin = async (lineBody: LineProfileDto) => {
+  const url = `${baseUrl}/auth/line/login`
+  const result = await axios
+    .post(url, lineBody, { headers: headerFirstAuth })
+    .then((result) => result.data)
+    .catch((err) => err)
+
+  if (result.data) {
+    const accessToken = result.data.accessToken
+    const { id, roles, lineId } = result.data.user
+    sessionStorage.setItem("accessToken", accessToken)
+    sessionStorage.setItem("lineId", lineId)
+    sessionStorage.setItem("id", id)
+    sessionStorage.setItem("roles", roles)
+    return result.data.user
+  } else return result
+}
+
 export const register = async (user: LoginDto) => {
   const url = `${baseUrl}/auth/register`
   const result = await axios
