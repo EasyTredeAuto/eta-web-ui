@@ -1,0 +1,5 @@
+export const getType = () => sessionStorage.getItem("type")
+export const getId = () => sessionStorage.getItem("id")
+export const getRoles = () => sessionStorage.getItem("roles")
+export const getEmail = () => sessionStorage.getItem("email")
+export const getToken = () => sessionStorage.getItem("accessToken")

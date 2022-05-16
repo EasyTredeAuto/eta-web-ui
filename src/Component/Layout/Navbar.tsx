@@ -29,7 +29,8 @@ import {
 import { BoxNotification } from "../StyledComponent/Notification.style"
 import moment from "moment"
 import { BiTime } from "react-icons/bi"
-// import DialogConfigLine from "../Dialog/LineConfig"
+import * as Auth from "../../Utils/auth"
+import liff from "@line/liff"
 
 const drawerWidth = isMobileOnly ? 0 : 200
 const ITEM_HEIGHT = 50
@@ -101,6 +102,12 @@ const Navbar = React.memo(() => {
 
   const handleLogout = async () => {
     await logout()
+    const ConfigLiffId = {
+      liffId: process.env.REACT_APP_LINE_LIFFID as string,
+    }
+    if (Auth.getType() === "line") {
+      liff.init(ConfigLiffId, () => liff.logout())
+    }
     navigate("/login")
     window.location.reload()
   }

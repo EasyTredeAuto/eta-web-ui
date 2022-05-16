@@ -20,11 +20,12 @@ export const login = async (user: LoginDto) => {
 
   if (result.data) {
     const accessToken = result.data.accessToken
-    const { id, email, roles } = result.data.user
+    const { id, email, roles, type } = result.data.user
     sessionStorage.setItem("accessToken", accessToken)
     sessionStorage.setItem("email", email)
     sessionStorage.setItem("id", id)
     sessionStorage.setItem("roles", roles)
+    sessionStorage.setItem("type", type)
     return result.data.user
   } else return result
 }
@@ -38,11 +39,12 @@ export const lineLogin = async (lineBody: LineProfileDto) => {
 
   if (result.data) {
     const accessToken = result.data.accessToken
-    const { id, roles, lineId } = result.data.user
+    const { id, roles, lineId, type } = result.data.user
     sessionStorage.setItem("accessToken", accessToken)
     sessionStorage.setItem("lineId", lineId)
     sessionStorage.setItem("id", id)
     sessionStorage.setItem("roles", roles)
+    sessionStorage.setItem("type", type)
     return result.data.user
   } else return result
 }
