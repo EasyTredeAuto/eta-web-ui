@@ -21,6 +21,11 @@ import { useNavigate, useParams } from "react-router-dom"
 import * as ajax from "../../Utils/ajax"
 import Swal from "sweetalert2"
 import { approveEmail } from "../../Recoil/actions/Authentication.action"
+import liff from "@line/liff"
+import { LineProfileDto } from "../../Recoil/atoms/todo-line"
+import { Button } from "@mui/material"
+
+const lineBtn = { marginBottom: 15 }
 
 const Login: React.FunctionComponent = memo(() => {
   const homeRef = useRef<HTMLAnchorElement>(null)
@@ -57,7 +62,9 @@ const Login: React.FunctionComponent = memo(() => {
         .catch((error) => error)
 
       if (result.id) {
-        navigate("/dashboard")
+        if (result.roles === "ADMIN") navigate("/admin/user")
+        else navigate("/user/dashboard")
+
         if (remember) {
           localStorage.setItem("email", user.email)
           localStorage.setItem("password", user.password)
@@ -74,6 +81,44 @@ const Login: React.FunctionComponent = memo(() => {
         })
       }
     }
+  }
+
+  const fetchConfigLine = () => {
+    const ConfigLiffId = {
+      liffId: process.env.REACT_APP_LINE_LIFFID as string,
+    }
+    liff.init(
+      ConfigLiffId,
+      () => {
+        if (liff.isLoggedIn()) {
+          const idToken = liff.getIDToken()
+          liff.getProfile().then(async (profile) => {
+            const { displayName, userId, pictureUrl } = profile
+            const body = {
+              displayName,
+              userId,
+              pictureUrl,
+              idToken,
+            } as LineProfileDto
+            const result = await ajax.lineLogin(body)
+            if (result.id) {
+              if (result.roles === "ADMIN") navigate("/admin/user")
+              else navigate("/user/dashboard")
+              window.location.reload()
+            } else {
+              Swal.fire({
+                title: "Warning",
+                icon: "warning",
+                text: result.message,
+              })
+            }
+          })
+        } else {
+          liff.login()
+        }
+      },
+      (err) => console.log(err)
+    )
   }
 
   useEffect(() => {
@@ -103,9 +148,19 @@ const Login: React.FunctionComponent = memo(() => {
       <BoxLogin>
         <TextHeaderH1 color={"#14FFEC"}>LOGIN</TextHeaderH1>
         <BoxContent onSubmit={handleLogin}>
+          <Button
+            fullWidth
+            style={lineBtn}
+            color="success"
+            variant="contained"
+            onClick={fetchConfigLine}
+          >
+            line login
+          </Button>
           <TextFieldBase
             value={user.email}
             fullWidth
+            size="small"
             type="email"
             label="Email"
             name="email"
@@ -118,6 +173,7 @@ const Login: React.FunctionComponent = memo(() => {
             fullWidth
             focused={user.password !== ""}
             type="password"
+            size="small"
             label="Password"
             name="password"
             onChange={handleChange}

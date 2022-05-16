@@ -14,7 +14,7 @@ const NotPermission = memo(() => {
         variant="contained"
         color="primary"
         autoFocus
-        onClick={() => navigate("/setting-api")}
+        onClick={() => navigate("/user/access-token")}
       >
         Setting Api
       </Button>

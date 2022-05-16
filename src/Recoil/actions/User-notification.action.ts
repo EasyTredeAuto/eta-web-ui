@@ -5,7 +5,6 @@ import { notificationDto } from "../atoms/user-notification"
 export const getAllNoti = async (
   setNotifications: SetterOrUpdater<notificationDto[]>
 ) => {
-    console.log(123)
   const result = await ajax
     .get("/notification")
     .then((result) => result)
