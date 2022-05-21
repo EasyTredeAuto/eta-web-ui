@@ -20,7 +20,10 @@ import { LoginDto, loginState } from "../../Recoil/atoms/auth"
 import { useNavigate, useParams } from "react-router-dom"
 import * as ajax from "../../Utils/ajax"
 import Swal from "sweetalert2"
-import { approveEmail } from "../../Recoil/actions/Authentication.action"
+import {
+  approveEmail,
+  setRememberOption,
+} from "../../Recoil/actions/Authentication.action"
 import liff from "@line/liff"
 import { LineProfileDto } from "../../Recoil/atoms/todo-line"
 import { Button } from "@mui/material"
@@ -61,13 +64,7 @@ const Login: React.FunctionComponent = memo(() => {
         .catch((error) => error)
 
       if (result.id) {
-        if (remember) {
-          localStorage.setItem("email", user.email)
-          localStorage.setItem("password", user.password)
-        } else {
-          localStorage.removeItem("email")
-          localStorage.removeItem("password")
-        }
+        await setRememberOption(user.email, user.password)
 
         if (result.roles === "ADMIN") {
           window.location.href = "https://www.smaretas.com/admin/user"

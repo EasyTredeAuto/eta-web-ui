@@ -108,8 +108,7 @@ const Navbar = React.memo(() => {
     if (Auth.getType() === "line") {
       liff.init(ConfigLiffId, () => liff.logout())
     }
-    navigate("/login")
-    window.location.reload()
+    window.location.href = "https://www.smaretas.com/login"
   }
 
   const handleDrawerOpen = () => {
