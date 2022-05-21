@@ -1,5 +1,18 @@
 import * as ajax from "../../Utils/ajax"
 
+export const setRememberOption = async (
+  email: string | undefined,
+  password: string | undefined
+) => {
+  if (email && password) {
+    sessionStorage.setItem("email", email)
+    sessionStorage.setItem("password", password)
+  } else {
+    sessionStorage.removeItem("email")
+    sessionStorage.removeItem("password")
+  }
+}
+
 export const logout = async () => {
   sessionStorage.removeItem("accessToken")
   sessionStorage.removeItem("email")
