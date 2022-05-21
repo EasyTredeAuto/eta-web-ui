@@ -125,9 +125,15 @@ const Login: React.FunctionComponent = memo(() => {
   }
 
   useEffect(() => {
-    if (liff.isLoggedIn()) {
-      lineLogin()
+    const CheckLogin = async () => {
+      await liff.init({ liffId: process.env.REACT_APP_LINE_LIFFID as string })
+
+      if (liff.isLoggedIn()) {
+        await lineLogin()
+      }
     }
+
+    CheckLogin()
   }, [liff, lineLogin])
 
   useEffect(() => {
