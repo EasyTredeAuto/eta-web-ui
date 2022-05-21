@@ -61,12 +61,6 @@ const Login: React.FunctionComponent = memo(() => {
         .catch((error) => error)
 
       if (result.id) {
-        if (result.roles === "ADMIN") {
-          window.location.href = "https://www.smaretas.com/admin/user"
-        } else {
-          window.location.href = "https://www.smaretas.com/user/dashboard"
-        }
-
         if (remember) {
           localStorage.setItem("email", user.email)
           localStorage.setItem("password", user.password)
@@ -74,7 +68,12 @@ const Login: React.FunctionComponent = memo(() => {
           localStorage.removeItem("email")
           localStorage.removeItem("password")
         }
-        window.location.reload()
+
+        if (result.roles === "ADMIN") {
+          window.location.href = "https://www.smaretas.com/admin/user"
+        } else {
+          window.location.href = "https://www.smaretas.com/user/dashboard"
+        }
       } else {
         Swal.fire({
           title: "Warning",
