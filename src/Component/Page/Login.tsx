@@ -84,6 +84,7 @@ const Login: React.FunctionComponent = memo(() => {
   }
 
   const lineLogin = async () => {
+    console.log(1)
     const idToken = await liff.getIDToken()
     const { displayName, userId, pictureUrl } = await liff.getProfile()
     const body = {
@@ -109,11 +110,12 @@ const Login: React.FunctionComponent = memo(() => {
   const fetchConfigLine = async () => {
     await liff.init({ liffId: process.env.REACT_APP_LINE_LIFFID as string })
 
+    console.log(liff.isInClient())
     if (liff.isInClient()) {
-      lineLogin()
+      await lineLogin()
     } else {
       if (liff.isLoggedIn()) {
-        lineLogin()
+        await lineLogin()
       } else {
         liff.login()
       }
