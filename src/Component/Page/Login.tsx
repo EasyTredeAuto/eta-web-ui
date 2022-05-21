@@ -32,8 +32,6 @@ const Login: React.FunctionComponent = memo(() => {
   const btnSubmit = useRef<HTMLButtonElement>(null)
   const [user, setUser] = useRecoilState(loginState)
   const [remember, setRemember] = useState(false)
-  const [LineLogin, setLineLogin] = useState(false)
-  const navigate = useNavigate()
   const { token } = useParams()
 
   useEffect(() => {
@@ -88,7 +86,6 @@ const Login: React.FunctionComponent = memo(() => {
   }
 
   const lineLogin = async () => {
-    console.log(1)
     const idToken = await liff.getIDToken()
     const { displayName, userId, pictureUrl } = await liff.getProfile()
     const body = {
@@ -113,23 +110,25 @@ const Login: React.FunctionComponent = memo(() => {
     }
   }
 
-  useEffect(() => {
-    const fetchConfigLine = async () => {
-      await liff.init({ liffId: process.env.REACT_APP_LINE_LIFFID as string })
+  const fetchConfigLine = async () => {
+    await liff.init({ liffId: process.env.REACT_APP_LINE_LIFFID as string })
 
-      if (liff.isLoggedIn()) {
+    if (liff.isLoggedIn()) {
+      await lineLogin()
+    } else {
+      if (liff.isInClient()) {
         await lineLogin()
       } else {
-        if (liff.isInClient()) {
-          await lineLogin()
-        } else {
-          liff.login()
-        }
+        liff.login()
       }
     }
+  }
 
-    fetchConfigLine()
-  }, [liff, LineLogin])
+  useEffect(() => {
+    if (liff.isLoggedIn()) {
+      lineLogin()
+    }
+  }, [liff, lineLogin])
 
   useEffect(() => {
     function fetchData() {
@@ -164,7 +163,7 @@ const Login: React.FunctionComponent = memo(() => {
             style={lineBtn}
             color="success"
             variant="contained"
-            onClick={() => setLineLogin(true)}
+            onClick={fetchConfigLine}
           >
             line login
           </Button>
