@@ -32,6 +32,7 @@ const Login: React.FunctionComponent = memo(() => {
   const btnSubmit = useRef<HTMLButtonElement>(null)
   const [user, setUser] = useRecoilState(loginState)
   const [remember, setRemember] = useState(false)
+  const [LineLogin, setLineLogin] = useState(false)
   const navigate = useNavigate()
   const { token } = useParams()
 
@@ -62,8 +63,11 @@ const Login: React.FunctionComponent = memo(() => {
         .catch((error) => error)
 
       if (result.id) {
-        if (result.roles === "ADMIN") navigate("/admin/user")
-        else navigate("/user/dashboard")
+        if (result.roles === "ADMIN") {
+          window.location.href = "https://www.smaretas.com/admin/user"
+        } else {
+          window.location.href = "https://www.smaretas.com/user/dashboard"
+        }
 
         if (remember) {
           localStorage.setItem("email", user.email)
@@ -95,9 +99,11 @@ const Login: React.FunctionComponent = memo(() => {
     } as LineProfileDto
     const result = await ajax.lineLogin(body)
     if (result.id) {
-      if (result.roles === "ADMIN") navigate("/admin/user")
-      else navigate("/user/dashboard")
-      window.location.reload()
+      if (result.roles === "ADMIN") {
+        window.location.href = "https://www.smaretas.com/admin/user"
+      } else {
+        window.location.href = "https://www.smaretas.com/user/dashboard"
+      }
     } else {
       Swal.fire({
         title: "Warning",
@@ -107,20 +113,23 @@ const Login: React.FunctionComponent = memo(() => {
     }
   }
 
-  const fetchConfigLine = async () => {
-    await liff.init({ liffId: process.env.REACT_APP_LINE_LIFFID as string })
+  useEffect(() => {
+    const fetchConfigLine = async () => {
+      await liff.init({ liffId: process.env.REACT_APP_LINE_LIFFID as string })
 
-    console.log(liff.isInClient())
-    if (liff.isInClient()) {
-      await lineLogin()
-    } else {
       if (liff.isLoggedIn()) {
         await lineLogin()
       } else {
-        liff.login()
+        if (liff.isInClient()) {
+          await lineLogin()
+        } else {
+          liff.login()
+        }
       }
     }
-  }
+
+    fetchConfigLine()
+  }, [liff, LineLogin])
 
   useEffect(() => {
     function fetchData() {
@@ -150,11 +159,12 @@ const Login: React.FunctionComponent = memo(() => {
         <TextHeaderH1 color={"#14FFEC"}>LOGIN</TextHeaderH1>
         <BoxContent onSubmit={handleLogin}>
           <Button
+            type="button"
             fullWidth
             style={lineBtn}
             color="success"
             variant="contained"
-            onClick={fetchConfigLine}
+            onClick={() => setLineLogin(true)}
           >
             line login
           </Button>
