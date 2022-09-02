@@ -62,7 +62,7 @@ export const TextFieldName = styled(TextField)`
   }
 `
 
-export const NumberFormatCustom = styled(NumberFormat)`
+export const NumberFormatCustom = styled(NumberFormat as any)`
   height: 35px;
   outline: none;
   border-radius: 5px;

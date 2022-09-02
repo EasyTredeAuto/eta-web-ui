@@ -1,16 +1,17 @@
+import { ReactElement } from "react"
 import { Navigate } from "react-router-dom"
 import AccessDenied from "../Component/Page/AccessDenied"
 import { AppRoles } from "../Utils/roles"
 
 interface Props {
-  component: React.ComponentType
   path?: string
-  roles: Array<AppRoles>
+  roles: Array<AppRoles>, 
+  children: ReactElement<any, any> | null
 }
 
 export const PrivateRoute: React.FC<Props> = ({
-  component: RouteComponent,
   roles,
+  children
 }) => {
   const accessToken: string | null = sessionStorage.getItem("accessToken")
   const userId = sessionStorage.getItem("id")
@@ -19,7 +20,7 @@ export const PrivateRoute: React.FC<Props> = ({
   const userHasRequiredRole = userId && roles.includes(role) ? true : false
 
   if (isAuthenticated && userHasRequiredRole) {
-    return <RouteComponent />
+    return children
   }
 
   if (isAuthenticated && !userHasRequiredRole) {

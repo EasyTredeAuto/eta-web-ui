@@ -2,7 +2,7 @@ import axios from "axios"
 import { LoginDto } from "../Recoil/atoms/auth"
 import { LineProfileDto } from "../Recoil/atoms/todo-line"
 
-const baseUrl = process.env.REACT_APP_BASE_URL
+const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:4000'
 const accessToken = sessionStorage.getItem("accessToken")
 const authFailedMessage = "Request failed with status code 401"
 const headerFirstAuth = { "Content-Type": "application/json" }

@@ -1,16 +1,17 @@
+import { ReactElement } from "react"
 import { Navigate } from "react-router-dom"
 
 interface Props {
-  component: React.ComponentType
-  path?: string
+  path?: string,
+  children: ReactElement<any, any> | null
 }
 
-export const PublicRoute: React.FC<Props> = ({ component: RouteComponent }) => {
+export const PublicRoute: React.FC<Props> = ({ children }) => {
   const accessToken: string | null = sessionStorage.getItem("accessToken")
   const isAuthenticated: boolean = accessToken ? true : false
 
   if (!isAuthenticated) {
-    return <RouteComponent />
+    return children
   }
 
   return <Navigate to="/" />
